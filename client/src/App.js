@@ -18,11 +18,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-<<<<<<< HEAD
-        <Nav />
-=======
       <Navbar/>
->>>>>>> 4e3c440... PDF, QRCODE, Navbar, Footer
         <Switch>
           <Route path="/" exact component={PageAdmin} />
           <Route path="/hopital" component={Hopital} />
