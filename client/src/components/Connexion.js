@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 class Connexion extends Component {
     state = {  }
@@ -13,7 +14,11 @@ class Connexion extends Component {
                     <div className="container-form-connexion">
                         <input placeholder="Identifiant" type="text" className="form-control element-form-connexion"></input>
                         <input placeholder="Mot de passe" type="text" className="form-control element-form-connexion"></input>
-                        <button type="button" className="btn-round btn btn-info element-form-connexion">Se connecter</button>
+                        <Link to="/home-citoyen">
+                            <button type="button" className="btn-round btn btn-info element-form-connexion">
+                                Se connecter
+                            </button>
+                        </Link>
                     </div>
                 </div> 
             </div>
