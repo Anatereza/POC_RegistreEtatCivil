@@ -76,8 +76,9 @@ class HomepageCitoyen extends Component {
         const _nomUsage = "Dupond";
         const _premierPrenom = "Pierre";
         const _autresPrenoms = "Marie Michael";
-        const _login = "DupondPierre";
-        this.setState({login : _login});
+        const _login = this.state.login;
+        //const _login = "DupondPierre";
+        //this.setState({login : _login});
                
         try {  
             await this.state.CivilStateInstance.methods.addNaissance(_sexe, _nomFamille, _nomUsage, _premierPrenom, _autresPrenoms)
@@ -178,6 +179,11 @@ class HomepageCitoyen extends Component {
 
     // Back
     componentDidMount = async () => {
+        //const { aboutConnexion } = this.props.location.aboutConnexion;
+        //console.log(aboutConnexion);
+        const connexion = "DupondPierre";
+        this.setState({ login: connexion });
+
         // FOR REFRESHING PAGE ONLY ONCE -
         if(!window.location.hash){
           window.location = window.location + '#loaded';

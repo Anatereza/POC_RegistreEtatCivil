@@ -25,7 +25,8 @@ function App() {
           <Route path="/mairie" component={Mairie} />
           <Route path="/prefecture" component={Prefecture} />
           <Route path="/rechercherMembre" component={RechercherMembre} />
-          <Route path="/home-citoyen" component={HomepageCitoyen} />
+          {/*<Route path="/home-citoyen" component={HomepageCitoyen} />*/}
+          <Route path="/home-citoyen" render={(props) => <HomepageCitoyen {...props}/>}/>
           <Route path="/home" component={HomepagePublique} />
           <Route path="/fiche-personne" component={FichePersonne} />
           <Route path="/verification-id" component={VueVérificationIdentité} />
