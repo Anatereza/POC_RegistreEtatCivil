@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 
-const getPerson = param => () => {
+const getPerson = () => {
     
 //TODO : Implémenter l'appel à la BC pour récupérer les données de la personne passée en argument
     
     const result = [
-        { name: "Sexe", price: param[0]},
-        { name: "Nom de famille", price: param[1]},
-        { name: "Nom d’usage", price: param[2]},
-        { name: "Premier prénom", price: param[3]},
-        { name: "Autres prénoms", price: param[4]},
-        { name: "Etat civil", price: param[5]},
-        { name: "Date de naissance", price: param[6]},
-        { name: "Commune de naissance", price: param[7]},
-        { name: "Département de naissance", price: param[8]},
-        { name: "Nom de famille de la mère", price: param[9]},
-        { name: "Prénom de la mère", price: param[10]},
-        { name: "Nom de famille du père", price: param[11]},
-        { name: "Prénom du père", price: param[12]},
+        { name: "Sexe", price: "Masculin"},
+        { name: "Nom de famille", price: "Durand"},
+        { name: "Nom d’usage", price: "Durand"},
+        { name: "Premier prénom", price: "Philippe"},
+        { name: "Autres prénoms", price: "Claude Michel"},
+        { name: "Etat civil", price: "Marié"},
+        { name: "Date de naissance", price: "20/01/1962"},
+        { name: "Commune de naissance", price: "Montpellier"},
+        { name: "Département de naissance", price: "Hérault (34)"},
+        { name: "Nom de famille de la mère", price: "Périllard"},
+        { name: "Prénom de la mère", price: "Julie"},
+        { name: "Nom de famille du père", price: "Durand"},
+        { name: "Prénom du père", price: "Augustin"},
       ]
 
     return (result);

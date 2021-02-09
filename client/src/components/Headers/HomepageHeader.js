@@ -22,7 +22,10 @@ class HomepageHeader extends Component {
                                 <div style={{color:"#66615b"}}>DE LA CÔTE D’IVOIRE <br/></div>
                         </div>
                         <div className="element-logo-header"> 
-                            <img style={{width:"150px"}} alt="..." src={require("assets/img/question.png")} />
+                            <span >
+                                <img style={{width:"50px"}} alt="..." src={require("assets/img/question.png")} />
+                                <div>Une question ?</div>
+                            </span>
                         </div>
                     </div>
                     

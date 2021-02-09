@@ -10,9 +10,9 @@ class VueVérificationIdentité extends Component {
     state = {  }
     render() { 
         return (
-            <Container>
+            <Container style={{minHeight:"100vh"}}>
                 <Row style={{height:"100px"}}></Row>
-                <Row>
+                <Row style={{height:"100%"}}>
                     <Col md={{ size: 8, offset: 0 }}>
                         <Row className="text-center" style={{paddingTop:"50px"}, {marginBottom:"50px"}}>
                             <h1 style={{color:"gray"}}>Vérifier une identité</h1>
@@ -24,7 +24,7 @@ class VueVérificationIdentité extends Component {
                             <ComponentVérificationID></ComponentVérificationID>
                         </Row>
                     </Col>
-                    <Col>
+                    <Col style={{height:"100%"}}>
                         <div>BLABLA</div>
                     </Col>
                 </Row>

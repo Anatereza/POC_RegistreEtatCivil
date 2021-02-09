@@ -26,6 +26,9 @@ function PageAdmin() {
       <Link to="/prefecture">
         <Ajoutprefecture />
       </Link>
+      <Link to="/rechercherMembre">
+        <RechercherMembre />
+      </Link>
     </div>
   );
 }
@@ -52,6 +55,15 @@ const Ajoutprefecture = () => {
   return (
     <img
       src="http://127.0.0.1:8887/ajoutPrefecture.PNG"
+      height="150"
+      width="150"
+    ></img>
+  );
+};
+const RechercherMembre = () => {
+  return (
+    <img
+      src="http://127.0.0.1:8887/rechercherMembre.PNG"
       height="150"
       width="150"
     ></img>

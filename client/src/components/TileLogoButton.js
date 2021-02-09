@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { useState, setState }from 'react';
-
 
 class TileLogoButton extends Component {
     state = {  }

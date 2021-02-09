@@ -21,20 +21,21 @@ class FichePersonne extends Component {
         return getPerson()
     }
 
+    handleClickBack(){
+        alert("TODO : Implémenter le routing retour à la page précédente")
+    }
+
     render() {
         return (
         <>  
             <Container>
-                <Row className="text-center" style={{paddingTop:"50px"}}>
-                    <i class="fa fa-arrow-left mr-10 fa-3x" style={{}}></i> 
-                    <h1 style={{color:"gray"}}>FICHE PERSONNE</h1>
+                <Row style={{paddingTop:"100px"}}>
+                    <div className="flex-container-left-center">
+                        <i onClick={this.handleClickBack} class="fa fa-arrow-left mr-10 fa-3x" style={{}}></i> 
+                        <h1 className="ml-4" style={{color:"gray"}}>FICHE PERSONNE</h1>
+                    </div>
                 </Row>
-                <InputDynamique etat="Default"></InputDynamique>
-                <Row style={{paddingTop:"50px"}}>
-                    <Col>
-                        <img alt="..." src={require("assets/img/icon_homepage_citizen.jpg")}/> 
-                    </Col>
-                </Row>
+
                 <Row style={{paddingTop:"100px"}}>        
                     <InfoPersonne data={this.getPerson()}></InfoPersonne>
                 </Row>

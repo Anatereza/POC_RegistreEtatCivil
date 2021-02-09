@@ -6,7 +6,7 @@ class Actualité extends Component {
         return (
              <div className = "bloc-actu">
                 <div className="element-bloc-actu">
-                    <img alt="..." src={require("assets/img/news.jpg")} className="img-rounded"/>
+                    <img alt="..." style={{width:"150px"}} src={require("assets/img/news.jpg")} className="img-rounded"/>
                 </div>
                 <div className="element-bloc-actu">
                     <div style={{fontWeight:"bold"}}>Nouvelle démarche disponible dans votre espace particulier</div>

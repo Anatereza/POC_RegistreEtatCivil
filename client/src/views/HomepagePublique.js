@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-
+import { Link, useHistory } from "react-router-dom";
 import Actualités from "components/Actualités"
 import CarouselComponent from "components/Carroussels/CarouselComponent"
 import HomepageHeader from "components/Headers/HomepageHeader"
 import QuestionsRéponses from "components/QuestionsRéponses"
 import TextesRef from "components/TextesRef"
 import Connexion from 'components/Connexion'
-import { useState, setState }from 'react';
 
 import {
     Container,
@@ -19,34 +18,36 @@ class HomepagePublique extends Component {
     state = {
         isTileState: true,
         isConnexionState: false,
+        redirect:false,
     }
 
     constructor(props) {
-        super(props)
+        super(props)    
       }
-    
+
+      
       /*Fonction pour changer l'état du composant affiché en bas à gauche : tuiles ou formualire
       de connexion */
-      triggerClickConnexion = () => {
-        this.setState({isTileState: false})
-        this.setState({ isConnexionState: true })
-      }
+    triggerClickConnexion = () => {
+    this.setState({isTileState: false})
+    this.setState({ isConnexionState: true })
+    }
     
     render() { 
         return (
             <>
             <HomepageHeader/>
             <Container> 
-                <div style={{height:"100px"}}/>
+                <div style={{height:"60px"}}/>
                 <Row>
                     <Col  md={{ size: 7, offset: 0 }}>
                         <Row>
                             <CarouselComponent/>
                         </Row>
                     </Col>
-                    <Col >
+                    <Col style={{marginLeft:"30px"}}>
                         <Row>
-                            <Actualités className="ml-auto"/>
+                            <Actualités style={{height:"445px"}} className="ml-auto"/>
                         </Row>
                     </Col>
                 </Row>
@@ -68,11 +69,11 @@ class HomepagePublique extends Component {
                             <Connexion/>}
                         </div>
                     </Col>
-                    <Col>
+                    <Col style={{marginLeft:"30px"}}>
                         <Row>
                             <QuestionsRéponses/>
-                            <div style={{height:"20px"}}/>
-                            <TextesRef/>
+                            <div style={{height:"50px"}}/>
+                            <TextesRef />
                         </Row>
                     </Col>
                 </Row>
