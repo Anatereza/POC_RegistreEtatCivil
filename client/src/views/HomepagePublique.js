@@ -62,7 +62,9 @@ class HomepagePublique extends Component {
                                 <TileLogoButton action={this.triggerClickConnexion} titre="PARTICULIERS" type="connexion" contenu="Connectez-vous à votre espace personnel pour consulter votre état civil et accéder à vos démarches."/>
                             </Row>
                             <Row>
-                                <TileLogoButton titre="VERIFIEZ UNE IDENTITE" contenu="Le service de vérification d’identité vous permet de confirmer les déclarations d’identité."/>
+                                <Link to="/verification-id">
+                                    <TileLogoButton titre="VERIFIEZ UNE IDENTITE" contenu="Le service de vérification d’identité vous permet de confirmer les déclarations d’identité."/>
+                                </Link>
                             </Row></>}
                         </div>
                         <div>{this.state.isConnexionState}{this.state.isConnexionState && 
