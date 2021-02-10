@@ -16,7 +16,8 @@ import Navbar from "components/Headers/Navbar";
 import AccueilPrefecture from "views/Préfecture/AccueilPrefecture"
 import AccueilMairie from "views/Mairie/AccueilMairie";
 import AccueilHopital from "views/Hopital/AccueilHopital";
-import EnregistrerNaissance from "views/Mairie/EnregistrerNaissance";
+import EnregistrerNaissance from "views/Hopital/EnregistrerNaissance";
+import ValiderIdentité from "views/Préfecture/ValiderIdentité"
 
 function App() {
   return (
@@ -32,12 +33,15 @@ function App() {
           {/*<Route path="/home-citoyen" component={HomepageCitoyen} />*/}
           <Route path="/home-citoyen" render={(props) => <HomepageCitoyen {...props}/>}/>
           <Route path="/home" component={HomepagePublique} />
-          <Route path="/fiche-personne" component={FichePersonne} />
+          <Route path="/fiche-personne" render={(props) => <FichePersonne {...props}/>}/>
+          <Route path="/valider-identite" render={(props) => <ValiderIdentité {...props}/>}/>
           <Route path="/verification-id" component={VueVérificationIdentité} />
           <Route path="/home-prefecture" component={AccueilPrefecture} />
           <Route path="/home-mairie" component={AccueilMairie} />
           <Route path="/home-hopital" component={AccueilHopital} />
           <Route path="/hopital-naissance" component={EnregistrerNaissance} />
+
+
         </Switch>
       <DemoFooter/>
       </div>

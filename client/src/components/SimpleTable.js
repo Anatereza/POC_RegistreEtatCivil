@@ -73,16 +73,15 @@ class SearchBar extends React.Component {
   }
 }
 
-class FilterableProductTable extends React.Component {
+class SimpleTable extends React.Component {
   render() {
 
     return (
       <>
-     
         <ProductTable products={this.props.data}/>
       </>
     );
   }
 }
 
-export default FilterableProductTable
+export default SimpleTable

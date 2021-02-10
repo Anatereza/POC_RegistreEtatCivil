@@ -253,7 +253,7 @@ class HomepageCitoyen extends Component {
         //this.toggle();
 
         return (
-            <Container>
+            <Container className="body-container">
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
                         <img style={{width:"80px"}} alt="..." src={require("assets/img/icon_homepage_citizen.jpg")}/>

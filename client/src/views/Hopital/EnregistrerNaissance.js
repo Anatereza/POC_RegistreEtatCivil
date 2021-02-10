@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import InputDynamique from "components/InputDynamique"
+
 import {
     Container,
     Row,
