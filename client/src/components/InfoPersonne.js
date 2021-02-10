@@ -6,10 +6,10 @@ import {
     Col,
   } from "reactstrap";
 
-class InfoPersonne extends Component {
-    state = {
 
-      }
+class InfoPersonne extends Component {
+    state = {}
+      
     render() { 
         return (
             <>
@@ -18,8 +18,7 @@ class InfoPersonne extends Component {
                     <h2 style={{color:"gray"}}>Données d’identification</h2>
                 </Row>
                 <Row style={{marginLeft:"30px"}}>
-
-                    <FilterableProductTable data={this.props.data.slice(0,6)}/>
+                    <FilterableProductTable data={this.props.data.slice(0,6)}/>                  
                 </Row>
                 <Row style={{paddingTop:"30px"}}>
                     <h2 style={{color:"gray"}}>Données de naissance</h2>
@@ -32,7 +31,7 @@ class InfoPersonne extends Component {
                 </Row>
                 <Row style={{marginLeft:"30px"}}> 
                     <FilterableProductTable data={this.props.data.slice(9,13)}/>
-                </Row>
+                 </Row>
             </div>
             </>
           );
