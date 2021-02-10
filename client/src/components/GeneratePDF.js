@@ -59,9 +59,7 @@ const ActeDeNaissance = (props) => (
             <Text style={styles.body}>ANNEE {Person[1].split('/')[2]} Acte n° {RandomNumber()}</Text>
             <Text style={styles.body}>Le {Person[1]} est né en notre commune à {Person[0]}</Text>
             <Text style={styles.body}>{Person[2]} {Person[3]} {Person[4]} </Text>
-            <Text style={styles.body}>Du sexe {Person[5]}</Text>
-
-            
+            <Text style={styles.body}>Du sexe {Person[5]}</Text>            
         </View>
     </Page>
   </Document>

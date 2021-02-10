@@ -8994,4 +8994,12 @@ td.rdtYear:hover {
 	margin-left: 32px;
 }
 
+.body-container {
+	min-height: calc(100vh - 32px - 150px);
+}
+
+Label {
+	text-align:left;
+}
+	
 /*# sourceMappingURL=paper-kit.css.map */

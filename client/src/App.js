@@ -13,6 +13,10 @@ import FichePersonne from "views/FichePersonne";
 import VueVérificationIdentité from "views/VueVerificationIdentité";
 import DemoFooter from "components/Footers/DemoFooter";
 import Navbar from "components/Headers/Navbar";
+import AccueilPrefecture from "views/Préfecture/AccueilPrefecture"
+import AccueilMairie from "views/Mairie/AccueilMairie";
+import AccueilHopital from "views/Hopital/AccueilHopital";
+import EnregistrerNaissance from "views/Mairie/EnregistrerNaissance";
 
 function App() {
   return (
@@ -29,6 +33,10 @@ function App() {
           <Route path="/home" component={HomepagePublique} />
           <Route path="/fiche-personne" component={FichePersonne} />
           <Route path="/verification-id" component={VueVérificationIdentité} />
+          <Route path="/home-prefecture" component={AccueilPrefecture} />
+          <Route path="/home-mairie" component={AccueilMairie} />
+          <Route path="/home-hopital" component={AccueilHopital} />
+          <Route path="/hopital-naissance" component={EnregistrerNaissance} />
         </Switch>
       <DemoFooter/>
       </div>

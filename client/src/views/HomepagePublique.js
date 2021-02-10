@@ -37,7 +37,7 @@ class HomepagePublique extends Component {
         return (
             <>
             <HomepageHeader/>
-            <Container> 
+            <Container className="body-container"> 
                 <div style={{height:"60px"}}/>
                 <Row>
                     <Col  md={{ size: 7, offset: 0 }}>
