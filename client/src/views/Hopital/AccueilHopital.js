@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
+import { Helmet } from 'react-helmet'
 import {
     Container,
     Row,
     Col,
   } from "reactstrap";
 
+  const TITLE = 'Hopital - Accueil'
+
 class AccueilHopital extends Component {
     state = {  }
+
     render() { 
         return ( 
+            <>
+            <Helmet>
+            <title>{ TITLE }</title>
+            </Helmet>
             <Container className="body-container">
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
@@ -16,24 +25,31 @@ class AccueilHopital extends Component {
                     </div>
                 </Row>
                 <Row style={{paddingTop:"100px"}}>
-                <Col className="mr-1 ml-auto" md="2" sm="3">
+                    <Col className="mr-1 ml-auto" md="2" sm="3">
+                        <Link to={{
+                            pathname: '/hopital-naissance',
+                            }}>
                             <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
                             src={require("assets/img/IconesAccueils/Ajouter.png")}
                             />
                             <p style ={{fontWeight:"bold"}} className="text-center ct-blue">Enregistrer une nouvelle naissance</p>
-                        </Col>
-                        <Col className="mr-auto ml-auto" md="2" sm="3">
+                        </Link> 
+                    </Col>
+                    <Col className="mr-auto ml-auto" md="2" sm="3">
+                        <div id="tooltip392938669">
                             <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
                             src={require("assets/img/IconesAccueils/Rechercher.png")}
                             />
                             <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Rechercher une naissance</p>
-                        </Col>
+                        </div>
+                    </Col>
                 </Row>
             </Container>
+            </>
          );
     }
 }

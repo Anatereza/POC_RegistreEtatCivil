@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet'
+import { Link } from "react-router-dom";
 import {
     Container,
     Row,
     Col,
   } from "reactstrap";
 
+
+  const TITLE = 'Mairie - Accueil'
+
 class AccueilMairie extends Component {
     state = {  }
     render() { 
         return ( 
+            <>
+            <Helmet>
+                <title>{ TITLE }</title>
+            </Helmet>
             <Container className="body-container">
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
@@ -17,12 +26,16 @@ class AccueilMairie extends Component {
                 </Row>
                 <Row style={{paddingTop:"100px"}}>
                         <Col className="mr-auto ml-auto" md="2" sm="3">
-                            <img
-                            alt="..."
-                            className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/IconesAccueils/Mariage.png")}
-                            />
-                            <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Déclarer un mariage</p>
+                            <Link to={{
+                            pathname: '/declarer-mariage',
+                            }}>
+                                <img
+                                alt="..."
+                                className="img-circle img-no-padding img-responsive"
+                                src={require("assets/img/IconesAccueils/Mariage.png")}
+                                />
+                                <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Déclarer un mariage</p>
+                            </Link>
                         </Col>
                         <Col className="mr-auto ml-auto" md="2" sm="3">
                             <img
@@ -42,6 +55,7 @@ class AccueilMairie extends Component {
                         </Col>
                 </Row>
             </Container>
+            </>
          );
     }
 }

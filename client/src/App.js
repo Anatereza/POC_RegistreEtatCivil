@@ -18,6 +18,8 @@ import AccueilMairie from "views/Mairie/AccueilMairie";
 import AccueilHopital from "views/Hopital/AccueilHopital";
 import EnregistrerNaissance from "views/Hopital/EnregistrerNaissance";
 import ValiderIdentité from "views/Préfecture/ValiderIdentité"
+import DeclarerMariage from "views/Mairie/DeclarerMariage";
+import DeclarerMariageTest from "views/Mairie/DeclarerMariageTest";
 
 function App() {
   return (
@@ -35,6 +37,7 @@ function App() {
           <Route path="/home" component={HomepagePublique} />
           <Route path="/fiche-personne" render={(props) => <FichePersonne {...props}/>}/>
           <Route path="/valider-identite" render={(props) => <ValiderIdentité {...props}/>}/>
+          <Route path="/declarer-mariage" render={(props) => <DeclarerMariage {...props}/>}/>
           <Route path="/verification-id" component={VueVérificationIdentité} />
           <Route path="/home-prefecture" component={AccueilPrefecture} />
           <Route path="/home-mairie" component={AccueilMairie} />

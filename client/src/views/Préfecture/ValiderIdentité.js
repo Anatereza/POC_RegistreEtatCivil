@@ -1,7 +1,8 @@
 import * as React from 'react';
 import  { Component } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import { Link } from "react-router-dom";
+import { Helmet } from 'react-helmet'
+
 import {
     Container,
     Row,
@@ -12,6 +13,9 @@ import {
     FormGroup,
     Label,
   } from "reactstrap";
+import ErrorMessage from 'components/ErrorMessage';
+
+const TITLE = 'Préfecture - Valider une identité'
 
   const columns = [
     { field: 'nom', headerName: <div style={{fontWeight:"bold"}}>Nom</div>, width: 160 },
@@ -24,7 +28,8 @@ import {
   
   const rows = [
       {id: 1, nom: "Durand", prenom:"Michel", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
-      {id: 2, nom: "Dupont", prenom:"Josie", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},];
+      {id: 2, nom: "Dupont", prenom:"Josie", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+    ];
 
   const tableHeight = 56+52+10+Object.keys(rows).length*52
 
@@ -48,11 +53,14 @@ class ValiderIdentité extends Component {
             pathname:'fiche-personne',
             state: this.state
         });
-
     }
 
     render() { 
         return ( 
+            <>
+            <Helmet>
+                <title>{ TITLE }</title>
+            </Helmet>
             <Container className="body-container">
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
@@ -61,11 +69,15 @@ class ValiderIdentité extends Component {
                     </div>
                 </Row>
                 <div style={{height:"80px"}}></div>
-                <div style={{ height: tableHeight, width: '100%' }}>   
-                    <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={(e) => this.handleClick(e)}></DataGrid>
+                <div style={{ height: tableHeight, width: '100%' }}>
+                    {Object.keys(rows).length !== 0 ? 
+                    <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={(e) => this.handleClick(e)}></DataGrid> :
+                    <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
+                }
+                    
                 </div>
-
             </Container>
+            </>
          );
     }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet'
 
 import {
     Container,
@@ -10,6 +11,8 @@ import {
     FormGroup,
     Label,
   } from "reactstrap";
+
+const TITLE = 'Hopital - Enregistrer une naissance'
 
 class EnregistrerNaissance extends Component {
     constructor(props){
@@ -161,6 +164,10 @@ class EnregistrerNaissance extends Component {
 
     render() { 
         return ( 
+            <>
+            <Helmet>
+            <title>{ TITLE }</title>
+            </Helmet>
             <Container>
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
@@ -237,6 +244,7 @@ class EnregistrerNaissance extends Component {
                 </Col>
 
             </Container>
+            </>
          );
     }
 }
