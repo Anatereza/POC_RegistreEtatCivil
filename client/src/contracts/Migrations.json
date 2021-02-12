@@ -985,6 +985,7 @@
       "address": "0x057A748730b7E22877babf23d1d61953637cD7be",
       "transactionHash": "0x6aa5b0a68cf928c6c239e2a3d44abc3f90484c8e6890e7c1e90c7db40171f11d"
     },
+<<<<<<< HEAD
     "1613407098677": {
       "events": {},
       "links": {},
@@ -994,6 +995,17 @@
   },
   "schemaVersion": "3.3.3",
   "updatedAt": "2021-02-15T16:42:43.180Z",
+=======
+    "1613467246735": {
+      "events": {},
+      "links": {},
+      "address": "0xf6A00A8EbF0f4DF836Cd3589686391B9043A3aE7",
+      "transactionHash": "0x5a1729d8fdd8c616e8063dd0293c06da7b0aaf5b7a2d106719fa78e5d044d963"
+    }
+  },
+  "schemaVersion": "3.0.22",
+  "updatedAt": "2021-02-16T09:22:20.240Z",
+>>>>>>> origin/main
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

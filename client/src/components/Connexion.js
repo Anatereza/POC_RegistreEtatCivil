@@ -6,98 +6,42 @@ import {
     Input
 } from 'reactstrap';
 
-/*const Connexion = (props) => {
-
-    function HandleClick(e){
-        console.log("=== handleClick ===")
-        console.log(e)
-        console.log(this.props)
-        this.props.history.push({
-            pathname:'home-citoyen',
-            state: this.state
-    });
-
-    console.log("=== Connexion ===")
-
-    /*if(this.props.location.state){
-        this.state=this.props.location.state
-        
-    }
-    this.HandleClick = this.HandleClick.bind(this);
-
-    }
-    return (<>
-        <div className="container-block-connexion">
-            <div className="element-block-connexion">
-                <h2 style={{color:"#FBC658"}}>SE CONNECTER</h2>
-            </div>
-            <div className="element-block-connexion">
-                <div className="container-form-connexion">
-                    <input placeholder="Identifiant" type="text" className="form-control element-form-connexion"></input>
-                    <input placeholder="Mot de passe" type="text" className="form-control element-form-connexion"></input>
-                    <button onClick={(e) => HandleClick(e)} type="button" className="btn-round btn btn-info element-form-connexion">
-                            Se connecter
-                    </button>                        
-                    {/*<Link to={{
-                        pathname: '/home-citoyen',
-                        aboutConnexion: {
-                            connexion : this.state.login
-                        }
-                        }}>
-                        <button  type="button" className="btn-round btn btn-info element-form-connexion">
-                            Se connecter
-                        </button>
-                    </Link>                     
-                </div>
-            </div> 
-        </div>
-        </>  
-        );
-    }
-}
-
-export default Connexion;*/
- 
-
 
 class Connexion extends Component {
     state = {
-        login: "DupondPierre",
-        pwd: ""        
+        login: "",
+        pwd: "",  
     };
 
     constructor(props) {
         console.log("=== Constructeur connexion ===")
-        super(props)
-        /*if(this.props.location.state){
-            this.state=this.props.location.state
-            
-        }
-        this.HandleClick = this.HandleClick.bind(this);*/
-        
+        super(props)        
     }
 
-    /*HandleClick(e){
-        console.log("=== handleClick ===")
-        console.log(this.state)
-        console.log(e)
-        console.log(this.props)
-        this.props.history.push({
-            pathname:'home-citoyen',
-            state: this.state
-        });
-    }*/
 
     HandleSubmit(e){
+        console.log(this)
         e.preventDefault()
-        this.props.ClickHandler(this.state.login)
+        const param = [this.state.login, this.state.pwd];
+        this.props.ClickHandler(param)
     }
 
-    HandleChange(e){
-        this.setState({login:e.target.value})
+   
+    updateLogin = event => {
+        this.setState({ login : event.target.value});
+        console.log("new login")
+        console.log(this.state.login)
+    }
+    
+    updatePwd = event => {
+        this.setState({ pwd : event.target.value});
+        console.log("new pwd")
+        console.log(this.state.pwd)
     }
 
     render() { 
+        console.log(this.state);
+
         return ( 
             <>
             <div className="container-block-connexion">
@@ -107,23 +51,12 @@ class Connexion extends Component {
                 <div className="element-block-connexion">
                     <div className="container-form-connexion">
                         <Form onSubmit={(e) => this.HandleSubmit(e)}>
-                            <Input onChange={(e) => this.HandleChange(e)} placeholder="Identifiant" type="text" className="form-control element-form-connexion"></Input>
-                            <Input placeholder="Mot de passe" type="text" className="form-control element-form-connexion"></Input>
-                            <Button  /*onClick={this.props.ClickHandler}*/ type="submit" className="btn-round btn btn-info element-form-connexion">
+                            <Input onChange={(e) => this.updateLogin(e)} placeholder="Identifiant" type="text" className="form-control element-form-connexion"></Input>
+                            <Input onChange={(e) => this.updatePwd(e)} placeholder="Mot de passe" type="text" className="form-control element-form-connexion"></Input>
+                            <Button type="submit" className="btn-round btn btn-info element-form-connexion">
                                     Se connecter
                             </Button>
-                        </Form>
-                                                
-                        {/*<Link to={{
-                            pathname: '/home-citoyen',
-                            aboutConnexion: {
-                                connexion : this.state.login
-                            }
-                            }}>
-                            <button  type="button" className="btn-round btn btn-info element-form-connexion">
-                                Se connecter
-                            </button>
-                        </Link>*/}                     
+                        </Form>                                      
                     </div>
                 </div> 
             </div>
