@@ -20,7 +20,7 @@ import {LibTransformUintString} from './LibTransformUintString.sol';
 import {SafeMath} from './SafeMath.sol';
 
 /** @title CivilState. */
-contract CivilState {
+contract CivilState_backup {
     /// @dev Include libraries codes and initialize its use in the contract
     using LibConcatenateStrings for string;
     using LibTransformUintString for *;

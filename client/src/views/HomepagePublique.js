@@ -22,15 +22,24 @@ class HomepagePublique extends Component {
     }
 
     constructor(props) {
-        super(props)    
+        super(props)
+        this.HandleClick = this.HandleClick.bind(this);
       }
 
+      HandleClick(identifiant){
+        console.log("=== handleClick ===")
+        this.props.history.push({
+            pathname:'home-citoyen',
+            state: identifiant
+        });
+    }
       
       /*Fonction pour changer l'état du composant affiché en bas à gauche : tuiles ou formualire
       de connexion */
-    triggerClickConnexion = () => {
-    this.setState({isTileState: false})
-    this.setState({ isConnexionState: true })
+    triggerClickConnexion = (e) => {
+        console.log("=== triggerClickConnexion ===")
+        this.setState({isTileState: false})
+        this.setState({ isConnexionState: true })
     }
     
     render() { 
@@ -68,7 +77,8 @@ class HomepagePublique extends Component {
                             </Row></>}
                         </div>
                         <div>{this.state.isConnexionState}{this.state.isConnexionState && 
-                            <Connexion/>}
+                            
+                            <Connexion ClickHandler={(e) => this.HandleClick(e)}/> }
                         </div>
                     </Col>
                     <Col style={{marginLeft:"30px"}}>

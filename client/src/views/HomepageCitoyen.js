@@ -18,31 +18,36 @@ import getWeb3 from "../getWeb3";
 
 class HomepageCitoyen extends Component {
 
+    state = {
+        CivilStateInstance: undefined,
+        account: null,
+        web3: null,
+        login : '',
+        sexe : '',
+        nomFamille : '',
+        premierPrenom : '',
+        autresPrenoms : '',
+        etatCivil : '',
+        dateNaissance : '',
+        communeNaissance : '',
+        departementNaissance : '',
+        nomFamilleMere : '',
+        prenomMere : '',
+        nomFamillePere : '',
+        prenomPere : '',
+        infosCitoyen : [],
+        ready : false
+    }    
+    
     constructor(props) {
-        console.log("Constructeur")
+        console.log("=== Homepage Citoyen ===")
         super(props)
-
-        // Back
-        this.state = {
-            CivilStateInstance: undefined,
-            account: null,
-            web3: null,
-            login : '',
-            sexe : '',
-            nomFamille : '',
-            premierPrenom : '',
-            autresPrenoms : '',
-            etatCivil : '',
-            dateNaissance : '',
-            communeNaissance : '',
-            departementNaissance : '',
-            nomFamilleMere : '',
-            prenomMere : '',
-            nomFamillePere : '',
-            prenomPere : '',
-            infosCitoyen : [],
-            ready : false
-        }
+        console.log(this.props.location.state)
+        /*if(this.props.location.state){
+            this.state=this.props.location.state
+            
+        }*/
+        
         
     }
 
@@ -179,8 +184,14 @@ class HomepageCitoyen extends Component {
 
     // Back
     componentDidMount = async () => {
+        //const { aboutConnexion } = { location };
+        
+        //const { aboutConnexion } = this.props.location.state;
+        // location.state
+        //console.log(aboutConnexion);
         //const { aboutConnexion } = this.props.location.aboutConnexion;
         //console.log(aboutConnexion);
+        console.log(this.state);
         const connexion = "DupondPierre";
         this.setState({ login: connexion });
 
@@ -250,7 +261,7 @@ class HomepageCitoyen extends Component {
             );
         }        
 
-        //this.toggle();
+        
 
         return (
             <Container className="body-container">

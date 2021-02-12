@@ -119,8 +119,6 @@ const tableHeight = 56+52+10+Object.keys(rows).length*52
 }*/
 
 class DeclarerMariage extends Component {
-    
-
     constructor(props){
         super(props);
         this.state = {
@@ -139,7 +137,7 @@ class DeclarerMariage extends Component {
         }
 
         console.log("=== constructeur ===")
-        
+        console.log(this.props)
         this.HandleClick = this.HandleClick.bind(this);
       
         //SI on arrive sur cette page depuis fiche-personne 
@@ -152,6 +150,7 @@ class DeclarerMariage extends Component {
         //      ALORS on supprime le nom stocké dans le secondConjoint lors de la redirection vers info-personne
         if(this.props.location.state){
             this.state=this.props.location.state
+            
             this.UpdateState()
         } else {
             this.setState({retourFichePersonne:""})

@@ -53,7 +53,7 @@ contract CivilState {
     * valeurs possibles typ : citoyen, admin, hopital, prefecture, mairie
     */
     struct Authentification {
-        string mdp;
+        bytes32 mdp;
         string typ;
     }
 
@@ -123,6 +123,7 @@ contract CivilState {
     struct DonneesCitoyen {
         string login;
         string identite;
+        bytes32 hashCertification;
         Authentification auth;
         DonneesIdentificationCitoyen donneesIdentCitoyen;
         DonneesNaissanceCitoyen donneesNaissanceCitoyen;
@@ -149,7 +150,10 @@ contract CivilState {
     * Mappings pour suivi des citoyens
     *
     */
-    mapping(string => DonneesCitoyen) citoyens;        
+    mapping(string => DonneesCitoyen) citoyens;    
+
+    /// @dev Mapping des hash
+    mapping(bytes32 => string) hashCertifications;    
 
     /// @dev Contract constructor sets the owner
     constructor () public {
@@ -171,14 +175,7 @@ contract CivilState {
         return utilisateursHopital;
     }
 
-    /// @dev Get info membre hopital
-    /// @param _login Le login du membre.
-    /// @return _civilite
-    /// @return _nom
-    /// @return _prenom
-    /// @return _dateNaissance
-    /// @return _role
-    function getInfoIdentMembreHopital(string memory _login) public returns(string memory _civilite, string memory _nom, string memory _prenom, string memory _dateNaissance, string memory _role){
+    /*function getInfoIdentMembreHopital(string memory _login) public returns(string memory _civilite, string memory _nom, string memory _prenom, string memory _dateNaissance, string memory _role){
      
         _donneesIdentTemp = membresHopital[_login].donneesIdent;
         _civilite = _donneesIdentTemp.civilite;
@@ -186,7 +183,7 @@ contract CivilState {
         _prenom = _donneesIdentTemp.prenom;
         _dateNaissance = _donneesIdentTemp.dateNaissance;
         _role = _donneesIdentTemp.role;
-    }
+    }*/
 
     function getInfoEtabMembreHopital(string memory _login) public returns(string memory _nomEtab, string memory _adresseEtab, string memory _codePostaleEtab, string memory _villeEtab){
      
@@ -201,7 +198,7 @@ contract CivilState {
     function getInfoIdentificationCitoyen (string memory _login) public view returns(string memory _sexe, 
     string memory _nomFamille, string memory _nomUsage, string memory _premierPrenom, 
     string memory _autresPrenoms, string memory _etatCivil) {
-         DonneesIdentificationCitoyen memory _donneesIdentificationCitoyen;
+       DonneesIdentificationCitoyen memory _donneesIdentificationCitoyen;
         _donneesIdentificationCitoyen = citoyens[_login].donneesIdentCitoyen;
 
         _sexe = _donneesIdentificationCitoyen.sexe;
@@ -238,7 +235,7 @@ contract CivilState {
     /**
     * Write functions 
     */    
-
+    /*
     /// @dev Function pour ajouter un nouveau utilisateur 
     function addMembreHopital(string memory _civilite, string memory _nom, string memory _prenom, string memory _dateNaissance, string memory _role,
     string memory _nomEtab, string memory _adresseEtab, string memory _codePostaleEtab, string memory _villeEtab) public {
@@ -248,6 +245,8 @@ contract CivilState {
         _login = _login.concatenate(_prenom);
         _login = _login.concatenate(_dateNaissance);
         string memory _mdp = _login;
+        bytes32 _mdpHash = keccak256(bytes(_mdp));
+
         Authentification memory _auth;   
 
         _donneesIdent = DonneesIdentification({
@@ -266,7 +265,7 @@ contract CivilState {
         });
 
         _auth = Authentification({
-            mdp : _mdp,
+            mdp : _mdpHash,
             typ : "hopital"
         });
         
@@ -279,13 +278,13 @@ contract CivilState {
         });
 
         utilisateurs[_login] = Authentification({
-            mdp : _mdp,
+            mdp : _mdpHash,
             typ : "hopital"
         });
 
         utilisateursHopital++;
         utilisateursCount++;
-    }
+    }*/
 
     /// @dev Function pour ajouter un nouveau citoyen 
     function addNaissance(string memory _sexe, string memory _nomFamille, string memory _nomUsage, string memory _premierPrenom, string memory _autresPrenoms) public {
@@ -297,10 +296,12 @@ contract CivilState {
         string memory _login = _nomFamille;
         _login = _login.concatenate(_premierPrenom);
         string memory _mdp = _login;
+        bytes32 _mdpHash = keccak256(bytes(_mdp));
         Authentification memory _auth;
+        bytes32 lambdaCertification = keccak256(bytes("naissance"));
 
         _auth = Authentification({
-            mdp : _mdp,
+            mdp : _mdpHash,
             typ : "citoyen"
         });
 
@@ -316,6 +317,7 @@ contract CivilState {
         citoyens[_login] = DonneesCitoyen({
             login : _login,
             identite : "nonvalide",
+            hashCertification : lambdaCertification,
             auth : _auth,
             donneesIdentCitoyen : _donneesIdentificationCitoyen,
             donneesNaissanceCitoyen : _donneesNaissanceCitoyen,
@@ -357,19 +359,56 @@ contract CivilState {
 
     /// @dev Function pour vérifier identité
     function verifyIdentite(string memory _login) public {
+        DonneesIdentificationCitoyen memory _donneesIdent;
         citoyens[_login].identite = "valide";
-        
+
         Authentification memory _auth = citoyens[_login].auth;
-        string memory _mdp = _auth.mdp;
+        bytes32 _mdpHash = _auth.mdp;
+        
+        /**
+         * Génération du hash
+         */
+        _donneesIdent = citoyens[_login].donneesIdentCitoyen;
+
+        string memory _nom = _donneesIdent.nomFamille;
+        string memory _prenom = _donneesIdent.premierPrenom;
+        string memory _conc = _nom.concatenate(_prenom);
+        bytes32 certification_hash = keccak256(bytes(_conc));
+
+        citoyens[_login].hashCertification = certification_hash;
+        hashCertifications[certification_hash] = _login;
 
         utilisateurs[_login] = Authentification({
-            mdp : _mdp,
+            mdp : _mdpHash,
             typ : "citoyen"
         });
 
         utilisateursCount++;
 
     }
-   
+
+    /// @dev Récupérer un hash
+    function getHash (string memory _login) public view returns (bytes32 _hash) {
+        _hash = citoyens[_login].hashCertification;
+    }
+
+    /// @dev Vérifier l'authentification et renvoie le type d'utilisateur.
+    function verifyAuthentification (string memory _login, string memory _pwd) public view returns (string memory _verify, string memory _typ){
+        //Verify that the user used the good password
+        
+        if (utilisateurs[_login].mdp == keccak256(bytes(_pwd))) {
+           _verify = "ok";
+            _typ = utilisateurs[_login].typ;
+        } else {
+           _verify = "ko";
+            _typ = "NULL";
+        }
+
+    }
+
+    /// @dev Vérifier un hash
+    function verifyCertification (bytes32 id_hash) public view returns (string memory _login) {
+        _login =  hashCertifications[id_hash];
+    }
 
 }

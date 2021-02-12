@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet';
+
+// Back 
+import CivilStateContract from "../../contracts/CivilState.json";
+import getWeb3 from "../../getWeb3";
+
 
 import {
     Container,
@@ -49,6 +54,9 @@ class EnregistrerNaissance extends Component {
         fieldsStates.set("Prenom du père","valid")
 
         this.state = {
+            CivilStateInstance: undefined,
+            account: null,
+            web3: null,
             fieldsStates: fieldsStates,
             fieldsValues: fieldsValues
         }
@@ -60,7 +68,7 @@ class EnregistrerNaissance extends Component {
         this.setState({fieldsValues});
     }
 
-    handleSubmit(e){
+    handleSubmit(e) {
         let fieldsStates = this.state.fieldsStates
         let fieldsValues = this.state.fieldsValues
         e.preventDefault()
@@ -159,8 +167,164 @@ class EnregistrerNaissance extends Component {
                 break
             }
         }     
-        this.setState({fieldsStates:fieldsStates})
+        this.setState({fieldsStates:fieldsStates});
+        this.addNaissance();
     }
+
+    addNaissance = async () => {
+        console.log(this.state.fieldsValues);
+        let fieldsStates = this.state.fieldsStates
+        let fieldsValues = this.state.fieldsValues
+        let _sexe;
+        let _nomFamille;
+        let _nomUsage;
+        let _premierPrenom;
+        let _autresPrenoms;
+        let _dateNaissance;
+        let _communeNaissance;
+        let _departementNaissance;
+        let _nomFamilleMere;
+        let _prenomMere;
+        let _nomFamillePere;
+        let _prenomPere;
+        let _login;
+
+        for (const element of fieldsStates){
+            switch (element[0]) {
+                case 'Sexe':
+                    _sexe = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Nom de famille':
+                _nomFamille = this.state.fieldsValues.get(element[0]);
+                break
+                case "Nom d'usage":
+                    _nomUsage = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Premier prénom':
+                   _premierPrenom = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Autres prénoms':
+                    _autresPrenoms = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Etat civil':
+                   // _etatCivil = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Date de naissance':
+                    _dateNaissance = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Commune de naissance':
+                    _communeNaissance = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Département de naissance':
+                    _departementNaissance = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Nom de famille de la mère':
+                    _nomFamilleMere = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Prénom de la mère':
+                    _prenomMere = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Nom de famille du père':
+                   _nomFamillePere = this.state.fieldsValues.get(element[0]);
+                break
+                case 'Prenom du père':
+                    _prenomPere = this.state.fieldsValues.get(element[0]);
+                break
+            }
+        }
+        console.log(_prenomPere);
+
+        try {  
+            await this.state.CivilStateInstance.methods.addNaissance(_sexe, _nomFamille, _nomUsage, _premierPrenom, _autresPrenoms)
+                  .send({
+                      from : this.state.account,
+                      gas: 1000000
+                  })
+            
+            _login =  _nomFamille + _premierPrenom;      
+            alert('Naissance enregistrée');
+          } catch (error) {
+              // Catch any errors for any of the above operations.
+              alert(
+                `Failed to load web3, accounts, or contract. Check console for details.`,
+              );
+              console.error(error);
+            }
+
+        try {  
+            await this.state.CivilStateInstance.methods.addDonneesNaissance(_login, _dateNaissance, _communeNaissance, _departementNaissance)
+                  .send({
+                      from : this.state.account,
+                      gas: 1000000
+                  })
+    
+            alert('Données de naissance ajoutées');
+          } catch (error) {
+              // Catch any errors for any of the above operations.
+              alert(
+                `Failed to load web3, accounts, or contract. Check console for details.`,
+              );
+              console.error(error);
+            } 
+
+            try {  
+                await this.state.CivilStateInstance.methods.addDonneesParents(_login, _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere)
+                      .send({
+                          from : this.state.account,
+                          gas: 1000000
+                      })
+        
+                alert('Données des parents ajoutées');
+              } catch (error) {
+                  // Catch any errors for any of the above operations.
+                  alert(
+                    `Failed to load web3, accounts, or contract. Check console for details.`,
+                  );
+                  console.error(error);
+                } 
+                    
+
+    }
+
+    //Back
+    componentDidMount = async () => {
+        // FOR REFRESHING PAGE ONLY ONCE -
+        if(!window.location.hash){
+          window.location = window.location + '#loaded';
+          window.location.reload();
+        }
+    
+        try {
+          // Get network provider and web3 instance.
+          const web3 = await getWeb3();
+    
+          // Use web3 to get the user's accounts.
+          const accounts = await web3.eth.getAccounts();
+    
+          // Get the contract instance.
+          const networkId = await web3.eth.net.getId();
+          const deployedNetwork = CivilStateContract.networks[networkId];
+          const instance = new web3.eth.Contract(
+              CivilStateContract.abi, 
+              deployedNetwork && deployedNetwork.address,
+          );
+
+          // account[0] = default account used by metamask
+          this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
+        
+          // Création du citoyen
+          //this.addCitoyen();
+      
+          
+        } catch (error) {
+          // Catch any errors for any of the above operations.
+          alert(
+            `Failed to load web3, accounts, or contract. Check console for details.`,
+          );
+          console.error(error);
+        }
+    };
+    // Back
 
     render() { 
         return ( 
