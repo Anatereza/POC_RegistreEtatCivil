@@ -311,10 +311,7 @@ class EnregistrerNaissance extends Component {
 
           // account[0] = default account used by metamask
           this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
-        
-          // Création du citoyen
-          //this.addCitoyen();
-      
+     
           
         } catch (error) {
           // Catch any errors for any of the above operations.

@@ -122,7 +122,8 @@ contract CivilState {
 
     struct DonneesCitoyen {
         string login;
-        string identite;
+        bool identite;
+        bytes4 id;
         bytes32 hashCertification;
         Authentification auth;
         DonneesIdentificationCitoyen donneesIdentCitoyen;
@@ -150,7 +151,13 @@ contract CivilState {
     * Mappings pour suivi des citoyens
     *
     */
-    mapping(string => DonneesCitoyen) citoyens;    
+    mapping(string => DonneesCitoyen) citoyens;
+
+    // CitoyenCount --> login
+    mapping(uint => string) ids;
+
+    // ID --> login
+    mapping(bytes4 => string) idLogins;
 
     /// @dev Mapping des hash
     mapping(bytes32 => string) hashCertifications;    
@@ -167,6 +174,23 @@ contract CivilState {
 
     function getTypeUtilisateur(string memory _login) public view returns(string memory _typ) {
         _typ = utilisateurs[_login].typ;
+    }
+
+
+    /// @dev Gets the citoyens members count.
+    /// @return citoyenCount Citoyens count.
+    function getCitoyensCount() public view returns(uint){
+        return citoyensCount;
+    }
+
+    function getLoginIdStatut(uint _count) public view returns(string memory _login, bytes4 _id, bool _statut) {
+        _login = ids[_count];
+        _id = citoyens[_login].id;
+        _statut = citoyens[_login].identite;
+    }
+
+    function getLoginFromId(bytes4 _id) public view returns(string memory _login) {
+        _login = idLogins[_id];
     }
 
     /// @dev Gets the hospital members count.
@@ -300,6 +324,8 @@ contract CivilState {
         Authentification memory _auth;
         bytes32 lambdaCertification = keccak256(bytes("naissance"));
 
+        bytes4 _id = bytes4(keccak256(bytes(_login)));
+
         _auth = Authentification({
             mdp : _mdpHash,
             typ : "citoyen"
@@ -316,13 +342,17 @@ contract CivilState {
 
         citoyens[_login] = DonneesCitoyen({
             login : _login,
-            identite : "nonvalide",
+            identite : false,
+            id : _id,
             hashCertification : lambdaCertification,
             auth : _auth,
             donneesIdentCitoyen : _donneesIdentificationCitoyen,
             donneesNaissanceCitoyen : _donneesNaissanceCitoyen,
             donneesParentsCitoyen : _donneesParentsCitoyen
         });
+
+        ids[citoyensCount] = _login;
+        idLogins[_id] = _login;
 
         citoyensCount++; 
 
@@ -360,7 +390,7 @@ contract CivilState {
     /// @dev Function pour vérifier identité
     function verifyIdentite(string memory _login) public {
         DonneesIdentificationCitoyen memory _donneesIdent;
-        citoyens[_login].identite = "valide";
+        citoyens[_login].identite = true;
 
         Authentification memory _auth = citoyens[_login].auth;
         bytes32 _mdpHash = _auth.mdp;
