@@ -9016,4 +9016,36 @@ Label {
 	font-weight: 300;
 }
 
+.recap-maries {
+	background-color: #efebeb;
+	padding-left: 30px;
+	border-radius: 20px;
+}
+
+.text-table {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.fa-edit:hover {
+	cursor: pointer;
+}
+
+.fa-times {
+	color: #f5593d;
+}
+
+.fa-times:hover {
+	cursor: pointer;
+}
+
+.fa-check {
+	color: #6bd098;
+}
+
+.fa-check:hover {
+	cursor: pointer;
+}
+
 /*# sourceMappingURL=paper-kit.css.map */

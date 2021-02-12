@@ -5,7 +5,8 @@ import {
     Container,
     Row,
     Col,
-    Button
+    Button,
+    Input,
   } from "reactstrap";
 import getPerson from 'services/getPerson';
 
@@ -24,28 +25,13 @@ class FichePersonne extends Component {
         super(props)
         
         if(!window.location.hash){
-            /*const PROPS = this.props;
-            console.log(PROPS);
-            const LOCATION = PROPS.location;
-            console.log(LOCATION);
-            const STATE = LOCATION.state;
-            console.log(STATE);
-            //const ID = STATE.ID;*/
+            console.log("location : " + this.props.location.state)
             const ID = this.props.location.state.ID;
-            console.log(ID)
-            console.log("ID");
             localStorage.setItem('IDLocal', ID);
             const _ID = localStorage.getItem('IDLocal');
-            console.log("ID après localStorage")
-            console.log(_ID)
-
             const URL = this.props.location.state.URL;
             localStorage.setItem('URLLocal', URL);
-            //window.location = window.location + '#loaded';
-            //window.location.reload();
-        }
-
-
+        }        
 
         this.state = {
             ID : '',
@@ -66,12 +52,11 @@ class FichePersonne extends Component {
             prenomMere : '',
             nomFamillePere : '',
             prenomPere : '',
-            infosCitoyen : [],     
+            infosCitoyen : [],   
+            stateTableRow : ["init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init"]
         }
-        
 
     }
-
     
     getPerson(e){
         return getPerson(e)
@@ -81,27 +66,27 @@ class FichePersonne extends Component {
         console.log("=== handleClickBack ===")
 
         // VOIR LES ELEMENTS DU STATE NECESSAIRES
-        console.log("URL state")
-        console.log(this.state.URL)
+        //console.log("URL state")
+        //console.log(this.state.URL)
         this.props.history.push({
             pathname:this.state.URL,
             state : 
-             { URL : this.state.URL }
+             { URL : this.state.URL,
+                source : "clickBack"
+            }
         })
     }
 
     handleClickMariage(){
         console.log("=== handleClickMariage ===")
-        if (this.state.wkfState <3){
-            this.setState(prevState => {return {wkfState: prevState.wkfState + 1}}, function(){console.log("**setState wkfState OK**")} )
-        }
-        
-        this.setState({retourFichePersonne:"conjointOK"}, function(){
-            this.props.history.push({
-                pathname:this.state.URL,
-                state : this.state
-            })
+        this.props.history.push({
+            pathname:this.state.URL,
+            state : 
+             {
+                source : "conjointOK"
+            }
         })
+        
     }
 
     handleClickValiderIdentite = async () => {
@@ -122,7 +107,7 @@ class FichePersonne extends Component {
               console.error(error);
          }
          
-         console.log(this.state.URL)
+         //console.log(this.state.URL)
          this.props.history.push({
              pathname:this.state.URL,
              state : 
@@ -130,16 +115,51 @@ class FichePersonne extends Component {
          })
     }
 
+    HandleEditClick(e){
+        console.log(e)
+        let changeLog = this.state.stateTableRow
+        changeLog[e]="edit"
+        this.setState({stateTableRow:changeLog}, function() {console.log(this.state.stateTableRow);})
+        
+        let infosCitoyen = this.state.infosCitoyen
+        const previousValue = infosCitoyen[e]
+        infosCitoyen[e]=<div className="text-table"><Input style={{width:"50%"}}></Input><i onClick={() => this.HandleConfirmChange} style={{marginLeft:"6px"}} class="fa fa-check"></i><i onClick={() => this.HandleCancelChange(previousValue, e)} style={{marginLeft:"6px"}} class="fa fa-times"></i></div>
+        
+        this.setState({infosCitoyen:infosCitoyen}, function() {console.log("**infosCitoyen MAJ**");})
+    }
+
+    HandleConfirmChange(){
+
+    }
+
+    HandleCancelChange(previousValue, e){
+        let infosCitoyen = this.state.infosCitoyen
+        infosCitoyen[e]=previousValue
+
+        let stateTableRow = this.state.stateTableRow
+        stateTableRow[e] = "init"
+
+        this.setState({infosCitoyen:infosCitoyen})
+        this.setState({stateTableRow:stateTableRow})
+
+    }
+
+    CreateInfosCitoyens(){
+        for (let i=0; i<13; i++){
+            
+        }
+    }
+
     // Back
     getInfosCitoyen = async () => {
         // Récupérer le login avec l'ID
         const responseLogin = await this.state.CivilStateInstance.methods.getLoginFromId(this.state.ID).call({from : this.state.account});
-        console.log("responseLogin")
-        console.log(responseLogin)
+        //console.log("responseLogin")
+        //console.log(responseLogin)
         const _login = responseLogin;
         this.setState({ login: _login });
-        console.log("APRES PREMIER APPEL")
-        console.log(this.state.ID)
+        //console.log("APRES PREMIER APPEL")
+        //console.log(this.state.ID)
 
         // Donnees identification citoyen
         const responseInfoIdentificationCitoyen = await this.state.CivilStateInstance.methods.getInfoIdentificationCitoyen(this.state.login).call({from : this.state.account});
@@ -150,10 +170,10 @@ class FichePersonne extends Component {
         const _autresPrenoms = responseInfoIdentificationCitoyen[4];
         const _etatCivil = responseInfoIdentificationCitoyen[5];
         this.setState({sexe : _sexe, nomFamille : _nomFamille, nomUsage : _nomUsage, premierPrenom : _premierPrenom, autresPrenoms : _autresPrenoms, etatCivil : _etatCivil});
-        console.log("local sexe")
-        console.log(_sexe)
-        console.log("state sexe")
-        console.log(this.state.sexe)
+        // console.log("local sexe")
+        // console.log(_sexe)
+        // console.log("state sexe")
+        // console.log(this.state.sexe)
 
         // Donnees naissance citoyen
         const responseInfoNaissanceCitoyen = await this.state.CivilStateInstance.methods.getInfoNaissanceCitoyen(this.state.login).call({from : this.state.account});
@@ -171,22 +191,34 @@ class FichePersonne extends Component {
         this.setState({nomFamilleMere : _nomFamilleMere, prenomMere : _prenomMere, nomFamillePere : _nomFamillePere, prenomPere : _prenomPere});
         
         // Alimentation de la liste "infosCitoyen" pour appel de "getPerson" et affichage
-        const _infosCitoyen = [this.state.sexe, this.state.nomFamille, this.state.nomUsage, this.state.premierPrenom, this.state.autresPrenoms, this.state.etatCivil, 
-                        this.state.dateNaissance, this.state.communeNaissance, this.state.departementNaissance,
-                        this.state.nomFamilleMere, this.state.prenomMere, this.state.nomFamillePere, this.state.prenomPere];
+        const _infosCitoyen = [
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.sexe}</div> <i onClick={() => this.HandleEditClick(0)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamille}</div> <i onClick={() => this.HandleEditClick(1)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.nomUsage}</div> <i onClick={() => this.HandleEditClick(2)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.premierPrenom}</div> <i onClick={() => this.HandleEditClick(3)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.autresPrenoms}</div> <i onClick={() => this.HandleEditClick(4)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.etatCivil}</div> <i onClick={() => this.HandleEditClick(5)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.dateNaissance}</div> <i onClick={() => this.HandleEditClick(6)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.communeNaissance}</div> <i onClick={() => this.HandleEditClick(7)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.departementNaissance}</div> <i onClick={() => this.HandleEditClick(8)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamilleMere}</div> <i onClick={() => this.HandleEditClick(9)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomMere}</div> <i onClick={() => this.HandleEditClick(10)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamillePere}</div> <i onClick={() => this.HandleEditClick(11)} class="fa fa-edit"></i></div>, 
+        <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomPere}</div> <i onClick={() => this.HandleEditClick(12)} class="fa fa-edit"></i></div>, 
+        ]
         this.setState({infosCitoyen : _infosCitoyen});
 
     }
     // Back
     
-    // Back
-    
+
+
     componentDidMount = async () => {
         //const _ID = localStorage.getItem('IDLocal');
         //console.log("ID componentDidMount")
         const _URL = localStorage.getItem('URLLocal');
         const _ID = localStorage.getItem('IDLocal');
-        console.log(_ID)
+        //console.log(_ID)
         this.setState({ ID: _ID, URL: _URL});
 
         
@@ -197,8 +229,6 @@ class FichePersonne extends Component {
         }
     
         try {
-
-          console.log("ID componentDidMount")
 
           // Get network provider and web3 instance.
           const web3 = await getWeb3();
@@ -228,15 +258,15 @@ class FichePersonne extends Component {
           console.error(error);
         }
 
-        console.log("STATE")
-        console.log(this.state)
+        // console.log("STATE")
+        // console.log(this.state)
     };
     
     
     // Back
     
     render() {
-        console.log(this.state)
+        //console.log(this.state)
         return (
         <>  
             <Helmet>

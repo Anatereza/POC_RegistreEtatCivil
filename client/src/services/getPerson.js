@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 const getPerson = param => {
     
-    console.log(param);
-    console.log(param[0]);
+    // console.log(param);
+    // console.log(param[0]);
 
     const result = [
         { name: "Sexe", price: param[0]},

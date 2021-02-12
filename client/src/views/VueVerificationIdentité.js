@@ -7,7 +7,14 @@ import {
   } from "reactstrap";
 
 class VueVérificationIdentité extends Component {
-    state = {  }
+    state = {
+        paramHash : this.props.history.location.hash.slice(1,this.props.history.location.hash.length)
+    }
+
+    constructor(props) {
+        super(props)
+    }
+
     render() { 
         return (
             <Container style={{minHeight:"100vh"}}>
@@ -21,7 +28,7 @@ class VueVérificationIdentité extends Component {
                             <div style={{color:"#66615B"}}>Pour vérifier l’identité d’un citoyen, saisissez le hash indiqué sur son extrait d’acte de naissance.</div>
                         </Row>
                         <Row style={{marginTop:"20px"}}>
-                            <ComponentVérificationID></ComponentVérificationID>
+                            <ComponentVérificationID defaultHash={this.state.paramHash && this.state.paramHash}></ComponentVérificationID>
                         </Row>
                     </Col>
                     <Col style={{height:"100%"}}>

@@ -30,7 +30,11 @@ class ComponentVérificationID extends Component {
 
     constructor(props) {
         super(props)
+        
+        
     }
+
+    
 
     checkHash(hash){
         //TODO : Définir le format du return 
@@ -90,7 +94,7 @@ class ComponentVérificationID extends Component {
             <div style={{width:"100%"}}>
                 <Form style={{marginBottom:"70px"}} onSubmit={e=> {this.handleSubmit(e)}}>
                     <FormGroup className="container-input-hash">
-                        <Input className="element-input-hash" placeholder="Hash" type="text" onChange={e=> {this.handleInputChange(e)}}/>
+                        <Input className="element-input-hash" placeholder="Hash" value={this.props.defaultHash} type="text" onChange={e=> {this.handleInputChange(e)}}/>
                         <Button className="element-input-hash" color="info" type="submit" onClickVerifier={()=>{this.handleClickVerifier()}}>
                             Vérifier
                         </Button>
