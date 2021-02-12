@@ -16,13 +16,11 @@ class FichePersonne extends Component {
     state = this.props.location.state 
 
     constructor(props) {
-        
         console.log("=== FichePersonne ===")
         super(props)
         /*{!this.props.location.state.URL && this.setState({source:this.props.location.state.URL})}
         console.log("constructeur")
         console.log(this.state.source)*/
-        console.log(this.state)
     }
 
     getPerson(){
@@ -31,16 +29,19 @@ class FichePersonne extends Component {
 
     handleClickBack(e){
         console.log("=== handleClickBack ===")
-        console.log("source : " + this.state.source)
         this.props.history.push({
             pathname:this.state.URL,
-        });
+            state : this.state
+        })
     }
 
     handleClickMariage(){
         console.log("=== handleClickMariage ===")
+        if (this.state.wkfState <3){
+            this.setState(prevState => {return {wkfState: prevState.wkfState + 1}}, function(){console.log("**setState wkfState OK**")} )
+        }
+        
         this.setState({retourFichePersonne:"conjointOK"}, function(){
-            console.log(this.state)
             this.props.history.push({
                 pathname:this.state.URL,
                 state : this.state
@@ -54,6 +55,7 @@ class FichePersonne extends Component {
             <Helmet>
                 <title>{ TITLE }</title>
             </Helmet>
+            
             <Container>
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">

@@ -19,7 +19,6 @@ import AccueilHopital from "views/Hopital/AccueilHopital";
 import EnregistrerNaissance from "views/Hopital/EnregistrerNaissance";
 import ValiderIdentité from "views/Préfecture/ValiderIdentité"
 import DeclarerMariage from "views/Mairie/DeclarerMariage";
-import DeclarerMariageTest from "views/Mairie/DeclarerMariageTest";
 
 function App() {
   return (

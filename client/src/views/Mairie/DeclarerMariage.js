@@ -12,6 +12,9 @@ import {
     Nav,
     TabContent,
     TabPane,
+    Button,
+    Col,
+    Progress
   } from "reactstrap";
 import ErrorMessage from 'components/ErrorMessage';
 
@@ -29,19 +32,34 @@ const columns = [
 const rows = [
       {id: 1, nom: "Durand", prenom:"Michel", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
       {id: 2, nom: "Dupont", prenom:"Josie", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 3, nom: "Durand", prenom:"Jacques", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 4, nom: "Dupont", prenom:"Hervé", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 5, nom: "Durand", prenom:"Mohammed", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 6, nom: "Dupont", prenom:"Alfred", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 7, nom: "Durand", prenom:"Frédéric", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 8, nom: "Dupont", prenom:"Clémentine", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 9, nom: "Durand", prenom:"Sofiane", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 10, nom: "Dupont", prenom:"Justine", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 11, nom: "Durand", prenom:"Charlotte", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 12, nom: "Dupont", prenom:"Victoire", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 13, nom: "Durand", prenom:"Avenall", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 14, nom: "Dupont", prenom:"Gabriel", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 15, nom: "Durand", prenom:"Olivier", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+      {id: 16, nom: "Dupont", prenom:"Fabienne", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
+
     ];
 
 const tableHeight = 56+52+10+Object.keys(rows).length*52
 
-function SectionProgress( props ) {
-    const [activeTab, setActiveTab] = React.useState("1");
-
+/*function SectionProgress( props ) {
+    //const [activeTab, setActiveTab] = React.useState("1");
     /*if (props.statut=="init"){
         setActiveTab("1")
     }else{
         setActiveTab("2")
     }*/
-    const toggle = (tab) => {
+
+    /*const toggle = (tab) => {
         if (activeTab !== tab) {
             setActiveTab(tab);
         }
@@ -53,30 +71,28 @@ function SectionProgress( props ) {
                 <Nav id="tabs" role="tablist" tabs>
                     <NavItem>
                         <NavLink
-                            className={activeTab === "1" ? "active" : ""}
-                            onClick={() => {
+                            className={props.statut !== "1" ? "active" : ""}
+                           /*onClick={() => {
                             toggle("1");
                             }}
                         >
                             Conjoint 1
                         </NavLink>
-
                     </NavItem>
                     <NavItem>
                         <NavLink
-                            className={activeTab === "2" ? "active" : ""}
-                            onClick={() => {
+                            className={props.statut === "2" ? "active" : ""}
+                            /*onClick={() => {
                             toggle("2");
                             }}
                         >
                             Conjoint 2
                         </NavLink>
-                   
                     </NavItem>
                 </Nav>
             </div>
         </div>
-        <TabContent activeTab={activeTab} className="text-center">
+        <TabContent activeTab={props.activeTab} className="text-center">
             <TabPane tabId="1">
                 <p>
                     <div style={{ height: tableHeight, width: '100%' }}>
@@ -100,49 +116,50 @@ function SectionProgress( props ) {
         </TabContent>
     </>
   );
-}
+}*/
 
 class DeclarerMariage extends Component {
-    state = {
-        nom:"",
-        prenom:"",
-        sexe:"",
-        dateDeNaissance:"",
-        communeDeNaissance:"",
-        statut:"",
-        URL:"declarer-mariage",
-        wkfState:"init",
-        retourFichePersonne:"",
-        premierConjoint:"",
-        secondConjoint:""
-      }
+    
 
     constructor(props){
+        super(props);
+        this.state = {
+            nom:"",
+            prenom:"",
+            sexe:"",
+            dateDeNaissance:"",
+            communeDeNaissance:"",
+            statut:"",
+            URL:"declarer-mariage",
+            wkfState:1,
+            retourFichePersonne:"",
+            premierConjoint:"",
+            secondConjoint:"",
+            activeTab:"1"
+        }
+
         console.log("=== constructeur ===")
         
-        super(props);
-        this.handleClick = this.handleClick.bind(this);
-        
-        if(this.props.location.state){
-            this.state=this.props.location.state
-        }        
+        this.HandleClick = this.HandleClick.bind(this);
+      
         //SI on arrive sur cette page depuis fiche-personne 
         //ALORS on appel la méthode de MAJ de l'état du composant
         //SINON
         //  SI le wkf est au statut initial
         //  ALORS on supprime le nom stocké dans le premierConjoint lors de la redirection vers info-personne
         //  SINON 
-        //      SI le wkf est statut unConjoint
+        //      SI le wkf est au statut unConjoint
         //      ALORS on supprime le nom stocké dans le secondConjoint lors de la redirection vers info-personne
         if(this.props.location.state){
-            this.updateState()
+            this.state=this.props.location.state
+            this.UpdateState()
         } else {
             this.setState({retourFichePersonne:""})
             switch (this.state.wkfState){
-                case "init" :
+                case 1 :
                     this.setState({premierConjoint:""})
                 break;
-                case "unConjoint" :
+                case 2 :
                     this.setState({secondConjoint:""})
                 break;
             }    
@@ -150,34 +167,54 @@ class DeclarerMariage extends Component {
         console.log(this.state)
     }
 
-    updateState(){
-        console.log("=== updateState ===")
-        if (this.state.retourFichePersonne==="conjointOK" && this.state.wkfState=="init"){
-            console.log("init => unConjoint")
-            this.setState(() => ({ wkfState:"unConjoint" }))
-
+    /*UpdateState(){
+        console.log("=== UpdateState ===")
+        if (this.state.retourFichePersonne==="conjointOK"){
+            switch (this.state.wkfState){
+                case "init" :
+                    this.setState((prevState) => {prevState.wkfState="unConjoint"})
+                break;
+                case "unConjoint" :
+                    this.setState((prevState) => {prevState.wkfState="deuxConjoints"})
+                break;
+            }
         }
-        if (this.state.retourFichePersonne==="conjointOK" && this.state.wkfState=="unConjoint"){
-            console.log("unConjoint => deuxConjoints")
-            this.setState(() => ({ wkfState:"deuxConjoints" }))
-        }
-
+        console.log(this.state)
+    }*/
+    UpdateState(){
+        console.log("=== UpdateState ===")
+        if (this.state.retourFichePersonne==="conjointOK"){
+                this.setState(prevState => {return {wkfState: prevState.wkfState + 1}}, function(){console.log("**setState wkfState OK**")} )
+            }
         console.log(this.state)
     }
 
-    handleClick(e){
-        console.log("=== handleClick ===")
+    /*UpdateActiveTab(){
+        let activeTab
+        console.log("=== UpdateActiveTab ===")
+        switch (this.state.wkfState){
+            case 1: 
+                activeTab="1"
+            break;
+            case 2:
+                activeTab="2"
+            break;
+        }
+        return activeTab
+    }*/
+
+    HandleClick(e){
+        console.log("=== HandleClick ===")
         const prenom = e.row.prenom;
         this.setState((prevState) => ({...prevState,["prenom"] :prenom}));
-        if (this.state.wkfState=="init"){
+        if (this.state.wkfState==1){
             this.setState({premierConjoint:prenom})
 
         }
-        if (this.state.wkfState=="unConjoint"){
+        if (this.state.wkfState==2){
             this.setState({secondConjoint:prenom})
 
         }
-        console.log(this.state)
         this.props.history.push({
             pathname:'fiche-personne',
             state: this.state
@@ -191,6 +228,7 @@ class DeclarerMariage extends Component {
                 <title>{ TITLE }</title>
             </Helmet>
             <Container className="body-container">
+            
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
                         <img style={{width:"80px"}} alt="..." src={require("assets/img/IconesAccueils/Valider.png")}/>
@@ -198,7 +236,65 @@ class DeclarerMariage extends Component {
                     </div>
                 </Row>
                 <div style={{height:"80px"}}></div>
-                <SectionProgress statut={this.state.wkfState} clickHandler={this.handleClick}></SectionProgress>
+                <Row>
+                    <Col className="col-6 col-sm-4">
+                        <div 
+                        className={this.state.wkfState > 1 ? "progress-active" : "progress-inactive" }
+                        >
+                            Premier conjoint
+                        </div>
+                    </Col>
+                    <Col className="col-6 col-sm-4 ">
+                        <div 
+                        className={this.state.wkfState > 2 ? "progress-active" : "progress-inactive" }
+                        >
+                        Second conjoint
+                        </div>
+                    </Col>
+                    <Col className="col-6 col-sm-4">
+                        <div 
+                        className={this.state.wkfState > 3 ? "progress-active" : "progress-inactive" }
+                        >
+                        Validation
+                        </div>
+                    </Col>
+
+                </Row>
+                <br/>
+                <Progress
+                    max="3"
+                    value={Number(parseInt(this.state.wkfState)-1)}
+                    barClassName="progress-bar-success"
+                    style={{backgroundColor: "6bd098"}}
+                />
+                <br/>
+                {this.state.wkfState<3 ? 
+                    <div style={{ height: tableHeight, width: '100%' }}>
+                        {Object.keys(rows).length !== 0 ? 
+                        <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
+                        <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
+                        }
+                    </div> :
+                    <>
+                        <Row>
+                            <Col className="col-6">
+                                {this.state.premierConjoint}
+                            </Col>
+                            <Col className="col-6">
+                                {this.state.secondConjoint}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className="offset-sm-7">
+                                <Button color="info">
+                                    Valider ce mariage
+                                </Button>
+                            </Col>
+                        </Row>
+                    </> 
+                }
+                
+                {/*<SectionProgress activeTab={this.UpdateActiveTab()} statut={this.state.wkfState} clickHandler={this.HandleClick}></SectionProgress>*/}
             </Container>
             </>
          );

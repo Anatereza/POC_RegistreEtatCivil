@@ -2478,7 +2478,7 @@ textarea.form-control {
 }
 
 .progress-bar {
-	background-color: #51cbce;
+	background-color: #6bd098;
 }
 
 .progress-bar-primary {
@@ -4069,7 +4069,7 @@ License - nucleoapp.com/license/
 
 .nav-tabs-wrapper {
 	display: inline-block;
-	margin-bottom: -6px;
+	/*margin-bottom: -6px;*/
 	margin-left: 1.25%;
 	margin-right: 1.25%;
 	position: relative;
@@ -4090,11 +4090,13 @@ License - nucleoapp.com/license/
 	color: #66615b;
 }
 .nav-tabs .nav-item .nav-link.active {
-	color: #66615b;
+	color: #4cb332;
+	font-weight: 500;
 }
 .nav-tabs .nav-item {
 	color: #66615b;
 	position: relative;
+	border-top: 5px;
 }
 .nav-tabs .nav-item .nav-link.active,
 .nav-tabs .nav-item .nav-link.active:hover,
@@ -8904,7 +8906,7 @@ td.rdtYear:hover {
 	color: white;
 	font-weight: bold;
 	background-color: rgb(214, 78, 15);
-	border-bottom-style: solid;
+	/*border-bottom-style: solid;*/
 	border-bottom-width: 2px;
 }
 
@@ -8999,7 +9001,19 @@ td.rdtYear:hover {
 }
 
 Label {
-	text-align:left;
+	text-align: left;
 }
-	
+
+.progress-active {
+	font-family: "Montserrat", "Helvetica", Arial, sans-serif;
+	color: #6bd098;
+	font-weight: 600;
+}
+
+.progress-inactive {
+	font-family: "Montserrat", "Helvetica", Arial, sans-serif;
+	color: #757575;
+	font-weight: 300;
+}
+
 /*# sourceMappingURL=paper-kit.css.map */
