@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import InfoPersonne from "components/InfoPersonne"
 import { Helmet } from 'react-helmet'
+import createPersistedState from 'use-persisted-state';
 import {
     Container,
     Row,
@@ -39,23 +40,23 @@ class FichePersonne extends Component {
         prenomMere : '',
         nomFamillePere : '',
         prenomPere : '',
-        infosCitoyen : [],     
+        infosCitoyen : [],
     }
-    /*
+    
     constructor(props) {
         console.log("=== FichePersonne ===")
+        //localStorage.setItem('wkfStateLocal', 2)
+        console.log("wkf : " + localStorage.getItem('wkfStateLocal'))
         super(props)
+    }
 
-
-    }*/
-
-    
     getPerson(e){
         return getPerson(e)
     }
 
     handleClickBack(e){
         console.log("=== handleClickBack ===")
+
         this.props.history.push({
             pathname:this.state.URL,
             state : this.state
@@ -64,6 +65,7 @@ class FichePersonne extends Component {
 
     handleClickMariage(){
         console.log("=== handleClickMariage ===")
+        console.log("wkfState : " + this.state.wkfState)
         if (this.state.wkfState <3){
             this.setState(prevState => {return {wkfState: prevState.wkfState + 1}}, function(){console.log("**setState wkfState OK**")} )
         }

@@ -4,6 +4,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Helmet } from 'react-helmet';
 import { useState, useEffect } from 'react';
 
+
 import {
     Container,
     Row,
@@ -51,72 +52,26 @@ const rows = [
 
 const tableHeight = 56+52+10+Object.keys(rows).length*52
 
-/*function SectionProgress( props ) {
-    //const [activeTab, setActiveTab] = React.useState("1");
-    /*if (props.statut=="init"){
-        setActiveTab("1")
-    }else{
-        setActiveTab("2")
-    }*/
+/* function HandleClick(e){
+    console.log("=== HandleClick ===")
+    const prenom = e.row.prenom;
+    this.setState((prevState) => ({...prevState,["prenom"] :prenom}));
+    if (this.state.wkfState==1){
+        this.setState({premierConjoint:prenom})
 
-    /*const toggle = (tab) => {
-        if (activeTab !== tab) {
-            setActiveTab(tab);
-        }
-    };
-    return (
-      <>
-        <div className="nav-tabs-navigation">
-            <div className="nav-tabs-wrapper">
-                <Nav id="tabs" role="tablist" tabs>
-                    <NavItem>
-                        <NavLink
-                            className={props.statut !== "1" ? "active" : ""}
-                           /*onClick={() => {
-                            toggle("1");
-                            }}
-                        >
-                            Conjoint 1
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={props.statut === "2" ? "active" : ""}
-                            /*onClick={() => {
-                            toggle("2");
-                            }}
-                        >
-                            Conjoint 2
-                        </NavLink>
-                    </NavItem>
-                </Nav>
-            </div>
-        </div>
-        <TabContent activeTab={props.activeTab} className="text-center">
-            <TabPane tabId="1">
-                <p>
-                    <div style={{ height: tableHeight, width: '100%' }}>
-                        {Object.keys(rows).length !== 0 ? 
-                        <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={props.clickHandler}></DataGrid> :
-                        <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
-                        }
-                    </div>
-                </p>
-            </TabPane>
-            <TabPane tabId="2">
-                <p>
-                    <div style={{ height: tableHeight, width: '100%' }}>
-                        {Object.keys(rows).length !== 0 ? 
-                        <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={props.clickHandler}></DataGrid> :
-                        <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
-                        }
-                    </div>
-                </p>
-            </TabPane>
-        </TabContent>
-    </>
-  );
-}*/
+    }
+    if (this.state.wkfState==2){
+        this.setState({secondConjoint:prenom})
+
+    }
+    console.log(this.state)
+    console.log("REDIRECTION :")
+    setCount(count + 1)
+    /*this.props.history.push({
+        pathname:'fiche-personne',
+        state: this.state
+    });
+}   */   
 
 class DeclarerMariage extends Component {
     constructor(props){
@@ -135,7 +90,7 @@ class DeclarerMariage extends Component {
             secondConjoint:"",
             activeTab:"1"
         }
-
+        
         console.log("=== constructeur ===")
         console.log(this.props)
         this.HandleClick = this.HandleClick.bind(this);
@@ -163,7 +118,7 @@ class DeclarerMariage extends Component {
                 break;
             }    
         }
-        console.log(this.state)
+        //console.log(this.state)
     }
 
     /*UpdateState(){
@@ -185,7 +140,7 @@ class DeclarerMariage extends Component {
         if (this.state.retourFichePersonne==="conjointOK"){
                 this.setState(prevState => {return {wkfState: prevState.wkfState + 1}}, function(){console.log("**setState wkfState OK**")} )
             }
-        console.log(this.state)
+        //console.log(this.state)
     }
 
     /*UpdateActiveTab(){
@@ -208,20 +163,27 @@ class DeclarerMariage extends Component {
         this.setState((prevState) => ({...prevState,["prenom"] :prenom}));
         if (this.state.wkfState==1){
             this.setState({premierConjoint:prenom})
+            localStorage.setItem('premierConjoint', prenom)
 
         }
         if (this.state.wkfState==2){
             this.setState({secondConjoint:prenom})
+            localStorage.setItem('secondConjoint', prenom)
 
         }
+        console.log(this.state)
+        console.log("REDIRECTION :")
+        localStorage.setItem('wkfStateLocal', this.state.wkfState)
+
         this.props.history.push({
             pathname:'fiche-personne',
             state: this.state
         });
     }      
+    
 
     render() { 
-        return ( 
+        return (
             <>
             <Helmet>
                 <title>{ TITLE }</title>
@@ -271,7 +233,9 @@ class DeclarerMariage extends Component {
                     <div style={{ height: tableHeight, width: '100%' }}>
                         {Object.keys(rows).length !== 0 ? 
                         <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
+                    
                         <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
+                       
                         }
                     </div> :
                     <>
