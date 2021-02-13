@@ -10,6 +10,7 @@ import {
     Col,
   } from "reactstrap";
 import GenerateQRCode from 'components/GenerateQRCode';
+import getPerson from 'services/getPerson';
   
 // Back 
 import CivilStateContract from "../contracts/CivilState.json";
@@ -22,7 +23,7 @@ class HomepageCitoyen extends Component {
         CivilStateInstance: undefined,
         account: null,
         web3: null,
-        login : '',
+        login : 'aa',
         sexe : '',
         nomFamille : '',
         premierPrenom : '',
@@ -43,108 +44,16 @@ class HomepageCitoyen extends Component {
         console.log("=== Homepage Citoyen ===")
         super(props)
         console.log(this.props.location.state)
-        /*if(this.props.location.state){
-            this.state=this.props.location.state
-            
-        }*/
-        
+        console.log(this.state.test)
         
     }
 
     // Back 
-    getPerson(){ 
-        const result = [
-            { name: "Sexe", price: this.state.sexe},
-            { name: "Nom de famille", price: this.state.infosCitoyen[1]},
-            { name: "Nom d’usage", price: this.state.infosCitoyen[2]},
-            { name: "Premier prénom", price: this.state.infosCitoyen[3]},
-            { name: "Autres prénoms", price: this.state.infosCitoyen[4]},
-            { name: "Etat civil", price: this.state.infosCitoyen[5]},
-            { name: "Date de naissance", price: this.state.infosCitoyen[6]},
-            { name: "Commune de naissance", price: this.state.infosCitoyen[7]},
-            { name: "Département de naissance", price: this.state.infosCitoyen[8]},
-            { name: "Nom de famille de la mère", price: this.state.infosCitoyen[9]},
-            { name: "Prénom de la mère", price: this.state.infosCitoyen[10]},
-            { name: "Nom de famille du père", price: this.state.infosCitoyen[11]},
-            { name: "Prénom du père", price: this.state.infosCitoyen[12]},
-        ]
-        
-        return (result);
+    getPerson(e){ 
+        return getPerson(e);
     }
 
     // Back
-    // For testing only
-    addCitoyen = async () => {
-        
-        const _sexe =  "Masculin";
-        const _nomFamille = "Dupond";
-        const _nomUsage = "Dupond";
-        const _premierPrenom = "Pierre";
-        const _autresPrenoms = "Marie Michael";
-        const _login = this.state.login;
-        //const _login = "DupondPierre";
-        //this.setState({login : _login});
-               
-        try {  
-            await this.state.CivilStateInstance.methods.addNaissance(_sexe, _nomFamille, _nomUsage, _premierPrenom, _autresPrenoms)
-                  .send({
-                      from : this.state.account,
-                      gas: 1000000
-                  })
-    
-            alert('Naissance');
-          } catch (error) {
-              // Catch any errors for any of the above operations.
-              alert(
-                `Failed to load web3, accounts, or contract. Check console for details.`,
-              );
-              console.error(error);
-            }        
-
-        const _dateNaissance = "01/01/2000";
-        const _communeNaissance = "Montpellier";
-        const _departementNaissance = "Hérault (34)";
-        
-        try {  
-            await this.state.CivilStateInstance.methods.addDonneesNaissance(_login, _dateNaissance, _communeNaissance, _departementNaissance)
-                  .send({
-                      from : this.state.account,
-                      gas: 1000000
-                  })
-    
-            alert('Naissance');
-          } catch (error) {
-              // Catch any errors for any of the above operations.
-              alert(
-                `Failed to load web3, accounts, or contract. Check console for details.`,
-              );
-              console.error(error);
-            } 
-
-
-        const _nomFamilleMere = "Florent";
-        const _prenomMere = "Julie";
-        const _nomFamillePere = "Dupond";
-        const _prenomPere = "Louis";
-        
-    
-        try {  
-            await this.state.CivilStateInstance.methods.addDonneesParents(_login, _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere)
-                  .send({
-                      from : this.state.account,
-                      gas: 1000000
-                  })
-    
-            alert('Naissance');
-          } catch (error) {
-              // Catch any errors for any of the above operations.
-              alert(
-                `Failed to load web3, accounts, or contract. Check console for details.`,
-              );
-              console.error(error);
-            } 
-    
-    }
 
     // Back
     getInfosCitoyen = async () => {
@@ -184,16 +93,6 @@ class HomepageCitoyen extends Component {
 
     // Back
     componentDidMount = async () => {
-        //const { aboutConnexion } = { location };
-        
-        //const { aboutConnexion } = this.props.location.state;
-        // location.state
-        //console.log(aboutConnexion);
-        //const { aboutConnexion } = this.props.location.aboutConnexion;
-        //console.log(aboutConnexion);
-        console.log(this.state);
-        const connexion = "DupondPierre";
-        this.setState({ login: connexion });
 
         // FOR REFRESHING PAGE ONLY ONCE -
         if(!window.location.hash){
@@ -218,11 +117,7 @@ class HomepageCitoyen extends Component {
 
           // account[0] = default account used by metamask
           this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
-        
-          // testing only
-          // Création du citoyen
-          this.addCitoyen();
-        
+               
           // Récupérations des informations du citoyen
           this.getInfosCitoyen();          
           
@@ -274,7 +169,7 @@ class HomepageCitoyen extends Component {
 
                 <Row style={{paddingTop:"100px"}}>
                     <Col style={{paddingLeft: "60px"}, {textAlign:"center"}} md={{ size: 9, offset: 0 }}>
-                        <InfoPersonne data={this.getPerson()}></InfoPersonne>
+                        <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
                         <div style={{marginTop:"120px"}}>
                             <h4>Mon code QR</h4>
                             <img alt="..." src={GenerateQRCode()}/>

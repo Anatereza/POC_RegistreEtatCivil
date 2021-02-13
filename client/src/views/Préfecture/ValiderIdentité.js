@@ -3,6 +3,10 @@ import  { Component } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { Helmet } from 'react-helmet'
 
+// Back 
+import CivilStateContract from "../../contracts/CivilState.json";
+import getWeb3 from "../../getWeb3";
+
 import {
     Container,
     Row,
@@ -18,23 +22,14 @@ import ErrorMessage from 'components/ErrorMessage';
 const TITLE = 'Préfecture - Valider une identité'
 
   const columns = [
+    { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>ID</div>, width: 160 },  
     { field: 'nom', headerName: <div style={{fontWeight:"bold"}}>Nom</div>, width: 160 },
     { field: 'prenom', headerName: <div style={{fontWeight:"bold"}}>Prénom</div>, width: 160 },
     { field: 'sexe', headerName: <div style={{fontWeight:"bold"}}>Sexe</div>, width: 130,},
     { field: 'dateDeNaissance', headerName: <div style={{fontWeight:"bold"}}>Date de naissance</div>, width: 200,},
     { field: 'communeDeNaissance', headerName: <div style={{fontWeight:"bold"}}>Commune de naissance</div>, width: 250,},
-    { field: 'statut', headerName: <div style={{fontWeight:"bold"}}>Statut</div>, width: 100,},
   ];
   
-  const rows = [
-      {id: 1, nom: "Durand", prenom:"Michel", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
-      {id: 2, nom: "Dupont", prenom:"Josie", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris", statut:'vérifé'},
-    ];
-
-  const tableHeight = 56+52+10+Object.keys(rows).length*52
-
-
-
 class ValiderIdentité extends Component {
     state = {
         nom:"",
@@ -43,19 +38,106 @@ class ValiderIdentité extends Component {
         dateDeNaissance:"",
         communeDeNaissance:"",
         statut:"",
-        URL:"valider-identite"
+        URL:"valider-identite",
+        rows: [],
+        tableHeight : "",
+        ID : ""
       }
 
     handleClick(e){
-        const prenom = e.row.prenom;
-        this.setState((prevState) => ({...prevState,["prenom"] :prenom}));
+        const ID = e.row.ID;
+        this.setState((prevState) => ({...prevState,["ID"] :ID}));
         this.props.history.push({
             pathname:'fiche-personne',
-            state: this.state
+            state: {
+              ID : this.state.ID, 
+              URL : this.state.URL,
+            }
         });
     }
 
+    contructNaissanceList = async () => {
+       
+        const citoyenCount = await this.state.CivilStateInstance.methods.getCitoyensCount().call({from : this.state.account});
+        console.log(citoyenCount);
+        for (let i = 0; i < citoyenCount; i++) {
+      
+            // Récupérer le login, l'id et le statut
+            const response = await this.state.CivilStateInstance.methods.getLoginIdStatut(i).call({from : this.state.account});
+            const _login = response[0];
+            const _id = response[1];
+            const _isVerified = response[2];
+
+            const responseIdent = await this.state.CivilStateInstance.methods.getInfoIdentificationCitoyen(_login).call({from : this.state.account});
+            const _sexe = responseIdent[0];
+            const _nomFamille = responseIdent[1];
+            const _premierPrenom = responseIdent[3];
+
+            const responseNaissance = await this.state.CivilStateInstance.methods.getInfoNaissanceCitoyen(_login).call({from : this.state.account});           
+            const _dateNaissance = responseNaissance[0];
+            const _communeNaissance = responseNaissance[1];
+                   
+            let _statut = '';
+            if (!_isVerified) {
+              // eslint-disable-next-line
+              _statut = 'A vérifier';
+              const _i = i + 1;
+              const naissanceAVerifier = {id: _i, ID : _id, nom: _nomFamille, prenom: _premierPrenom, sexe: _sexe, dateDeNaissance: _dateNaissance, communeDeNaissance: _communeNaissance}
+              this.setState({rows : [...this.state.rows, naissanceAVerifier]});
+              console.log(naissanceAVerifier);
+            }
+      
+        }
+
+        const defTableHeight = 56+52+10+Object.keys(this.state.rows).length*52;
+        this.setState({tableHeight : defTableHeight});
+        console.log(this.state.rows);
+      }
+
+    //Back
+    componentDidMount = async () => {
+        // FOR REFRESHING PAGE ONLY ONCE -
+        if(!window.location.hash){
+          window.location = window.location + '#loaded';
+          window.location.reload();
+        }
+    
+        try {
+          // Get network provider and web3 instance.
+          const web3 = await getWeb3();
+    
+          // Use web3 to get the user's accounts.
+          const accounts = await web3.eth.getAccounts();
+    
+          // Get the contract instance.
+          const networkId = await web3.eth.net.getId();
+          const deployedNetwork = CivilStateContract.networks[networkId];
+          const instance = new web3.eth.Contract(
+              CivilStateContract.abi, 
+              deployedNetwork && deployedNetwork.address,
+          );
+
+          // account[0] = default account used by metamask
+          this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
+        
+          this.contructNaissanceList();
+          
+        } catch (error) {
+          // Catch any errors for any of the above operations.
+          alert(
+            `Failed to load web3, accounts, or contract. Check console for details.`,
+          );
+          console.error(error);
+        }
+    };
+    // Back    
+
     render() { 
+        console.log(this.state.rows)
+        console.log(this.state.tableHeight)
+        const rows = this.state.rows;
+        const tableHeight = this.state.tableHeight;
+
         return ( 
             <>
             <Helmet>
