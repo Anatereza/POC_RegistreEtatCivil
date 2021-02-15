@@ -37,6 +37,7 @@ class HomepageCitoyen extends Component {
         nomFamillePere : '',
         prenomPere : '',
         infosCitoyen : [],
+        hash: '',
         ready : false
     }    
     
@@ -90,6 +91,11 @@ class HomepageCitoyen extends Component {
                         this.state.dateNaissance, this.state.communeNaissance, this.state.departementNaissance,
                         this.state.nomFamilleMere, this.state.prenomMere, this.state.nomFamillePere, this.state.prenomPere];
         this.setState({infosCitoyen : _infosCitoyen});
+        
+        // Récupération du hash pour affichage
+        const responseHash = await this.state.CivilStateInstance.methods.getHash(this.state.login).call({from : this.state.account});
+        this.setState({hash : responseHash});
+
 
     }
     // Back
@@ -181,6 +187,7 @@ class HomepageCitoyen extends Component {
                         <div style={{marginTop:"120px"}}>
                             <h4>Mon code QR</h4>
                             <img alt="..." src={GenerateQRCode()}/>
+                            <h5>{this.state.hash}</h5>
                         </div>
                     </Col>
                     <Col>
