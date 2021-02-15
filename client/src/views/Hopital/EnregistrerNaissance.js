@@ -29,7 +29,6 @@ class EnregistrerNaissance extends Component {
         fieldsValues.set("Nom d'usage","")
         fieldsValues.set("Premier prénom","")
         fieldsValues.set("Autres prénoms","")
-        fieldsValues.set("Etat civil","")
         fieldsValues.set("Date de naissance","")
         fieldsValues.set("Commune de naissance","")
         fieldsValues.set("Département de naissance","")
@@ -44,7 +43,6 @@ class EnregistrerNaissance extends Component {
         fieldsStates.set("Nom d'usage","valid")
         fieldsStates.set("Premier prénom","valid")
         fieldsStates.set("Autres prénoms","valid")
-        fieldsStates.set("Etat civil","valid")
         fieldsStates.set("Date de naissance","valid")
         fieldsStates.set("Commune de naissance","valid")
         fieldsStates.set("Département de naissance","valid")
@@ -101,13 +99,6 @@ class EnregistrerNaissance extends Component {
                     }
                 break
                 case 'Autres prénoms':
-                    if (!this.state.fieldsValues.get(element[0])){
-                        fieldsStates.set(element[0],"notValid")
-                    }else{
-                        fieldsStates.set(element[0],"valid")
-                    }
-                break
-                case 'Etat civil':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
                     }else{
@@ -206,9 +197,6 @@ class EnregistrerNaissance extends Component {
                 case 'Autres prénoms':
                     _autresPrenoms = this.state.fieldsValues.get(element[0]);
                 break
-                case 'Etat civil':
-                   // _etatCivil = this.state.fieldsValues.get(element[0]);
-                break
                 case 'Date de naissance':
                     _dateNaissance = this.state.fieldsValues.get(element[0]);
                 break
@@ -281,7 +269,12 @@ class EnregistrerNaissance extends Component {
                     `Failed to load web3, accounts, or contract. Check console for details.`,
                   );
                   console.error(error);
-                } 
+              }
+
+              console.log("Redirection homepage hopital")
+              this.props.history.push({
+                  pathname:'home-hopital'
+              })
                     
 
     }
@@ -361,10 +354,6 @@ class EnregistrerNaissance extends Component {
                         <FormGroup className={this.state.fieldsStates.get("Autres prénoms")==="notValid" && "has-danger"}>
                             <Label>Autres prénoms</Label>
                             <Input onChange={this.handleChange.bind(this, "Autres prénoms")} type="text" placeholder="Autres prénoms" />
-                        </FormGroup>
-                        <FormGroup className={this.state.fieldsStates.get("Etat civil")==="notValid" && "has-danger"}>
-                            <Label>Etat civil</Label>
-                            <Input onChange={this.handleChange.bind(this, "Etat civil")} type="text" placeholder="Etat civil" />
                         </FormGroup>
                         <Row style={{paddingTop:"30px"}}>
                             <h2 style={{color:"gray"}}>Données de naissance</h2>

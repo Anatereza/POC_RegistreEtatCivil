@@ -43,8 +43,17 @@ class HomepageCitoyen extends Component {
     constructor(props) {
         console.log("=== Homepage Citoyen ===")
         super(props)
-        console.log(this.props.location.state)
-        console.log(this.state.test)
+
+        if(!window.location.hash){
+            //const ID = this.props.location.state.ID;
+            //console.log(ID)
+            //console.log("ID");
+            //localStorage.setItem('IDLocal', ID);
+            //const _ID = localStorage.getItem('IDLocal');
+            console.log("Login")
+            console.log(this.props.location.state)
+            
+        }
         
     }
 
