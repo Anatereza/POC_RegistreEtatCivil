@@ -23,7 +23,7 @@ class HomepageCitoyen extends Component {
         CivilStateInstance: undefined,
         account: null,
         web3: null,
-        login : 'aa',
+        login : '',
         sexe : '',
         nomFamille : '',
         premierPrenom : '',
@@ -45,14 +45,8 @@ class HomepageCitoyen extends Component {
         super(props)
 
         if(!window.location.hash){
-            //const ID = this.props.location.state.ID;
-            //console.log(ID)
-            //console.log("ID");
-            //localStorage.setItem('IDLocal', ID);
-            //const _ID = localStorage.getItem('IDLocal');
-            console.log("Login")
-            console.log(this.props.location.state)
-            
+            const login = this.props.location.state;
+            localStorage.setItem('LoginLocal', login);
         }
         
     }
@@ -103,6 +97,11 @@ class HomepageCitoyen extends Component {
     // Back
     componentDidMount = async () => {
 
+        const _login = localStorage.getItem('LoginLocal');
+        console.log("login did mount")
+        console.log(_login)
+        this.setState({ login: _login});
+        
         // FOR REFRESHING PAGE ONLY ONCE -
         if(!window.location.hash){
           window.location = window.location + '#loaded';
