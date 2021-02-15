@@ -18,36 +18,59 @@ const TITLE = 'Fiche personne'
 
 class FichePersonne extends Component {
     
-    //state = this.props.location.state
-       
-    state = {
-        ID : this.props.location.state.ID,
-        URL : this.props.location.state.URL,
-        CivilStateInstance: undefined,
-        account: null,
-        web3: null,
-        login : '',
-        sexe : '',
-        nomFamille : '',
-        premierPrenom : '',
-        autresPrenoms : '',
-        etatCivil : '',
-        dateNaissance : '',
-        communeNaissance : '',
-        departementNaissance : '',
-        nomFamilleMere : '',
-        prenomMere : '',
-        nomFamillePere : '',
-        prenomPere : '',
-        infosCitoyen : [],     
-    }
-    /*
+   
     constructor(props) {
         console.log("=== FichePersonne ===")
         super(props)
+        
+        if(!window.location.hash){
+            /*const PROPS = this.props;
+            console.log(PROPS);
+            const LOCATION = PROPS.location;
+            console.log(LOCATION);
+            const STATE = LOCATION.state;
+            console.log(STATE);
+            //const ID = STATE.ID;*/
+            const ID = this.props.location.state.ID;
+            console.log(ID)
+            console.log("ID");
+            localStorage.setItem('IDLocal', ID);
+            const _ID = localStorage.getItem('IDLocal');
+            console.log("ID après localStorage")
+            console.log(_ID)
+
+            const URL = this.props.location.state.URL;
+            localStorage.setItem('URLLocal', URL);
+            //window.location = window.location + '#loaded';
+            //window.location.reload();
+        }
 
 
-    }*/
+
+        this.state = {
+            ID : '',
+            URL : '',
+            CivilStateInstance: undefined,
+            account: null,
+            web3: null,
+            login : '',
+            sexe : '',
+            nomFamille : '',
+            premierPrenom : '',
+            autresPrenoms : '',
+            etatCivil : '',
+            dateNaissance : '',
+            communeNaissance : '',
+            departementNaissance : '',
+            nomFamilleMere : '',
+            prenomMere : '',
+            nomFamillePere : '',
+            prenomPere : '',
+            infosCitoyen : [],     
+        }
+        
+
+    }
 
     
     getPerson(e){
@@ -56,9 +79,14 @@ class FichePersonne extends Component {
 
     handleClickBack(e){
         console.log("=== handleClickBack ===")
+
+        // VOIR LES ELEMENTS DU STATE NECESSAIRES
+        console.log("URL state")
+        console.log(this.state.URL)
         this.props.history.push({
             pathname:this.state.URL,
-            state : this.state
+            state : 
+             { URL : this.state.URL }
         })
     }
 
@@ -76,12 +104,42 @@ class FichePersonne extends Component {
         })
     }
 
+    handleClickValiderIdentite = async () => {
+
+        try {  
+            await this.state.CivilStateInstance.methods.verifyIdentite(this.state.login)
+                  .send({
+                      from : this.state.account,
+                      gas: 1000000
+                  })
+                  
+            alert('Identité validée');
+          } catch (error) {
+              // Catch any errors for any of the above operations.
+              alert(
+                `Failed to load web3, accounts, or contract. Check console for details.`,
+              );
+              console.error(error);
+         }
+         
+         console.log(this.state.URL)
+         this.props.history.push({
+             pathname:this.state.URL,
+             state : 
+              { URL : this.state.URL }
+         })
+    }
+
     // Back
     getInfosCitoyen = async () => {
         // Récupérer le login avec l'ID
         const responseLogin = await this.state.CivilStateInstance.methods.getLoginFromId(this.state.ID).call({from : this.state.account});
-        const _login = responseLogin[0];
+        console.log("responseLogin")
+        console.log(responseLogin)
+        const _login = responseLogin;
         this.setState({ login: _login });
+        console.log("APRES PREMIER APPEL")
+        console.log(this.state.ID)
 
         // Donnees identification citoyen
         const responseInfoIdentificationCitoyen = await this.state.CivilStateInstance.methods.getInfoIdentificationCitoyen(this.state.login).call({from : this.state.account});
@@ -92,6 +150,10 @@ class FichePersonne extends Component {
         const _autresPrenoms = responseInfoIdentificationCitoyen[4];
         const _etatCivil = responseInfoIdentificationCitoyen[5];
         this.setState({sexe : _sexe, nomFamille : _nomFamille, nomUsage : _nomUsage, premierPrenom : _premierPrenom, autresPrenoms : _autresPrenoms, etatCivil : _etatCivil});
+        console.log("local sexe")
+        console.log(_sexe)
+        console.log("state sexe")
+        console.log(this.state.sexe)
 
         // Donnees naissance citoyen
         const responseInfoNaissanceCitoyen = await this.state.CivilStateInstance.methods.getInfoNaissanceCitoyen(this.state.login).call({from : this.state.account});
@@ -118,8 +180,16 @@ class FichePersonne extends Component {
     // Back
     
     // Back
-    /*
+    
     componentDidMount = async () => {
+        //const _ID = localStorage.getItem('IDLocal');
+        //console.log("ID componentDidMount")
+        const _URL = localStorage.getItem('URLLocal');
+        const _ID = localStorage.getItem('IDLocal');
+        console.log(_ID)
+        this.setState({ ID: _ID, URL: _URL});
+
+        
         // FOR REFRESHING PAGE ONLY ONCE -
         if(!window.location.hash){
           window.location = window.location + '#loaded';
@@ -127,6 +197,9 @@ class FichePersonne extends Component {
         }
     
         try {
+
+          console.log("ID componentDidMount")
+
           // Get network provider and web3 instance.
           const web3 = await getWeb3();
     
@@ -145,7 +218,7 @@ class FichePersonne extends Component {
           this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
         
           // Récupérations des informations du citoyen
-          //this.getInfosCitoyen();          
+          this.getInfosCitoyen();          
           
         } catch (error) {
           // Catch any errors for any of the above operations.
@@ -154,13 +227,15 @@ class FichePersonne extends Component {
           );
           console.error(error);
         }
-    };
 
+        console.log("STATE")
+        console.log(this.state)
+    };
+    
     
     // Back
-    */
+    
     render() {
-        const test = ["test1", "test2"]
         console.log(this.state)
         return (
         <>  
@@ -179,13 +254,13 @@ class FichePersonne extends Component {
                 <Row style={{paddingTop:"100px"}}>     
                 {/**TODO : Changer la source des données personnes */}
                     {/*this.infosCitoyen*/} 
-                    <InfoPersonne data={this.getPerson(test)}></InfoPersonne>
+                    <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
                 </Row>
 
                 <Row style={{paddingTop:"50px"}}>
                     <Col className="col-sm-auto offset-sm-7">
                         {this.state.URL==="valider-identite" && 
-                            <Button color="info">
+                            <Button onClick={() => this.handleClickValiderIdentite()} color="info">
                                 Valider cette identité
                             </Button>
                         }
