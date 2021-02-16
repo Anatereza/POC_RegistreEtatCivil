@@ -337,7 +337,7 @@ contract CivilState {
             nomUsage : _nomUsage,
             premierPrenom : _premierPrenom,
             autresPrenoms : _autresPrenoms,
-            etatCivil : "celibataire"
+            etatCivil : "CELIBATAIRE"
         });
 
         citoyens[_login] = DonneesCitoyen({
