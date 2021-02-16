@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 - Sexe
 - Marié ? => Date de mariage, époux.se
 */
-const Person =[
+/*const Person =[
     "Montpellier", //0
     "20/01/1962", //1
     "Philipe", //2
@@ -42,24 +42,24 @@ const Person =[
     "DURAND", //4
     "Masculin", //5
     "0289 0382", //6
-];
+];*/
 
 function RandomNumber () {
     return Math.floor(Math.random() * Math.floor(9999));
 }
 
-const ActeDeNaissance = (props) => (
+const ActeDeNaissance = param => (
     <Document>
     <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-            <Text style={styles.titre}>Maire de {Person[0]}</Text>
+            <Text style={styles.titre}>Maire de {param[0]}</Text>
             <Text >Extrait d'acte de naissance</Text>
         </View>
         <View style={styles.section}>
-            <Text style={styles.body}>ANNEE {Person[1].split('/')[2]} Acte n° {RandomNumber()}</Text>
-            <Text style={styles.body}>Le {Person[1]} est né en notre commune à {Person[0]}</Text>
-            <Text style={styles.body}>{Person[2]} {Person[3]} {Person[4]} </Text>
-            <Text style={styles.body}>Du sexe {Person[5]}</Text>            
+            <Text style={styles.body}>ANNEE {param[1].split('/')[2]} Acte n° {RandomNumber()}</Text>
+            <Text style={styles.body}>Le {param[1]} est né en notre commune à {param[0]}</Text>
+            <Text style={styles.body}>{param[2]} {param[3]} {param[4]} </Text>
+            <Text style={styles.body}>Du sexe {param[5]}</Text>            
         </View>
     </Page>
   </Document>

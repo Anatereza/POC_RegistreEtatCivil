@@ -16,6 +16,16 @@ import getPerson from 'services/getPerson';
 import CivilStateContract from "../contracts/CivilState.json";
 import getWeb3 from "../getWeb3";
 
+// test
+const Person =[
+    "Salvador", //0
+    "20/01/1962", //1
+    "Philipe", //2
+    "Claude, Michel", //3
+    "DURAND", //4
+    "Masculin", //5
+    "0289 0382", //6
+];
 
 class HomepageCitoyen extends Component {
 
@@ -37,6 +47,7 @@ class HomepageCitoyen extends Component {
         nomFamillePere : '',
         prenomPere : '',
         infosCitoyen : [],
+        personnePDF: [],
         hash: '',
         ready : false
     }    
@@ -96,6 +107,16 @@ class HomepageCitoyen extends Component {
         const responseHash = await this.state.CivilStateInstance.methods.getHash(this.state.login).call({from : this.state.account});
         this.setState({hash : responseHash});
 
+        const person = [
+            this.state.communeNaissance, 
+            this.state.dateNaissance, 
+            this.state.premierPrenom, 
+            this.state.autresPrenoms,
+            this.state.nomFamille,
+            this.state.sexe,
+            "0289 0382"
+        ]
+        this.setState({personnePDF : person});
 
     }
     // Back
@@ -186,7 +207,7 @@ class HomepageCitoyen extends Component {
                         <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
                         <div style={{marginTop:"120px"}}>
                             <h4>Mon code QR</h4>
-                            <img alt="..." src={GenerateQRCode()}/>
+                            <img alt="..." src={GenerateQRCode(this.state.hash)}/>
                             <h5>{this.state.hash}</h5>
                         </div>
                     </Col>
@@ -196,7 +217,7 @@ class HomepageCitoyen extends Component {
                             <div style={{marginTop: "30px"}, {marginBottom: "30px"}} id="buttons">
                                         
                                         {ready && (
-                                            <PDFDownloadLink document={ActeDeNaissance()} fileName="ActeDeNaissance.pdf" className="btn-download-file">
+                                            <PDFDownloadLink document={ActeDeNaissance(this.state.personnePDF)} fileName="ActeDeNaissance.pdf" className="btn-download-file">
                                                 {
                                                     ({ blob, url, loading, error }) => (loading ? 'Loading Générer mon acte de naissance...' :
                                                         <Button type="button" className="btn-round ml-1 btn-download-file" color="info" onClick={() => (this.setState({ ready: false }))}>
