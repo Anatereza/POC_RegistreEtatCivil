@@ -268,8 +268,7 @@ class EnregistrerNaissance extends Component {
             const response = await this.state.CivilStateInstance.methods.getLoginIdStatut(idNaissance).call({from : this.state.account});
             _login = response[0];
             const _id = response[1];
-            //_login =  _nomFamille + _premierPrenom;
-
+            
             alert('Naissance enregistrée');
           } catch (error) {
               // Catch any errors for any of the above operations.
