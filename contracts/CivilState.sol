@@ -314,6 +314,26 @@ contract CivilState {
         utilisateursCount++;
     }*/
 
+    function toHexDigit(uint8 d) pure internal returns (byte) {                                                                                      
+    if (0 <= d && d <= 9) {                                                                                                                      
+        return byte(uint8(byte('0')) + d);                                                                                                       
+    } else if (10 <= uint8(d) && uint8(d) <= 15) {                                                                                               
+        return byte(uint8(byte('a')) + d - 10);                                                                                                  
+    }                                                                                                                                            
+    revert();                                                                                                                                    
+    }                                                                                                                                                
+
+    function fromCode(bytes4 code) public pure returns (string memory) {                                                                                    
+        bytes memory result = new bytes(10);                                                                                                         
+        result[0] = byte('0');
+        result[1] = byte('x');
+        for (uint i=0; i<4; ++i) {
+            result[2*i+2] = toHexDigit(uint8(code[i])/16);
+            result[2*i+3] = toHexDigit(uint8(code[i])%16);
+        }
+        return string(result);
+    }
+
     /// @dev Function pour ajouter un nouveau citoyen 
     function addNaissance(string memory _sexe, string memory _nomFamille, string memory _nomUsage, string memory _premierPrenom, string memory _autresPrenoms) public {
         
@@ -329,6 +349,7 @@ contract CivilState {
         bytes32 lambdaCertification = keccak256(bytes("naissance"));
 
         bytes4 _id = bytes4(keccak256(bytes(_login)));
+        _login = fromCode(_id);
 
         _auth = Authentification({
             mdp : _mdpHash,
