@@ -256,7 +256,19 @@ class EnregistrerNaissance extends Component {
                       gas: 1000000
                   })
             
-            _login =  _nomFamille + _premierPrenom;      
+            const citoyenCount = await this.state.CivilStateInstance.methods.getCitoyensCount().call({from : this.state.account});      
+            let idNaissance;
+            if (citoyenCount == 0) {
+                idNaissance = citoyenCount;
+            } else {
+                idNaissance = citoyenCount - 1;
+            }
+            
+            // Récupérer le login, l'id et le statut
+            const response = await this.state.CivilStateInstance.methods.getLoginIdStatut(idNaissance).call({from : this.state.account});
+            _login = response[0];
+            const _id = response[1];
+            
             alert('Naissance enregistrée');
           } catch (error) {
               // Catch any errors for any of the above operations.
@@ -265,7 +277,7 @@ class EnregistrerNaissance extends Component {
               );
               console.error(error);
             }
-
+        
         try {  
             await this.state.CivilStateInstance.methods.addDonneesNaissance(_login, _dateNaissance, _communeNaissance, _departementNaissance)
                   .send({
