@@ -18,19 +18,19 @@ class InfoPersonne extends Component {
                     <h2 style={{color:"gray"}}>Données d’identification</h2>
                 </Row>
                 <Row style={{marginLeft:"30px"}}>
-                    <SimpleTable data={this.props.data.slice(0,6)}/>                  
+                    <SimpleTable data={this.props.data.slice(0,7)}/>                  
                 </Row>
                 <Row style={{paddingTop:"30px"}}>
                     <h2 style={{color:"gray"}}>Données de naissance</h2>
                 </Row>
                 <Row style={{marginLeft:"30px"}}>
-                    <SimpleTable data={this.props.data.slice(6,9)}/>
+                    <SimpleTable data={this.props.data.slice(7,10)}/>
                 </Row>
                 <Row style={{paddingTop:"30px"}}>
                     <h2 style={{color:"gray"}}>Parents</h2>
                 </Row>
                 <Row style={{marginLeft:"30px"}}> 
-                    <SimpleTable data={this.props.data.slice(9,13)}/>
+                    <SimpleTable data={this.props.data.slice(10,14)}/>
                  </Row>
             </div>
             </>

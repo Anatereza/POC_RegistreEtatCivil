@@ -22,7 +22,7 @@ import ErrorMessage from 'components/ErrorMessage';
 const TITLE = 'Préfecture - Valider une identité'
 
   const columns = [
-    { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>ID</div>, width: 160 },  
+    { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>Numéro d’identification unique</div>, width: 270 },  
     { field: 'nom', headerName: <div style={{fontWeight:"bold"}}>Nom</div>, width: 160 },
     { field: 'prenom', headerName: <div style={{fontWeight:"bold"}}>Prénom</div>, width: 160 },
     { field: 'sexe', headerName: <div style={{fontWeight:"bold"}}>Sexe</div>, width: 130,},

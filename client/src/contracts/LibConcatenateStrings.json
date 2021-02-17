@@ -39,14 +39,14 @@
     "absolutePath": "/C/Users/anatereza.mascarenha/Documents/POC Etat Civil/contracts/LibConcatenateStrings.sol",
     "exportedSymbols": {
       "LibConcatenateStrings": [
-        2003
+        2049
       ]
     },
-    "id": 2004,
+    "id": 2050,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1984,
+        "id": 2030,
         "literals": [
           "solidity",
           ">=",
@@ -65,16 +65,16 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 2003,
+        "id": 2049,
         "linearizedBaseContracts": [
-          2003
+          2049
         ],
         "name": "LibConcatenateStrings",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 2001,
+              "id": 2047,
               "nodeType": "Block",
               "src": "241:56:2",
               "statements": [
@@ -87,11 +87,11 @@
                         "arguments": [
                           {
                             "argumentTypes": null,
-                            "id": 1996,
+                            "id": 2042,
                             "name": "a",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1986,
+                            "referencedDeclaration": 2032,
                             "src": "283:1:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_string_memory_ptr",
@@ -100,11 +100,11 @@
                           },
                           {
                             "argumentTypes": null,
-                            "id": 1997,
+                            "id": 2043,
                             "name": "b",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1988,
+                            "referencedDeclaration": 2034,
                             "src": "286:1:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_string_memory_ptr",
@@ -125,18 +125,18 @@
                           ],
                           "expression": {
                             "argumentTypes": null,
-                            "id": 1994,
+                            "id": 2040,
                             "name": "abi",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 2322,
+                            "referencedDeclaration": 2368,
                             "src": "266:3:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_abi",
                               "typeString": "abi"
                             }
                           },
-                          "id": 1995,
+                          "id": 2041,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -150,7 +150,7 @@
                             "typeString": "function () pure returns (bytes memory)"
                           }
                         },
-                        "id": 1998,
+                        "id": 2044,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -172,7 +172,7 @@
                           "typeString": "bytes memory"
                         }
                       ],
-                      "id": 1993,
+                      "id": 2039,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -185,7 +185,7 @@
                       },
                       "typeName": "string"
                     },
-                    "id": 1999,
+                    "id": 2045,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -199,30 +199,30 @@
                       "typeString": "string memory"
                     }
                   },
-                  "functionReturnParameters": 1992,
-                  "id": 2000,
+                  "functionReturnParameters": 2038,
+                  "id": 2046,
                   "nodeType": "Return",
                   "src": "252:37:2"
                 }
               ]
             },
             "documentation": null,
-            "id": 2002,
+            "id": 2048,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "concatenate",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1989,
+              "id": 2035,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1986,
+                  "id": 2032,
                   "name": "a",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2002,
+                  "scope": 2048,
                   "src": "171:15:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -231,7 +231,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1985,
+                    "id": 2031,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "171:6:2",
@@ -245,10 +245,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1988,
+                  "id": 2034,
                   "name": "b",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2002,
+                  "scope": 2048,
                   "src": "188:16:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -257,7 +257,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1987,
+                    "id": 2033,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "188:6:2",
@@ -273,15 +273,15 @@
               "src": "170:35:2"
             },
             "returnParameters": {
-              "id": 1992,
+              "id": 2038,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1991,
+                  "id": 2037,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2002,
+                  "scope": 2048,
                   "src": "226:13:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -290,7 +290,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1990,
+                    "id": 2036,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "226:6:2",
@@ -305,14 +305,14 @@
               ],
               "src": "225:15:2"
             },
-            "scope": 2003,
+            "scope": 2049,
             "src": "150:147:2",
             "stateMutability": "pure",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2004,
+        "scope": 2050,
         "src": "69:231:2"
       }
     ],
@@ -322,14 +322,14 @@
     "absolutePath": "/C/Users/anatereza.mascarenha/Documents/POC Etat Civil/contracts/LibConcatenateStrings.sol",
     "exportedSymbols": {
       "LibConcatenateStrings": [
-        2003
+        2049
       ]
     },
-    "id": 2004,
+    "id": 2050,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1984,
+        "id": 2030,
         "literals": [
           "solidity",
           ">=",
@@ -348,16 +348,16 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 2003,
+        "id": 2049,
         "linearizedBaseContracts": [
-          2003
+          2049
         ],
         "name": "LibConcatenateStrings",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 2001,
+              "id": 2047,
               "nodeType": "Block",
               "src": "241:56:2",
               "statements": [
@@ -370,11 +370,11 @@
                         "arguments": [
                           {
                             "argumentTypes": null,
-                            "id": 1996,
+                            "id": 2042,
                             "name": "a",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1986,
+                            "referencedDeclaration": 2032,
                             "src": "283:1:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_string_memory_ptr",
@@ -383,11 +383,11 @@
                           },
                           {
                             "argumentTypes": null,
-                            "id": 1997,
+                            "id": 2043,
                             "name": "b",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1988,
+                            "referencedDeclaration": 2034,
                             "src": "286:1:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_string_memory_ptr",
@@ -408,18 +408,18 @@
                           ],
                           "expression": {
                             "argumentTypes": null,
-                            "id": 1994,
+                            "id": 2040,
                             "name": "abi",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 2322,
+                            "referencedDeclaration": 2368,
                             "src": "266:3:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_abi",
                               "typeString": "abi"
                             }
                           },
-                          "id": 1995,
+                          "id": 2041,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -433,7 +433,7 @@
                             "typeString": "function () pure returns (bytes memory)"
                           }
                         },
-                        "id": 1998,
+                        "id": 2044,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -455,7 +455,7 @@
                           "typeString": "bytes memory"
                         }
                       ],
-                      "id": 1993,
+                      "id": 2039,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -468,7 +468,7 @@
                       },
                       "typeName": "string"
                     },
-                    "id": 1999,
+                    "id": 2045,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -482,30 +482,30 @@
                       "typeString": "string memory"
                     }
                   },
-                  "functionReturnParameters": 1992,
-                  "id": 2000,
+                  "functionReturnParameters": 2038,
+                  "id": 2046,
                   "nodeType": "Return",
                   "src": "252:37:2"
                 }
               ]
             },
             "documentation": null,
-            "id": 2002,
+            "id": 2048,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "concatenate",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1989,
+              "id": 2035,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1986,
+                  "id": 2032,
                   "name": "a",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2002,
+                  "scope": 2048,
                   "src": "171:15:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -514,7 +514,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1985,
+                    "id": 2031,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "171:6:2",
@@ -528,10 +528,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1988,
+                  "id": 2034,
                   "name": "b",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2002,
+                  "scope": 2048,
                   "src": "188:16:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -540,7 +540,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1987,
+                    "id": 2033,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "188:6:2",
@@ -556,15 +556,15 @@
               "src": "170:35:2"
             },
             "returnParameters": {
-              "id": 1992,
+              "id": 2038,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1991,
+                  "id": 2037,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2002,
+                  "scope": 2048,
                   "src": "226:13:2",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -573,7 +573,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 1990,
+                    "id": 2036,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "226:6:2",
@@ -588,14 +588,14 @@
               ],
               "src": "225:15:2"
             },
-            "scope": 2003,
+            "scope": 2049,
             "src": "150:147:2",
             "stateMutability": "pure",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2004,
+        "scope": 2050,
         "src": "69:231:2"
       }
     ],
@@ -606,45 +606,21 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {
-    "1612887039759": {
+    "1613568457352": {
       "events": {},
       "links": {},
-      "address": "0xd41Ac24c5200A44E178354df667349Ca6714834B",
-      "transactionHash": "0x1ebd4c9c4aa10f16532b68ad4fc68fa27777e8abca3acd7bbc1fe4d0703f1bfc"
+      "address": "0xd8EacA7a98Baef52D22d45f17d4582180F154C2C",
+      "transactionHash": "0x1c77876098868676ec109ce9a6cfd9fca5485f74b299f9d37900ecdf28a826b3"
     },
-    "1613121630229": {
+    "1613580537836": {
       "events": {},
       "links": {},
-      "address": "0x20f22C986c9Ca75Ac6ceF3C4E6394034Fa339D46",
-      "transactionHash": "0xcabcdaf86c46e4eabdddb6872104914624d5ed942811bf88d6f2966f56bf5121"
-    },
-    "1613138151350": {
-      "events": {},
-      "links": {},
-      "address": "0x8ceaE67eA8d5DD7Df25DF5E6A8F9E9903f62d477",
-      "transactionHash": "0x3180b04a5f2de6b05cc726650a2edfbdc3699d97b06aca4439d8e32b3451700a"
-    },
-    "1613235114225": {
-      "events": {},
-      "links": {},
-      "address": "0x31Df68ec3e9bbb03bAa87A21A7275C25d836F289",
-      "transactionHash": "0x752834b9e1073e1a67d1fec143f313218d2e5f727460186b1c4a4318b042a2f3"
-    },
-    "1613397388287": {
-      "events": {},
-      "links": {},
-      "address": "0x2B4D556f0f302034D15e843999d1F001F3D3fA4a",
-      "transactionHash": "0xc2437da3a8034205e1dd8b42756183dda5cd34652289a977f7431be587e9a3d6"
-    },
-    "1613467246735": {
-      "events": {},
-      "links": {},
-      "address": "0xF0789918AbA3c12B23389441f5b865A70F4d6765",
-      "transactionHash": "0x8c27a38fa143abb84f3afa2e5784d71d651d575f86409d42b1f840a0959f2bd4"
+      "address": "0xE151bE0076676A8B3809FA443714D904cda67132",
+      "transactionHash": "0x534dcd4b83cf4b8783f4681f91f98827ac22a17cf22dabbeb67ca01892e87ef7"
     }
   },
   "schemaVersion": "3.0.22",
-  "updatedAt": "2021-02-16T09:22:20.230Z",
+  "updatedAt": "2021-02-17T16:50:49.588Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

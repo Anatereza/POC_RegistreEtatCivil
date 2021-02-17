@@ -193,6 +193,10 @@ contract CivilState {
         _login = idLogins[_id];
     }
 
+    function getIdFromLogin(string memory _login) public view returns (bytes4 _id) {
+        _id = citoyens[_login].id;
+    }
+
     /// @dev Gets the hospital members count.
     /// @return utilisateursHopital Membres hopital count.
     function getUtilisateursHopitalCount() public view returns(uint){
@@ -439,6 +443,14 @@ contract CivilState {
     /// @dev Vérifier un hash
     function verifyCertification (bytes32 id_hash) public view returns (string memory _login) {
         _login =  hashCertifications[id_hash];
+    }
+
+    /// @dev Déclarer mariage
+    function declareMariage(string memory _login, string memory _etatCivil) public {
+        DonneesIdentificationCitoyen memory _donneesIdentCitoyen;
+        _donneesIdentCitoyen = citoyens[_login].donneesIdentCitoyen;
+        _donneesIdentCitoyen.etatCivil = _etatCivil;
+        citoyens[_login].donneesIdentCitoyen = _donneesIdentCitoyen;
     }
 
 }

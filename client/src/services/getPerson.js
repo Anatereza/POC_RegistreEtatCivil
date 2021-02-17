@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 const getPerson = param => {    
 
     const result = [
+        { name: "Numéro d’identification unique", price: param[13]},
         { name: "Sexe", price: param[0]},
         { name: "Nom de famille", price: param[1]},
         { name: "Nom d’usage", price: param[2]},
