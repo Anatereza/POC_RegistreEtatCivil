@@ -61,6 +61,8 @@ class HomepageCitoyen extends Component {
             localStorage.setItem('LoginLocal', login);
         }
         
+
+
     }
 
     // Back 
@@ -209,11 +211,23 @@ class HomepageCitoyen extends Component {
                 <Row style={{paddingTop:"100px"}}>
                     <Col style={{paddingLeft: "60px"}, {textAlign:"center"}} md={{ size: 9, offset: 0 }}>
                         <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
-                        <div style={{marginTop:"120px"}}>
-                            <h4>Mon code QR</h4>
-                            <img alt="..." src={GenerateQRCode(this.state.hash)}/>
-                            <h5>{this.state.hash}</h5>
-                        </div>
+                        <Row style={{paddingTop:"50px"}} className="text-left">
+                            <Col className="col-sm-4">
+                                <h4>Mon code QR</h4>
+                            </Col>
+                            <Col className="col-6">
+                                <img alt="..." src={GenerateQRCode(this.state.hash)}/>
+                            </Col>
+                        </Row>
+                        <Row style={{paddingTop:"20px"}} className="text-left">
+                            <Col className="col-sm-4">
+                                <h4>Ma clé de sécurité</h4>
+                            </Col>
+                            <Col className="col-sm-3">
+                                <div style={{wordWrap:"break-word"}}>{this.state.hash}</div>
+                            </Col>
+                        </Row>
+                        
                     </Col>
                     <Col>
                         <Row style={{display:"flex"}, {flexDirection:"column"}, {justifyContent:"center"}}>
