@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import InfoPersonne from "components/InfoPersonne"
 import ActeDeNaissance from "components/GeneratePDF"
 import { PDFDownloadLink } from '@react-pdf/renderer'
+import logoHomeCitoyen from 'assets/img/icon_homepage_citizen.jpg'
 
 import {
     Button,
@@ -197,13 +198,11 @@ class HomepageCitoyen extends Component {
             );
         }        
 
-        
-
         return (
             <Container className="body-container">
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
-                        <img style={{width:"80px"}} alt="..." src={require("assets/img/icon_homepage_citizen.jpg")}/>
+                        <img style={{width:"80px"}} alt="..." src={logoHomeCitoyen}/>
                         <h1 className="ml-4" style={{color:"gray"}}>MES INFORMATIONS PERSONNELLES</h1>
                     </div>
                 </Row>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Helmet } from 'react-helmet'
+import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png'
+import imageRechercher from 'assets/img/IconesAccueils/Rechercher.png'
 import {
     Container,
     Row,
@@ -32,7 +34,7 @@ class AccueilHopital extends Component {
                             <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/IconesAccueils/Ajouter.png")}
+                            src={imageAjouter}
                             />
                             <p style ={{fontWeight:"bold"}} className="text-center ct-blue">Enregistrer une nouvelle naissance</p>
                         </Link> 
@@ -42,7 +44,7 @@ class AccueilHopital extends Component {
                             <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/IconesAccueils/Rechercher.png")}
+                            src={imageRechercher}
                             />
                             <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Rechercher une naissance</p>
                         </div>

@@ -17,13 +17,12 @@
 
 */
 import React from "react";
-
+import imageCarroussel1 from 'assets/img/carroussel1.jpg'
+import imageCarroussel2 from 'assets/img/carroussel2.jpg'
+import imageCarroussel3 from 'assets/img/carroussel3.jpg'
 // reactstrap components
 import {
   Card,
-  Container,
-  Row,
-  Col,
   Carousel,
   CarouselItem,
   CarouselIndicators,
@@ -34,7 +33,7 @@ import {
 
 const items = [
   {
-    src: require("assets/img/carroussel1.jpg"),
+    src: imageCarroussel1,
     altText: "Somewhere",
     caption: 
     <div style={{textAlign:"left"}}>
@@ -49,7 +48,7 @@ const items = [
       </div>,
   },
   {
-    src: require("assets/img/carroussel2.jpg"),
+    src: imageCarroussel2,
     altText: "Somewhere else",
     caption: <div style={{textAlign:"left"}}>
     <h1>Vos actes numériques certifiés sans attendre</h1> 
@@ -57,7 +56,7 @@ const items = [
     </div>,
   },
   {
-    src: require("assets/img/carroussel3.jpg"),
+    src: imageCarroussel3,
     altText: "Here it is",
     caption: 
     <div style={{textAlign:"left"}}>

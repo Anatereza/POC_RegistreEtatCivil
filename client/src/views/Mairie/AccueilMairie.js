@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet'
 import { Link } from "react-router-dom";
+import imageMariage from 'assets/img/IconesAccueils/Mariage.png';
+import imagePACS from 'assets/img/IconesAccueils/PACS.png';
+import imageDivorce from 'assets/img/IconesAccueils/Divorce.png';
+
 import {
     Container,
     Row,
@@ -32,7 +36,7 @@ class AccueilMairie extends Component {
                                 <img
                                 alt="..."
                                 className="img-circle img-no-padding img-responsive"
-                                src={require("assets/img/IconesAccueils/Mariage.png")}
+                                src={imageMariage}
                                 />
                                 <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Déclarer un mariage</p>
                             </Link>
@@ -41,7 +45,7 @@ class AccueilMairie extends Component {
                             <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/IconesAccueils/Divorce.png")}
+                            src={imageDivorce}
                             />
                             <p style ={{fontWeight:"bold"}} className="text-center ct-blue">Déclarer un divorce</p>
                         </Col>
@@ -49,7 +53,7 @@ class AccueilMairie extends Component {
                             <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/IconesAccueils/PACS.png")}
+                            src={imagePACS}
                             />
                             <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Déclarer un PACS</p>
                         </Col>

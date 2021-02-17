@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
+import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png'
 
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
@@ -364,7 +365,7 @@ class EnregistrerNaissance extends Component {
             <Container>
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
-                        <img style={{width:"80px"}} alt="..." src={require("assets/img/IconesAccueils/Ajouter.png")}/>
+                        <img style={{width:"80px"}} alt="..." src={imageAjouter}/>
                         <h1 className="ml-4" style={{color:"gray"}}>Enregistrer une naissance</h1>
                     </div>
                 </Row>

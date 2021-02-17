@@ -19,12 +19,14 @@ import AccueilHopital from "views/Hopital/AccueilHopital";
 import EnregistrerNaissance from "views/Hopital/EnregistrerNaissance";
 import ValiderIdentité from "views/Préfecture/ValiderIdentité"
 import DeclarerMariage from "views/Mairie/DeclarerMariage";
+import HomepageHeader from 'components/Headers/HomepageHeader'
 
 function App() {
   return (
     <Router>
       <div className="App">
       <Navbar/>
+      <HomepageHeader/>
         <Switch>
           <Route path="/" exact component={PageAdmin} />
           <Route path="/hopital" component={Hopital} />

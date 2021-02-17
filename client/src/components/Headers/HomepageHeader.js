@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import { Button, Container } from "reactstrap";
+import { Container } from "reactstrap";
 import "assets/css/paper-kit.css"
-import {
-    Row,
-    Col,
-  } from "reactstrap";
+import logoCoteIvoire from 'assets/img/logo_cote_ivoire.png'
+import logoQuestion from 'assets/img/question.png'
+
 class HomepageHeader extends Component {
     state = {  }
+    constructor(props){
+        super(props);}
     render() { 
+        console.log(this.props)
         return (
             <>
             <div className="page-header">
                 <Container>
                     <div className="container-logo-header">
                         <div className="element-logo-header"> 
-                        <img alt="..." src={require("assets/img/logo_cote_ivoire.png")} />
+                        <img alt="..." src={logoCoteIvoire} />
                         </div>
                         <div className="element-logo-header"> 
                                 <div style={{fontWeight:"bold"}, {color:"#fbc658"}}>WWW.GOUV.CI/ETATSCIVILS <br/></div>
@@ -23,7 +25,7 @@ class HomepageHeader extends Component {
                         </div>
                         <div className="element-logo-header"> 
                             <span >
-                                <img style={{width:"50px"}} alt="..." src={require("assets/img/question.png")} />
+                                <img style={{width:"50px"}} alt="..." src={logoQuestion} />
                                 <div>Une question ?</div>
                             </span>
                         </div>

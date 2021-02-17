@@ -3,7 +3,8 @@ import  { Component } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { Helmet } from 'react-helmet';
 import ErrorMessage from 'components/ErrorMessage';
-import SimpleTable from 'components/SimpleTable'
+import SimpleTable from 'components/SimpleTable';
+import image from 'assets/img/IconesAccueils/Valider.png'
 
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
@@ -488,7 +489,7 @@ class DeclarerMariage extends Component {
             <Container className="body-container">
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
-                        <img style={{width:"80px"}} alt="..." src={require("assets/img/IconesAccueils/Valider.png")}/>
+                        <img style={{width:"80px"}} alt="..." src={image}/>
                         <h1 className="ml-4" style={{color:"gray"}}>Déclarer un mariage</h1>
                     </div>
                 </Row>

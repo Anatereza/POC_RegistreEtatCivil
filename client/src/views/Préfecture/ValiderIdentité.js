@@ -2,6 +2,7 @@ import * as React from 'react';
 import  { Component } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { Helmet } from 'react-helmet'
+import imageValider from 'assets/img/IconesAccueils/Valider.png'
 
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
@@ -10,12 +11,6 @@ import getWeb3 from "../../getWeb3";
 import {
     Container,
     Row,
-    Col,
-    Form,
-    Button,
-    Input,
-    FormGroup,
-    Label,
   } from "reactstrap";
 import ErrorMessage from 'components/ErrorMessage';
 
@@ -146,7 +141,7 @@ class ValiderIdentité extends Component {
             <Container className="body-container">
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
-                        <img style={{width:"80px"}} alt="..." src={require("assets/img/IconesAccueils/Valider.png")}/>
+                        <img style={{width:"80px"}} alt="..." src={imageValider}/>
                         <h1 className="ml-4" style={{color:"gray"}}>Valider une identité</h1>
                     </div>
                 </Row>

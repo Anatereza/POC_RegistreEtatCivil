@@ -121,7 +121,7 @@ class HomepagePublique extends Component {
     render() { 
         return (
             <>
-            <HomepageHeader/>
+            {/*<HomepageHeader/>*/}
             <Container className="body-container"> 
                 <div style={{height:"60px"}}/>
                 <Row>

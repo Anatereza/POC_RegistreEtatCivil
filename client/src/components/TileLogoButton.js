@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import logoConnexion from 'assets/img/icone_connexion.jpg'
+import logoVerification from 'assets/img/icone_verification.jpg'
 
 class TileLogoButton extends Component {
     state = {  }
@@ -7,7 +9,7 @@ class TileLogoButton extends Component {
         return (
             <div className="container-tile" style={this.props.type==="connexion" ? {borderColor:"#51bcda"} : {borderColor:"#6bd098"}}>
                 <div>
-                    <img className="img-tile" alt="..." src={this.props.type==="connexion" ? require("assets/img/icone_connexion.jpg") : require("assets/img/icone_verification.jpg")} />
+                    <img className="img-tile" alt="..." src={this.props.type==="connexion" ? logoConnexion : logoVerification} />
                 </div>
                 <div className="container-content-tile">
                         <h2 className={this.props.type==="connexion" ? "ct-azure" : "ct-green"}>{this.props.titre}</h2>

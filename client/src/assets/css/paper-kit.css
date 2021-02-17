@@ -8902,41 +8902,40 @@ td.rdtYear:hover {
 }
 
 .element-menu-navbar:nth-child(1) {
-	border-bottom-color: rgb(214, 78, 15);
-	color: white;
+	border-bottom-color: #0b6ba8;
+	color: #0b6ba8;
 	font-weight: bold;
-	background-color: rgb(214, 78, 15);
-	/*border-bottom-style: solid;*/
-	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-width: 4px;
 }
 
 .element-menu-navbar:nth-child(2) {
-	border-bottom-color: rgb(15, 214, 187);
-	color: rgb(15, 214, 187);
+	border-bottom-color: #a63950;
+	color: #a63950;
 	border-bottom-style: solid;
 	border-bottom-width: 2px;
 }
 
 .element-menu-navbar:nth-child(2):hover {
-	background-color: rgb(15, 214, 187);
-	color: white;
+	font-weight: bold;
+	border-bottom-width: 4px;
 }
 
 .element-menu-navbar:nth-child(3) {
-	border-bottom-color: rgb(85, 15, 214);
-	color: rgb(85, 15, 214);
+	border-bottom-color: #0c7b38;
+	color: #0c7b38;
 	border-bottom-style: solid;
 	border-bottom-width: 2px;
 }
 
 .element-menu-navbar:nth-child(3):hover {
-	background-color: rgb(85, 15, 214);
-	color: white;
+	font-weight: bold;
+	border-bottom-width: 4px;
 }
 
 .element-menu-navbar:nth-child(4) {
-	border-bottom-color: rgb(184, 171, 0);
-	color: rgb(184, 171, 0);
+	border-bottom-color: #fbbc05;
+	color: #fbbc05;
 	border-bottom-style: solid;
 	border-bottom-width: 2px;
 	border-right-color: white;
@@ -8944,8 +8943,8 @@ td.rdtYear:hover {
 }
 
 .element-menu-navbar:nth-child(4):hover {
-	background-color: rgb(214, 203, 52);
-	color: white;
+	font-weight: bold;
+	border-bottom-width: 4px;
 }
 
 .connexion-navbar {

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet'
 import { Link } from "react-router-dom";
+import imageValider from 'assets/img/IconesAccueils/Valider.png'
+import imageRechercher from 'assets/img/IconesAccueils/Rechercher.png'
 import {
     Container,
     Row,
@@ -31,7 +33,7 @@ class AccueilPrefecture extends Component {
                                 <img
                                 alt="..."
                                 className="img-circle img-no-padding img-responsive"
-                                src={require("assets/img/IconesAccueils/Valider.png")}
+                                src={imageValider}
                                 />
                                 <p style ={{fontWeight:"bold"}} className="text-center ct-blue">Valider une identité</p>
                             </Link>
@@ -40,7 +42,7 @@ class AccueilPrefecture extends Component {
                             <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={require("assets/img/IconesAccueils/Rechercher.png")}
+                            src={imageRechercher}
                             />
                             <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Rechercher une identité</p>
                         </Col>
