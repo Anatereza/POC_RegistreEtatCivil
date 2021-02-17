@@ -34,7 +34,8 @@ class ComponentVérificationID extends Component {
         account: null,
         web3: null,
         login: '',
-        infosCitoyen: []
+        infosCitoyen: [],
+        hashFieldHasChanged:false,
       }
 
     constructor(props) {
@@ -48,27 +49,38 @@ class ComponentVérificationID extends Component {
     checkHash(hash){
         //TODO : Définir le format du return 
         console.log("=== checkHash ===")
-        
-        this.verifyHash();
-
-        console.log(this.state.login);
-        
         let hashVerified;
-        const _infosCitoyen = localStorage.getItem('infoCitoyenLocal');
-        const login = localStorage.getItem('LoginLocal');
-        console.log("local login")
+        let _infosCitoyen = []
+        let login = ""
+
+        //hashVerified = this.verifyHash();
+
+        this.verifyHash(function(){console.log("hashVerified : " + hashVerified)})
+
+        
+        if (hashVerified){
+            _infosCitoyen = localStorage.getItem('infoCitoyenLocal');
+            login = localStorage.getItem('LoginLocal');
+            this.setState({hashIsOk: true}, function () {console.log("** hashIsOk = true **");})
+        } else {
+
+            this.setState({hashIsOk: false}, function () {console.log("** hashIsOk = false **");})
+        }
+        
+
+        /*console.log("local login")
         console.log(login)
         console.log("local citoyen")
-        console.log(_infosCitoyen)
+        console.log(_infosCitoyen)*/
 
         //const boolLogin = login.isEmpty();
         //console.log(boolLogin);
 
-        if (login === '') {
+        /*if (login === '') {
             hashVerified = false;
         } else {
             hashVerified = true;
-        }
+        }*/
 
         if (hashVerified) {
             this.setState({hashIsOk: true})
@@ -84,14 +96,11 @@ class ComponentVérificationID extends Component {
 
     updateState(){
         console.log("=== updateSate ===")      
-        console.log("hashIsOK :")
-        console.log(this.state.hashIsOk)
+
         if (this.state.hashSent) {
             if (this.state.hashIsOk) {
-                console.log("HashOK")
                 this.setState(() => ({stateComponent:"HashOK"}))
             } else {
-                console.log("HashKO")
                 this.setState(() => ({stateComponent:"HashKO"}))
             }
         }
@@ -100,21 +109,37 @@ class ComponentVérificationID extends Component {
     handleSubmit(e){
         e.preventDefault()
         console.log("=== handleSubmit ===")
+
+        if(this.state.hashFieldHasChanged===false && this.props.defaultHash!=="loaded"){
+            this.setState({fieldValue: this.props.defaultHash}, function(){console.log(this.state.fieldValue);})
+        }
+        console.log("1");
+
         if (this.state.fieldValue){
+            console.log("2");
             //Recopie dans sentHash la valeur de fieldValue (qui est mise à jour on change) 
             //Lorsque c'est fait, appel de la fonction de check du hash contenu dans sentHash dans la BC
             this.setState({sentHash: this.state.fieldValue}, function() {this.checkHash(this.state.sentHash)})
             //this.setState({sentHash: this.state.fieldValue})
         }
-
-        //this.verifyHash();
-
-        
+        //this.verifyHash();     
     }
 
     handleInputChange(e){
         console.log("=== handleInputChange ===")
         this.setState({fieldValue: e.target.value})
+        this.setState({hashFieldHasChanged:true})
+    }
+
+    defineInputValue(){
+
+        if(this.state.hashFieldHasChanged){
+            //return e.target.value
+        } else {
+            if (this.props.defaultHash!=="loaded"){
+                return this.props.defaultHash
+            }
+        }
     }
 
     handleClick(e){
@@ -128,7 +153,7 @@ class ComponentVérificationID extends Component {
     }
 
     verifyHash = async () => {
-
+        console.log("=== verifyHash ===");
         try {
             // Récupération du hash pour affichage
             const responseLogin = await this.state.CivilStateInstance.methods.verifyCertification(this.state.sentHash).call({from : this.state.account});
@@ -166,17 +191,15 @@ class ComponentVérificationID extends Component {
                             _dateNaissance, _communeNaissance, _departementNaissance,
                             _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere];
             this.setState({infosCitoyen : _infosCitoyen});        
-            console.log("infos citoyen did mount")
-            console.log(this.state.infosCitoyen)
             localStorage.setItem('infoCitoyenLocal', _infosCitoyen);
+            return (true)
         } catch (error) {
             
           this.setState({hashIsOk: false})
           this.setState({hashSent: true}, function() {this.updateState()})
-          alert(
-            `Impossible de vérifier ce hash`,
-          );
+          //alert(`Impossible de vérifier ce hash`,);
           console.error(error);
+          return (false)
         }
     }    
 
@@ -220,13 +243,11 @@ class ComponentVérificationID extends Component {
 
     render() {
 
-        console.log(this.state)
-
         return (
             <div style={{width:"100%"}}>
                 <Form style={{marginBottom:"70px"}} onSubmit={e=> {this.handleSubmit(e)}}>
                     <FormGroup className="container-input-hash">
-                        <Input className="element-input-hash" placeholder="Hash" value={this.props.defaultHash} type="text" onChange={e=> {this.handleInputChange(e)}}/>
+                        <Input className="element-input-hash" placeholder="Hash" value={this.defineInputValue()} type="text" onChange={e=> {this.handleInputChange(e)}}/>
                         <Button className="element-input-hash" color="info" type="submit" onClickVerifier={()=>{this.handleClickVerifier()}}>
                             Vérifier
                         </Button>

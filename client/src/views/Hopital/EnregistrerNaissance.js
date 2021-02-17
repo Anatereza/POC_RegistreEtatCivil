@@ -24,7 +24,7 @@ class EnregistrerNaissance extends Component {
         super(props);
 
         const fieldsValues = new Map();
-        fieldsValues.set("Sexe","")
+        fieldsValues.set("Sexe","Féminin")
         fieldsValues.set("Nom de famille","")
         fieldsValues.set("Nom d'usage","")
         fieldsValues.set("Premier prénom","")
@@ -56,17 +56,23 @@ class EnregistrerNaissance extends Component {
             account: null,
             web3: null,
             fieldsStates: fieldsStates,
-            fieldsValues: fieldsValues
+            fieldsValues: fieldsValues,
+            formIsOK: true,
         }
      }
 
      handleChange(field, e){         
         let fieldsValues = this.state.fieldsValues
         fieldsValues.set(field,e.target.value)
+
+        let fieldsStates = this.state.fieldsStates
+        fieldsStates.set(field,false)
+
         this.setState({fieldsValues});
     }
 
     handleSubmit(e) {
+        this.setState({formIsOK:true})
         let fieldsStates = this.state.fieldsStates
         let fieldsValues = this.state.fieldsValues
         e.preventDefault()
@@ -75,11 +81,13 @@ class EnregistrerNaissance extends Component {
                 case 'Sexe':
                     if (!fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }
                 break
                 case 'Nom de famille':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -87,6 +95,7 @@ class EnregistrerNaissance extends Component {
                 case "Nom d'usage":
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -94,6 +103,7 @@ class EnregistrerNaissance extends Component {
                 case 'Premier prénom':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -101,15 +111,17 @@ class EnregistrerNaissance extends Component {
                 case 'Autres prénoms':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
                 break
                 case 'Date de naissance':
-                    const date = new Date('2021-02-09')
-                    const aujourdhui = date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0"+(date.getDate()+1)).slice(-2)
+                    const date = new Date()
+                    const aujourdhui = date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0"+(date.getDate())).slice(-2)
                     if (!this.state.fieldsValues.get(element[0]) || this.state.fieldsValues.get(element[0])>aujourdhui){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -117,6 +129,7 @@ class EnregistrerNaissance extends Component {
                 case 'Commune de naissance':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -124,6 +137,7 @@ class EnregistrerNaissance extends Component {
                 case 'Département de naissance':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -131,6 +145,7 @@ class EnregistrerNaissance extends Component {
                 case 'Nom de famille de la mère':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -138,6 +153,7 @@ class EnregistrerNaissance extends Component {
                 case 'Prénom de la mère':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -145,6 +161,7 @@ class EnregistrerNaissance extends Component {
                 case 'Nom de famille du père':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
@@ -152,14 +169,23 @@ class EnregistrerNaissance extends Component {
                 case 'Prenom du père':
                     if (!this.state.fieldsValues.get(element[0])){
                         fieldsStates.set(element[0],"notValid")
+                        this.setState({formIsOK:false})
                     }else{
                         fieldsStates.set(element[0],"valid")
                     }
                 break
+                default:
             }
         }     
-        this.setState({fieldsStates:fieldsStates});
-        this.addNaissance();
+        this.setState({fieldsStates:fieldsStates}, 
+            function(){
+                if(this.state.formIsOK){
+                    this.addNaissance()
+                }
+                
+            }
+        );
+        
     }
 
     addNaissance = async () => {
@@ -218,6 +244,7 @@ class EnregistrerNaissance extends Component {
                 case 'Prenom du père':
                     _prenomPere = this.state.fieldsValues.get(element[0]);
                 break
+                default:
             }
         }
         console.log(_prenomPere);
@@ -350,7 +377,10 @@ class EnregistrerNaissance extends Component {
                         </Row>
                         <FormGroup className={this.state.fieldsStates.get("Sexe")==="notValid" && "has-danger"}>
                             <Label for="oui">Sexe</Label>
-                            <Input onChange={this.handleChange.bind(this, "Sexe")} type="text" placeholder="Sexe"                         />
+                            <Input onChange={this.handleChange.bind(this, "Sexe")} type="select" placeholder="Sexe">
+                                <option>Féminin</option>
+                                <option>Masculin</option>
+                            </Input>
                         </FormGroup>
                         <FormGroup className={this.state.fieldsStates.get("Nom de famille")==="notValid" && "has-danger"}>
                             <Label>Nom de famille</Label>
@@ -402,7 +432,11 @@ class EnregistrerNaissance extends Component {
                             <Label>Prénom du père</Label>
                             <Input onChange={this.handleChange.bind(this, "Prenom du père")} type="text" placeholder="Prénom du père" />
                         </FormGroup>
-                        <Button className="btn-round btn ml-8 btn-info" color="info">Enregistrer</Button>
+                        <Row style={{paddingTop:"30px"}} >
+                            <Col className="offset-sm-8">
+                                <Button className="btn-round btn ml-8 btn-info" color="info">Enregistrer</Button>
+                            </Col>
+                        </Row>
                     </Form>
                 </Col>
 
