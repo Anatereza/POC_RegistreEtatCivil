@@ -25,12 +25,12 @@ import {
 const TITLE = 'Mairie - Déclarer un mariage'
 
 const columns = [
-    { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>Numéro d’identification unique</div>, width: 270 },
-    { field: 'nom', headerName: <div style={{fontWeight:"bold"}}>Nom</div>, width: 150 },
-    { field: 'prenom', headerName: <div style={{fontWeight:"bold"}}>Prénom</div>, width: 150 },
+    { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>N° d’identification unique</div>, width: 240 },
+    { field: 'nom', headerName: <div style={{fontWeight:"bold"}}>Nom</div>, width: 140 },
+    { field: 'prenom', headerName: <div style={{fontWeight:"bold"}}>Prénom</div>, width: 140 },
     { field: 'sexe', headerName: <div style={{fontWeight:"bold"}}>Sexe</div>, width: 130,},
     { field: 'dateDeNaissance', headerName: <div style={{fontWeight:"bold"}}>Date de naissance</div>, width: 200,},
-    { field: 'communeDeNaissance', headerName: <div style={{fontWeight:"bold"}}>Commune de naissance</div>, width: 250,},
+    { field: 'communeDeNaissance', headerName: <div style={{fontWeight:"bold"}}>Commune de naissance</div>, width: 220,},
   ];
   
 
