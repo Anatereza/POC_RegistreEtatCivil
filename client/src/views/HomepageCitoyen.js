@@ -73,6 +73,10 @@ class HomepageCitoyen extends Component {
     // Back
     getInfosCitoyen = async () => {
         // Donnees identification citoyen
+        
+        // Récupérer l'ID à partir du login
+        const _id = await this.state.CivilStateInstance.methods.getIdFromLogin(this.state.login).call({from : this.state.account});
+        
         const responseInfoIdentificationCitoyen = await this.state.CivilStateInstance.methods.getInfoIdentificationCitoyen(this.state.login).call({from : this.state.account});
         const _sexe =  responseInfoIdentificationCitoyen[0];
         const _nomFamille = responseInfoIdentificationCitoyen[1];
@@ -100,7 +104,7 @@ class HomepageCitoyen extends Component {
         // Alimentation de la liste "infosCitoyen" pour appel de "getPerson" et affichage
         const _infosCitoyen = [this.state.sexe, this.state.nomFamille, this.state.nomUsage, this.state.premierPrenom, this.state.autresPrenoms, this.state.etatCivil, 
                         this.state.dateNaissance, this.state.communeNaissance, this.state.departementNaissance,
-                        this.state.nomFamilleMere, this.state.prenomMere, this.state.nomFamillePere, this.state.prenomPere];
+                        this.state.nomFamilleMere, this.state.prenomMere, this.state.nomFamillePere, this.state.prenomPere, _id];
         this.setState({infosCitoyen : _infosCitoyen});
         
         // Récupération du hash pour affichage

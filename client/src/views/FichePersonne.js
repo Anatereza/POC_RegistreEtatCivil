@@ -154,12 +154,9 @@ class FichePersonne extends Component {
     getInfosCitoyen = async () => {
         // Récupérer le login avec l'ID
         const responseLogin = await this.state.CivilStateInstance.methods.getLoginFromId(this.state.ID).call({from : this.state.account});
-        //console.log("responseLogin")
-        //console.log(responseLogin)
-        const _login = responseLogin;
+                const _login = responseLogin;
         this.setState({ login: _login });
-        //console.log("APRES PREMIER APPEL")
-        //console.log(this.state.ID)
+
 
         // Donnees identification citoyen
         const responseInfoIdentificationCitoyen = await this.state.CivilStateInstance.methods.getInfoIdentificationCitoyen(this.state.login).call({from : this.state.account});
@@ -170,10 +167,6 @@ class FichePersonne extends Component {
         const _autresPrenoms = responseInfoIdentificationCitoyen[4];
         const _etatCivil = responseInfoIdentificationCitoyen[5];
         this.setState({sexe : _sexe, nomFamille : _nomFamille, nomUsage : _nomUsage, premierPrenom : _premierPrenom, autresPrenoms : _autresPrenoms, etatCivil : _etatCivil});
-        // console.log("local sexe")
-        // console.log(_sexe)
-        // console.log("state sexe")
-        // console.log(this.state.sexe)
 
         // Donnees naissance citoyen
         const responseInfoNaissanceCitoyen = await this.state.CivilStateInstance.methods.getInfoNaissanceCitoyen(this.state.login).call({from : this.state.account});
@@ -206,7 +199,8 @@ class FichePersonne extends Component {
                 <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamilleMere}</div> <i onClick={() => this.HandleEditClick(9)} class="fa fa-edit"></i></div>, 
                 <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomMere}</div> <i onClick={() => this.HandleEditClick(10)} class="fa fa-edit"></i></div>, 
                 <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamillePere}</div> <i onClick={() => this.HandleEditClick(11)} class="fa fa-edit"></i></div>, 
-                <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomPere}</div> <i onClick={() => this.HandleEditClick(12)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomPere}</div> <i onClick={() => this.HandleEditClick(12)} class="fa fa-edit"></i></div>,
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.ID}</div> <i onClick={() => this.HandleEditClick(13)} class="fa fa-edit"></i></div>, 
                 ]
         } else {
             _infosCitoyen = [
@@ -223,6 +217,7 @@ class FichePersonne extends Component {
                 this.state.prenomMere,
                 this.state.nomFamillePere,
                 this.state.prenomPere,
+                this.state.ID,
                 ]
         }
         
@@ -234,11 +229,8 @@ class FichePersonne extends Component {
 
 
     componentDidMount = async () => {
-        //const _ID = localStorage.getItem('IDLocal');
-        //console.log("ID componentDidMount")
         const _URL = localStorage.getItem('URLLocal');
         const _ID = localStorage.getItem('IDLocal');
-        //console.log(_ID)
         this.setState({ ID: _ID, URL: _URL});
 
         
@@ -278,8 +270,6 @@ class FichePersonne extends Component {
           console.error(error);
         }
 
-        // console.log("STATE")
-        // console.log(this.state)
     };
     
     
@@ -302,8 +292,6 @@ class FichePersonne extends Component {
                 </Row>
                 <div>{this.props.state}</div>
                 <Row style={{paddingTop:"100px"}}>     
-                {/**TODO : Changer la source des données personnes */}
-                    {/*this.infosCitoyen*/} 
                     <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
                 </Row>
 

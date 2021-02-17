@@ -5,6 +5,10 @@ import { Helmet } from 'react-helmet';
 import ErrorMessage from 'components/ErrorMessage';
 import SimpleTable from 'components/SimpleTable'
 
+// Back 
+import CivilStateContract from "../../contracts/CivilState.json";
+import getWeb3 from "../../getWeb3";
+
 import {
     Container,
     Row,
@@ -21,7 +25,7 @@ import {
 const TITLE = 'Mairie - Déclarer un mariage'
 
 const columns = [
-    { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>Identifiant unique</div>, width: 170 },
+    { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>Numéro d’identification unique</div>, width: 270 },
     { field: 'nom', headerName: <div style={{fontWeight:"bold"}}>Nom</div>, width: 150 },
     { field: 'prenom', headerName: <div style={{fontWeight:"bold"}}>Prénom</div>, width: 150 },
     { field: 'sexe', headerName: <div style={{fontWeight:"bold"}}>Sexe</div>, width: 130,},
@@ -29,30 +33,12 @@ const columns = [
     { field: 'communeDeNaissance', headerName: <div style={{fontWeight:"bold"}}>Commune de naissance</div>, width: 250,},
   ];
   
-const rows = [
-      {id: 1, ID: "0x48e3f69b", nom: "Durand", prenom:"Michel", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 2, ID: "0x48e3f69b", nom: "Dupont", prenom:"Josie", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 3, ID: "0x48e3f69b", nom: "Durand", prenom:"Jacques", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 4, ID: "0x48e3f69b", nom: "Dupont", prenom:"Hervé", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 5, ID: "0x48e3f69b", nom: "Durand", prenom:"Mohammed", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 6, ID: "0x48e3f69b", nom: "Dupont", prenom:"Alfred", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 7, ID: "0x48e3f69b", nom: "Durand", prenom:"Frédéric", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 8, ID: "0x48e3f69b", nom: "Dupont", prenom:"Clémentine", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 9, ID: "0x48e3f69b", nom: "Durand", prenom:"Sofiane", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 10, ID: "0x48e3f69b", nom: "Dupont", prenom:"Justine", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 11, ID: "0x48e3f69b", nom: "Durand", prenom:"Charlotte", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 12, ID: "0x48e3f69b", nom: "Dupont", prenom:"Victoire", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 13, ID: "0x48e3f69b", nom: "Durand", prenom:"Avenall", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 14, ID: "0x48e3f69b", nom: "Dupont", prenom:"Gabriel", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 15, ID: "0x48e3f69b", nom: "Durand", prenom:"Olivier", sexe:"Masculin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-      {id: 16, ID: "0x48e3f69b", nom: "Dupont", prenom:"Fabienne", sexe:"Féminin", dateDeNaissance:"31/02/1945", communeDeNaissance:"Paris"},
-    ];
-
-const tableHeight = 56+52+10+Object.keys(rows).length*52 
 
 class DeclarerMariage extends Component {
     constructor(props){
         super(props);
+
+        console.log(this.props)
 
         // Maps pour le formulaire détails du mariage
         const fieldsValues = new Map();
@@ -91,12 +77,31 @@ class DeclarerMariage extends Component {
             IDSearch:"",
             IDSearchFieldValue:"",
             stateSearchComponent:"init",
+            rows: [],
+            tableHeight : "",
         }
+
+
 
         console.log("=== constructeur ===")
         this.HandleClick = this.HandleClick.bind(this);
         this.HandleClickSuivant = this.HandleClickSuivant.bind(this);
         this.HandleSubmitMariage = this.HandleSubmitMariage.bind(this);
+
+        // TEST
+        /*if ( !( (localStorage.getItem('wkfStateLocal') == 1) || 
+            (localStorage.getItem('wkfStateLocal') == 2) ||
+            (localStorage.getItem('wkfStateLocal') == 3) ||
+            (localStorage.getItem('wkfStateLocal') == 4) ||
+            (localStorage.getItem('wkfStateLocal') == 5) )
+        ) {
+            localStorage.setItem('wkfStateLocal',1)
+            console.log("here")
+            console.log(localStorage.getItem('wkfStateLocal'))
+            localStorage.setItem('wkfStateLocal',1)
+            console.log("here2")
+            console.log(localStorage.getItem('wkfStateLocal'))
+        } */
         //localStorage.setItem('wkfStateLocal',1)
 
         // SI on arrive d'une page qui renvoie des paramètres (seul cas : fiche personne)
@@ -228,11 +233,7 @@ class DeclarerMariage extends Component {
         
         localStorage.setItem('wkfStateLocal', 5)
         this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
-        /*TODO : 
-            - Valider le mariage dans la BC
-            - Reset compteur wkf :  localStorage.setItem('wkfStateLocal', 1)
-            - Retour page d'accueil*/
-        localStorage.setItem('wkfStateLocal', 1)
+        this.handleClickValiderMariage(); // Après : Reset compteur wkf & Retour page d'accueil        
     }
 
     HandleClick(e){
@@ -289,14 +290,15 @@ class DeclarerMariage extends Component {
     
     MakeTablePersons(){
         const result = [
-            {name : "Identifiant", price : localStorage.getItem('ID1')},
+            {name : "Numéro d’identification unique", price : localStorage.getItem('ID1')},
             {name : "Nom de famille", price : localStorage.getItem('nom1')},
             {name : "Prénom", price : localStorage.getItem('prenom1')},
             {name : "Sexe", price : localStorage.getItem('sexe1')},
             {name : "Date de naissance", price : localStorage.getItem('dateDeNaissance1')},
             {name : "Commune de naissance", price : localStorage.getItem('communeDeNaissance1')},
 
-            {name : "Identifiant", price : localStorage.getItem('ID2')},
+            {name : "Numéro d’identification unique", price : localStorage.getItem('ID2')},
+            {name : "Nom de famille", price : localStorage.getItem('nom2')},
             {name : "Prénom", price : localStorage.getItem('prenom2')},
             {name : "Sexe", price : localStorage.getItem('sexe2')},
             {name : "Date de naissance", price : localStorage.getItem('dateDeNaissance2')},
@@ -348,8 +350,136 @@ class DeclarerMariage extends Component {
     HandleClickNvlleRecherche(e){
         this.setState({stateSearchComponent:"init"}, function(){console.log("stateSearchComponent" + this.state.stateSearchComponent)})
     }
+
+    handleClickValiderMariage = async () => {
+        const idConjoint1 = localStorage.getItem('ID1');
+        const idConjoint2 = localStorage.getItem('ID2');
+
+        // Marié le JJ/MM/AAAA à
+        const dateMariage = localStorage.getItem('mariageDate');
+        const nom1 = localStorage.getItem('nom1');
+        const nom2 = localStorage.getItem('nom2');
+        const prenom1 = localStorage.getItem('prenom1');
+        const prenom2 = localStorage.getItem('prenom2');        
+        const etatCivilConjoint2 = "MARIE LE " + dateMariage + " " + "A" + " " + prenom1 + " " + nom1;
+        const etatCivilConjoint1 = "MARIE LE " + dateMariage + " " + "A" + " " + prenom2 + " " + nom2;
+ 
+        try {  
+            // Récupérer le login avec l'ID
+            const responseLogin1 = await this.state.CivilStateInstance.methods.getLoginFromId(idConjoint1).call({from : this.state.account});
+            const responseLogin2 = await this.state.CivilStateInstance.methods.getLoginFromId(idConjoint2).call({from : this.state.account});
+
+
+            // Appel pour marier premier conjoint
+            await this.state.CivilStateInstance.methods.declareMariage(responseLogin1, etatCivilConjoint1)
+                  .send({
+                      from : this.state.account,
+                      gas: 1000000
+                  })               
+            alert('Premier conjoint mariée');
+
+            // Appel pour marier deuxième conjoint
+            await this.state.CivilStateInstance.methods.declareMariage(responseLogin2, etatCivilConjoint2)
+                  .send({
+                      from : this.state.account,
+                      gas: 1000000
+                  })               
+            alert('Deuxième conjoint mariée');            
+
+          } catch (error) {
+              // Catch any errors for any of the above operations.
+              alert(
+                `En cours de chargement`,
+              );
+              console.error(error);
+         }
+         
+         localStorage.setItem('wkfStateLocal', 1);
+         this.props.history.push({
+             pathname:'home-mairie'
+         })
+    }    
+
+    contructIdentiteList = async () => {
+       
+        const citoyenCount = await this.state.CivilStateInstance.methods.getCitoyensCount().call({from : this.state.account});
+        console.log(citoyenCount);
+        for (let i = 0; i < citoyenCount; i++) {
+      
+            // Récupérer le login, l'id et le statut
+            const response = await this.state.CivilStateInstance.methods.getLoginIdStatut(i).call({from : this.state.account});
+            const _login = response[0];
+            const _id = response[1];
+            const _isVerified = response[2];
+
+            const responseIdent = await this.state.CivilStateInstance.methods.getInfoIdentificationCitoyen(_login).call({from : this.state.account});
+            const _sexe = responseIdent[0];
+            const _nomFamille = responseIdent[1];
+            const _premierPrenom = responseIdent[3];
+
+            const responseNaissance = await this.state.CivilStateInstance.methods.getInfoNaissanceCitoyen(_login).call({from : this.state.account});           
+            const _dateNaissance = responseNaissance[0];
+            const _communeNaissance = responseNaissance[1];
+                   
+            
+            if (_isVerified) {
+              // eslint-disable-next-line
+              const _i = i + 1;
+              const identiteVerifie = {id: _i, ID : _id, nom: _nomFamille, prenom: _premierPrenom, sexe: _sexe, dateDeNaissance: _dateNaissance, communeDeNaissance: _communeNaissance}
+              this.setState({rows : [...this.state.rows, identiteVerifie]});
+              console.log(identiteVerifie);
+            }
+      
+        }
+
+        const defTableHeight = 56+52+10+Object.keys(this.state.rows).length*52;
+        this.setState({tableHeight : defTableHeight});
+        console.log(this.state.rows);
+      }
+
+    //Back
+    componentDidMount = async () => {
+        // FOR REFRESHING PAGE ONLY ONCE -
+        if(!window.location.hash){
+          window.location = window.location + '#loaded';
+          window.location.reload();
+        }
     
-    render() { 
+        try {
+          // Get network provider and web3 instance.
+          const web3 = await getWeb3();
+    
+          // Use web3 to get the user's accounts.
+          const accounts = await web3.eth.getAccounts();
+    
+          // Get the contract instance.
+          const networkId = await web3.eth.net.getId();
+          const deployedNetwork = CivilStateContract.networks[networkId];
+          const instance = new web3.eth.Contract(
+              CivilStateContract.abi, 
+              deployedNetwork && deployedNetwork.address,
+          );
+
+          // account[0] = default account used by metamask
+          this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
+        
+          this.contructIdentiteList();
+          
+        } catch (error) {
+          // Catch any errors for any of the above operations.
+          alert(
+            `Failed to load web3, accounts, or contract. Check console for details.`,
+          );
+          console.error(error);
+        }
+    };
+    // Back       
+    
+    render() {
+        console.log("---render")
+        console.log(localStorage.getItem('wkfStateLocal'))
+        console.log(this.state.wkfState)
+        
         return (
             <>
             <Helmet>
@@ -407,7 +537,7 @@ class DeclarerMariage extends Component {
                         <div style={{width:"70%"}}>
                             <Form style={{marginBottom:"30px"}} onSubmit={e=> {this.HandleSubmitRecherche(e)}}>
                                 <FormGroup className="container-input-hash">
-                                    <Input className="element-input-hash" placeholder="Identifiant" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
+                                    <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
                                     <Button className="element-input-hash" color="info" type="submit">
                                         Rechercher
                                     </Button>
@@ -421,18 +551,18 @@ class DeclarerMariage extends Component {
                                 </FormGroup>
                             </Form>
                         </div>
-                        <div style={{ height: tableHeight, width: '100%' }}>
-                            {Object.keys(rows).length !== 0 ? 
-                            <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
+                        <div style={{ height: this.state.tableHeight, width: '100%' }}>
+                            {Object.keys(this.state.rows).length !== 0 ? 
+                            <DataGrid rows={this.state.rows} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
                             <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
                             }
                         </div>
                     </div>
                 }
                 {localStorage.getItem('wkfStateLocal')==2 && 
-                <div style={{ height: tableHeight, width: '100%' }}>
-                    {Object.keys(rows).length !== 0 ? 
-                    <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
+                <div style={{ height: this.state.tableHeight, width: '100%' }}>
+                    {Object.keys(this.state.rows).length !== 0 ? 
+                    <DataGrid rows={this.state.rows} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
                     <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
                     }
                 </div>}
@@ -448,7 +578,7 @@ class DeclarerMariage extends Component {
                                             <h2 style={{color:"gray"}}>Conjoint 1</h2>
                                         </Row>
                                         <Row>
-                                            <div>Identifiant :  {localStorage.getItem('ID1')}</div>
+                                            <div>Numéro d’identification unique :  {localStorage.getItem('ID1')}</div>
                                         </Row>
                                         <Row>
                                             <div>{localStorage.getItem('prenom1')} {localStorage.getItem('nom1')}</div>
@@ -460,7 +590,7 @@ class DeclarerMariage extends Component {
                                             <h2 style={{color:"gray"}}>Conjoint 2</h2>
                                         </Row>
                                         <Row>
-                                            <div>Identifiant :  {localStorage.getItem('ID2')}</div>
+                                            <div>Numéro d’identification unique :  {localStorage.getItem('ID2')}</div>
                                         </Row>
                                         <Row>
                                             <div>{localStorage.getItem('prenom2')} {localStorage.getItem('nom2')}</div>
