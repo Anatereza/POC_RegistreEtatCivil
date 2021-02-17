@@ -111,10 +111,11 @@ class DeclarerMariage extends Component {
                         case "2" :                    
                             localStorage.setItem('secondConjoint', "")
                         break;
+                        default:
                     }    
                 break;
                 case "conjointOK" :            
-                    if (props.history.action=="PUSH") {
+                    if (props.history.action==="PUSH") {
                         localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1/2).toString())
                     }
                 break;
@@ -204,6 +205,7 @@ class DeclarerMariage extends Component {
                         localStorage.setItem('mariageDate',fieldsValues.get(element[0]))
                     }
                 break
+                default :
                 }
             }
         this.setState({fieldsStates:fieldsStates}, function(){console.log(this.state.fieldsStates)});
@@ -253,7 +255,7 @@ class DeclarerMariage extends Component {
 
         this.setState((prevState) => ({...prevState,["personne"] :personne}), function() {console.log(this.state.personne);});
         
-        if (localStorage.getItem('wkfStateLocal')=='1'){
+        if (localStorage.getItem('wkfStateLocal')==='1'){
             localStorage.setItem('premierConjoint', personne)
             localStorage.setItem('ID1', ID)
             localStorage.setItem('nom1', nom)
@@ -263,7 +265,7 @@ class DeclarerMariage extends Component {
             localStorage.setItem('communeDeNaissance1', communeDeNaissance)
 
         }
-        if (localStorage.getItem('wkfStateLocal')=='2'){
+        if (localStorage.getItem('wkfStateLocal')==='2'){
             localStorage.setItem('secondConjoint', personne)
             localStorage.setItem('ID2', ID)
             localStorage.setItem('nom2', nom)

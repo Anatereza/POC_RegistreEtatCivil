@@ -16,16 +16,13 @@ import getWeb3 from "../getWeb3";
 
 const TITLE = 'Fiche personne'
 
-
 class FichePersonne extends Component {
     
-   
     constructor(props) {
         console.log("=== FichePersonne ===")
         super(props)
         
         if(!window.location.hash){
-            console.log("location : " + this.props.location.state)
             const ID = this.props.location.state.ID;
             localStorage.setItem('IDLocal', ID);
             const _ID = localStorage.getItem('IDLocal');
@@ -53,9 +50,10 @@ class FichePersonne extends Component {
             nomFamillePere : '',
             prenomPere : '',
             infosCitoyen : [],   
-            stateTableRow : ["init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init"]
+            stateTableRow : ["init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init"],
+            modifiedFieldValue :"",
         }
-
+        this.refInputChange = React.createRef();
     }
     
     getPerson(e){
@@ -116,20 +114,29 @@ class FichePersonne extends Component {
     }
 
     HandleEditClick(e){
-        console.log(e)
         let changeLog = this.state.stateTableRow
         changeLog[e]="edit"
-        this.setState({stateTableRow:changeLog}, function() {console.log(this.state.stateTableRow);})
+        this.setState({stateTableRow:changeLog})
         
         let infosCitoyen = this.state.infosCitoyen
         const previousValue = infosCitoyen[e]
-        infosCitoyen[e]=<div className="text-table"><Input style={{width:"50%"}}></Input><i onClick={() => this.HandleConfirmChange} style={{marginLeft:"6px"}} class="fa fa-check"></i><i onClick={() => this.HandleCancelChange(previousValue, e)} style={{marginLeft:"6px"}} class="fa fa-times"></i></div>
+        infosCitoyen[e]=<div className="text-table"><Input onChange={(e) => this.HandleChangeInput(e)} style={{width:"50%"}}></Input><i onClick={() => this.HandleConfirmChange(e)} style={{marginLeft:"6px"}} class="fa fa-check"></i><i onClick={() => this.HandleCancelChange(previousValue, e)} style={{marginLeft:"6px"}} class="fa fa-times"></i></div>
         
-        this.setState({infosCitoyen:infosCitoyen}, function() {console.log("**infosCitoyen MAJ**");})
+        this.setState({infosCitoyen:infosCitoyen})
     }
 
-    HandleConfirmChange(){
+    HandleChangeInput(e){
+        this.setState({modifiedFieldValue:e.target.value})
+    }
 
+    HandleConfirmChange(e){
+        let infosCitoyen = this.state.infosCitoyen
+
+        infosCitoyen[e]=<div className="text-table"><div style={{width:"50%"}}>{this.state.modifiedFieldValue}</div> <i onClick={() => this.HandleEditClick(e)} class="fa fa-edit"></i></div>
+        
+        let stateTableRow = this.state.stateTableRow
+        stateTableRow[e] = "changed"
+        this.setState({stateTableRow:stateTableRow})
     }
 
     HandleCancelChange(previousValue, e){
@@ -141,13 +148,6 @@ class FichePersonne extends Component {
 
         this.setState({infosCitoyen:infosCitoyen})
         this.setState({stateTableRow:stateTableRow})
-
-    }
-
-    CreateInfosCitoyens(){
-        for (let i=0; i<13; i++){
-            
-        }
     }
 
     // Back
@@ -191,21 +191,41 @@ class FichePersonne extends Component {
         this.setState({nomFamilleMere : _nomFamilleMere, prenomMere : _prenomMere, nomFamillePere : _nomFamillePere, prenomPere : _prenomPere});
         
         // Alimentation de la liste "infosCitoyen" pour appel de "getPerson" et affichage
-        const _infosCitoyen = [
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.sexe}</div> <i onClick={() => this.HandleEditClick(0)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamille}</div> <i onClick={() => this.HandleEditClick(1)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.nomUsage}</div> <i onClick={() => this.HandleEditClick(2)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.premierPrenom}</div> <i onClick={() => this.HandleEditClick(3)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.autresPrenoms}</div> <i onClick={() => this.HandleEditClick(4)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.etatCivil}</div> <i onClick={() => this.HandleEditClick(5)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.dateNaissance}</div> <i onClick={() => this.HandleEditClick(6)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.communeNaissance}</div> <i onClick={() => this.HandleEditClick(7)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.departementNaissance}</div> <i onClick={() => this.HandleEditClick(8)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamilleMere}</div> <i onClick={() => this.HandleEditClick(9)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomMere}</div> <i onClick={() => this.HandleEditClick(10)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamillePere}</div> <i onClick={() => this.HandleEditClick(11)} class="fa fa-edit"></i></div>, 
-        <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomPere}</div> <i onClick={() => this.HandleEditClick(12)} class="fa fa-edit"></i></div>, 
-        ]
+        let _infosCitoyen =[]
+        if(this.state.URL==="valider-identite"){
+            _infosCitoyen = [
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.sexe}</div> <i onClick={() => this.HandleEditClick(0)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamille}</div> <i onClick={() => this.HandleEditClick(1)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.nomUsage}</div> <i onClick={() => this.HandleEditClick(2)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.premierPrenom}</div> <i onClick={() => this.HandleEditClick(3)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.autresPrenoms}</div> <i onClick={() => this.HandleEditClick(4)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.etatCivil}</div> <i onClick={() => this.HandleEditClick(5)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.dateNaissance}</div> <i onClick={() => this.HandleEditClick(6)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.communeNaissance}</div> <i onClick={() => this.HandleEditClick(7)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.departementNaissance}</div> <i onClick={() => this.HandleEditClick(8)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamilleMere}</div> <i onClick={() => this.HandleEditClick(9)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomMere}</div> <i onClick={() => this.HandleEditClick(10)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.nomFamillePere}</div> <i onClick={() => this.HandleEditClick(11)} class="fa fa-edit"></i></div>, 
+                <div className="text-table"><div style={{width:"50%"}}>{this.state.prenomPere}</div> <i onClick={() => this.HandleEditClick(12)} class="fa fa-edit"></i></div>, 
+                ]
+        } else {
+            _infosCitoyen = [
+                this.state.sexe,
+                this.state.nomFamille,
+                this.state.nomUsage,
+                this.state.premierPrenom,
+                this.state.autresPrenoms,
+                this.state.etatCivil,
+                this.state.dateNaissance,
+                this.state.communeNaissance,
+                this.state.departementNaissance,
+                this.state.nomFamilleMere,
+                this.state.prenomMere,
+                this.state.nomFamillePere,
+                this.state.prenomPere,
+                ]
+        }
+        
         this.setState({infosCitoyen : _infosCitoyen});
 
     }
