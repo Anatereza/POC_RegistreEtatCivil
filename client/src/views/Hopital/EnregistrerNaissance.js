@@ -334,16 +334,11 @@ class EnregistrerNaissance extends Component {
                 pathname:'hopital-naissance'
             })
         }
-        console.log(window.location);
-        if(this.state.snackBarErrorOpen === false){
-            await timeout(2000);
-            this.props.history.push({
+        this.setState({snackBarSuccessOpen:true})
+        await timeout(2000)
+        this.props.history.push({
             pathname:'home-hopital'
         })
-        }
-        
-                    
-
     }
 
     //Back
@@ -401,7 +396,7 @@ class EnregistrerNaissance extends Component {
                 </Snackbar>
             </div>
             <div>
-                <Snackbar open={this.state.snackBarOpen} autoHideDuration={3000} onClose={this.handleCloseErrorSnackBar}>
+                <Snackbar open={this.state.snackBarErrorOpen} autoHideDuration={3000} onClose={this.handleCloseErrorSnackBar}>
                     <MuiAlert elevation={6} variant="filled" severity="error">
                         Erreur de communication avec la blockchain. Rechargement de la page.
                     </MuiAlert>
