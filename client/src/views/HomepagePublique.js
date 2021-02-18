@@ -31,14 +31,16 @@ class HomepagePublique extends Component {
         CivilStateInstance: undefined,
         account: null,
         web3: null,
+        authentificationState:"init"
     }
 
     constructor(props) {
         super(props)
         this.HandleClick = this.HandleClick.bind(this);
+        this.setState = this.setState.bind(this)
       }
 
-      HandleClick(param){
+    HandleClick(param){
         console.log("=== handleClick ===")
         const identifiant = param[0];
         const mdp = param[1];
@@ -46,18 +48,24 @@ class HomepagePublique extends Component {
         localStorage.setItem('MdpLocal', mdp);
 
         // Vérification authentification blockchain
-        console.log("login et pwd")
-        this.getAuthentification();
-        const authLocal = localStorage.getItem('AuthLocal');
 
-        if (authLocal == "ok") {
-            this.props.history.push({
-                pathname:'home-citoyen',
-                state: identifiant
-            });
-        } else {
-            console.log("erreur authentification")
-        }
+        this.getAuthentification().then(result => 
+            {
+                console.log('** getAuthentification done. Exited with status : ' + result + ' **');
+                if (result){
+                    this.setState({authentificationState:"OK"})
+                    console.log("identification OK");
+                    this.props.history.push({
+                        pathname:'home-citoyen',
+                        state: identifiant
+                    });
+                }else {
+                    this.setState({authentificationState:"KO"})
+                    console.log("identification KO");
+                }
+                
+            }
+        );
     }
       
       /*Fonction pour changer l'état du composant affiché en bas à gauche : tuiles ou formualire
@@ -69,16 +77,23 @@ class HomepagePublique extends Component {
     }
 
     // Back
-    getAuthentification = async () => {
+    async getAuthentification  () {
+        console.log("=== getAuthentification ===");
         // Vérifier authentification
         const _identifiant = localStorage.getItem('IdentifiantLocal');
         const _pwd = localStorage.getItem('MdpLocal');
 
         const responseAuth = await this.state.CivilStateInstance.methods.verifyAuthentification(_identifiant, _pwd).call({from : this.state.account});
         const _auth = responseAuth[0];
-        this.setState({ auth: _auth });
-
+        
+        this.setState({ auth: _auth});
         localStorage.setItem('AuthLocal', _auth);
+
+        if (_auth==="ko"){
+            return (false)
+        } else {
+            return (true)
+        }
     }
     // Back       
     
@@ -158,7 +173,7 @@ class HomepagePublique extends Component {
                         </div>
                         <div>{this.state.isConnexionState}{this.state.isConnexionState && 
                             
-                            <Connexion ClickHandler={(e) => this.HandleClick(e)}/> }
+                            <Connexion status={this.state.authentificationState} ClickHandler={(e) => this.HandleClick(e)}/> }
                         </div>
                     </Col>
                     <Col style={{marginLeft:"30px"}}>
