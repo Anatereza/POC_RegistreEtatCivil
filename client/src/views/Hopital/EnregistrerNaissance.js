@@ -305,6 +305,12 @@ class EnregistrerNaissance extends Component {
             _login = response[0];
             _id = response[1];
             
+        } catch {
+              // Catch any errors for any of the above operations.
+              alert(
+                `Failed to load web3, accounts, or contract. Check console for details.`,
+              );
+              console.error(error);            
         }
         
         try {  
@@ -345,34 +351,7 @@ class EnregistrerNaissance extends Component {
                   console.error(error);
                   return(false)
         }
-              //localStorage.setItem('wkfStateLocal',2)
-              /*
-              console.log("Redirection homepage hopital")
-              this.props.history.push({
-                  pathname:'home-hopital'
-              })*/
-                    
 
-        try {  
-            await this.state.CivilStateInstance.methods.addDonneesParents(_login, _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere)
-                    .send({
-                        from : this.state.account,
-                        gas: 1000000
-                    })
-        } catch (error) {
-            // Catch any errors for any of the above operations.
-            this.setState({snackBarErrorOpen:true})
-            console.log("** addDonneesParents ** => Failed to load web3, accounts, or contract. Check console for details.");
-            await timeout(2000);
-            this.props.history.push({
-                pathname:'hopital-naissance'
-            })
-        }
-        this.setState({snackBarSuccessOpen:true})
-        await timeout(2000)
-        this.props.history.push({
-            pathname:'home-hopital'
-        })
     }
 
 
