@@ -41,10 +41,13 @@ class ComponentVérificationID extends Component {
     constructor(props) {
         super(props)
         
-        
+        this.updateState = this.updateState.bind(this);
+        this.setState = this.setState.bind(this);
     }
 
-    
+    test(){
+        console.log('=== Test ===');
+    }
 
     checkHash(hash){
         //TODO : Définir le format du return 
@@ -53,24 +56,34 @@ class ComponentVérificationID extends Component {
         let _infosCitoyen = []
         let login = ""
 
-        //hashVerified = this.verifyHash();
-
-        this.verifyHash(function(){console.log("hashVerified : " + hashVerified)})
-
+        this.verifyHash().then(
+            (result) => {
+                console.log("** verifyHash done, promesse tenue : " + result + " **")
+                //this.updateState()
+                if (result){
+                    _infosCitoyen = localStorage.getItem('infoCitoyenLocal');
+                    login = localStorage.getItem('LoginLocal');
+                    this.setState({hashIsOk: true, hashSent:true}, function () {console.log("** hashIsOk = true **"); this.updateState()})
+                } else {
         
-        if (hashVerified){
+                    this.setState({hashIsOk: false, hashSent:true}, function () {console.log("** hashIsOk = false **");; this.updateState()})
+                }
+            }
+        )
+
+        /*if (hashVerified){
             _infosCitoyen = localStorage.getItem('infoCitoyenLocal');
             login = localStorage.getItem('LoginLocal');
             this.setState({hashIsOk: true}, function () {console.log("** hashIsOk = true **");})
         } else {
 
             this.setState({hashIsOk: false}, function () {console.log("** hashIsOk = false **");})
-        }
+        }*/
         
 
-        /*console.log("local login")
+        /*console.log("checkHash : local login")
         console.log(login)
-        console.log("local citoyen")
+        console.log("checkHash : local citoyen")
         console.log(_infosCitoyen)*/
 
         //const boolLogin = login.isEmpty();
@@ -80,18 +93,21 @@ class ComponentVérificationID extends Component {
             hashVerified = false;
         } else {
             hashVerified = true;
-        }*/
+            _infosCitoyen = localStorage.getItem('infoCitoyenLocal');
+            login = localStorage.getItem('LoginLocal');
+        }
+
 
         if (hashVerified) {
             this.setState({hashIsOk: true})
             
         } else {
             this.setState({hashIsOk: false})
-        }
+        }*/
         //Passage à true de l'état hashSent pour signifier que le hash a été envoyé à la BC
         //Appel de la fonction de mise à jour de updateState pour ajuster stateComponent en fonction
         //console.log(this.state.hashIsOk)
-        this.setState({hashSent: true}, function() {this.updateState()})
+        //this.setState({hashSent: true}, function() {this.updateState()})
     }
 
     updateState(){
@@ -104,6 +120,7 @@ class ComponentVérificationID extends Component {
                 this.setState(() => ({stateComponent:"HashKO"}))
             }
         }
+        console.log(this.state);
     }
     
     handleSubmit(e){
@@ -113,10 +130,8 @@ class ComponentVérificationID extends Component {
         if(this.state.hashFieldHasChanged===false && this.props.defaultHash!=="loaded"){
             this.setState({fieldValue: this.props.defaultHash}, function(){console.log(this.state.fieldValue);})
         }
-        console.log("1");
 
         if (this.state.fieldValue){
-            console.log("2");
             //Recopie dans sentHash la valeur de fieldValue (qui est mise à jour on change) 
             //Lorsque c'est fait, appel de la fonction de check du hash contenu dans sentHash dans la BC
             this.setState({sentHash: this.state.fieldValue}, function() {this.checkHash(this.state.sentHash)})
@@ -152,14 +167,15 @@ class ComponentVérificationID extends Component {
        return getPerson(e);
     }
 
-    verifyHash = async () => {
+    async verifyHash (){
         console.log("=== verifyHash ===");
         try {
             // Récupération du hash pour affichage
+            console.log("-- verifyHash => Try");
             const responseLogin = await this.state.CivilStateInstance.methods.verifyCertification(this.state.sentHash).call({from : this.state.account});
             localStorage.setItem('LoginLocal', responseLogin);
-
-            //this.setState({login: responseLogin});
+            this.setState({login: responseLogin});
+            console.log(responseLogin);
 
             // Donnees identification citoyen
             const responseInfoIdentificationCitoyen = await this.state.CivilStateInstance.methods.getInfoIdentificationCitoyen(responseLogin).call({from : this.state.account});
@@ -169,14 +185,14 @@ class ComponentVérificationID extends Component {
             const _premierPrenom = responseInfoIdentificationCitoyen[3];
             const _autresPrenoms = responseInfoIdentificationCitoyen[4];
             const _etatCivil = responseInfoIdentificationCitoyen[5];
-            //this.setState({sexe : _sexe, nomFamille : _nomFamille, nomUsage : _nomUsage, premierPrenom : _premierPrenom, autresPrenoms : _autresPrenoms, etatCivil : _etatCivil});
+            this.setState({sexe : _sexe, nomFamille : _nomFamille, nomUsage : _nomUsage, premierPrenom : _premierPrenom, autresPrenoms : _autresPrenoms, etatCivil : _etatCivil});
 
             // Donnees naissance citoyen
             const responseInfoNaissanceCitoyen = await this.state.CivilStateInstance.methods.getInfoNaissanceCitoyen(responseLogin).call({from : this.state.account});
             const _dateNaissance = responseInfoNaissanceCitoyen[0];
             const _communeNaissance = responseInfoNaissanceCitoyen[1];
             const _departementNaissance = responseInfoNaissanceCitoyen[2];
-            //this.setState({dateNaissance : _dateNaissance, communeNaissance : _communeNaissance, departementNaissance : _departementNaissance});
+            this.setState({dateNaissance : _dateNaissance, communeNaissance : _communeNaissance, departementNaissance : _departementNaissance});
 
             // Donnees parents citoyen
             const responseInfoParentsCitoyen = await this.state.CivilStateInstance.methods.getInfoParentsCitoyen(responseLogin).call({from : this.state.account});
@@ -184,17 +200,25 @@ class ComponentVérificationID extends Component {
             const _prenomMere = responseInfoParentsCitoyen[1];
             const _nomFamillePere = responseInfoParentsCitoyen[2];
             const _prenomPere = responseInfoParentsCitoyen[3];
-            //this.setState({nomFamilleMere : _nomFamilleMere, prenomMere : _prenomMere, nomFamillePere : _nomFamillePere, prenomPere : _prenomPere});
+            this.setState({nomFamilleMere : _nomFamilleMere, prenomMere : _prenomMere, nomFamillePere : _nomFamillePere, prenomPere : _prenomPere});
             
             // Alimentation de la liste "infosCitoyen" pour appel de "getPerson" et affichage
             const _infosCitoyen = [_sexe, _nomFamille, _nomUsage, _premierPrenom, _autresPrenoms, _etatCivil, 
                             _dateNaissance, _communeNaissance, _departementNaissance,
                             _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere];
-            this.setState({infosCitoyen : _infosCitoyen});        
-            localStorage.setItem('infoCitoyenLocal', _infosCitoyen);
-            return (true)
-        } catch (error) {
             
+            this.setState({infosCitoyen : _infosCitoyen});     
+            localStorage.setItem('infoCitoyenLocal', _infosCitoyen);
+            
+            if (responseLogin){
+                return (true)
+            } else {
+                return(false)
+            }
+           
+            
+        } catch (error) {
+        console.log("-- verifyHash => Catch");
           this.setState({hashIsOk: false})
           this.setState({hashSent: true}, function() {this.updateState()})
           //alert(`Impossible de vérifier ce hash`,);
