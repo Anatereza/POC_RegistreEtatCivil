@@ -9,6 +9,7 @@ import image from 'assets/img/IconesAccueils/Valider.png'
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
 import getWeb3 from "../../getWeb3";
+import { provider } from "../../variables";
 
 import {
     Container,
@@ -89,23 +90,11 @@ class DeclarerMariage extends Component {
         this.HandleClickSuivant = this.HandleClickSuivant.bind(this);
         this.HandleSubmitMariage = this.HandleSubmitMariage.bind(this);
 
-        // TEST
-        /*if ( !( (localStorage.getItem('wkfStateLocal') == 1) || 
-            (localStorage.getItem('wkfStateLocal') == 2) ||
-            (localStorage.getItem('wkfStateLocal') == 3) ||
-            (localStorage.getItem('wkfStateLocal') == 4) ||
-            (localStorage.getItem('wkfStateLocal') == 5) )
-        ) {
+        if (localStorage.getItem('wkfStateLocal') < 1) {
             localStorage.setItem('wkfStateLocal',1)
-            console.log("here")
-            console.log(localStorage.getItem('wkfStateLocal'))
-            localStorage.setItem('wkfStateLocal',1)
-            console.log("here2")
-            console.log(localStorage.getItem('wkfStateLocal'))
-        } */
-        //localStorage.setItem('wkfStateLocal',1)
+            console.log("Initialiser wkfStateLocal si undefined")
+        }
 
-        // SI on arrive d'une page qui renvoie des paramètres (seul cas : fiche personne)
         if(this.props.location.state){
             switch (this.props.location.state.source){
                 case "clickBack" :
@@ -335,12 +324,6 @@ class DeclarerMariage extends Component {
                 }
             )
 
-        /*TODO : 
-        - Implémenter la recherche sur la BC
-        - Construire un objet du même format que 'rows' avec les données retournées
-        - Faire un setState de cet objet 
-        - Modifier le render() pour appeler ce nouvel état et plus l'objet 'rows'  
-        */
         }
     }
 
@@ -377,7 +360,7 @@ class DeclarerMariage extends Component {
                       from : this.state.account,
                       gas: 1000000
                   })               
-            alert('Premier conjoint mariée');
+            //alert('Premier conjoint mariée');
 
             // Appel pour marier deuxième conjoint
             await this.state.CivilStateInstance.methods.declareMariage(responseLogin2, etatCivilConjoint2)
@@ -385,7 +368,7 @@ class DeclarerMariage extends Component {
                       from : this.state.account,
                       gas: 1000000
                   })               
-            alert('Deuxième conjoint mariée');            
+            alert('Mariage validé');            
 
           } catch (error) {
               // Catch any errors for any of the above operations.
@@ -449,7 +432,10 @@ class DeclarerMariage extends Component {
         try {
           // Get network provider and web3 instance.
           const web3 = await getWeb3();
-    
+
+          // Set provider for signature
+          web3.setProvider(provider);
+
           // Use web3 to get the user's accounts.
           const accounts = await web3.eth.getAccounts();
     

@@ -13,6 +13,7 @@ import getPerson from 'services/getPerson';
 // Back 
 import CivilStateContract from "../contracts/CivilState.json";
 import getWeb3 from "../getWeb3";
+import { provider } from "../variables";
 
 const TITLE = 'Fiche personne'
 
@@ -244,7 +245,10 @@ class FichePersonne extends Component {
 
           // Get network provider and web3 instance.
           const web3 = await getWeb3();
-    
+          
+          // Set provider for signature
+          web3.setProvider(provider);
+
           // Use web3 to get the user's accounts.
           const accounts = await web3.eth.getAccounts();
     

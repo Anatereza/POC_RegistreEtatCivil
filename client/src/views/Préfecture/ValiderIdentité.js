@@ -7,6 +7,7 @@ import imageValider from 'assets/img/IconesAccueils/Valider.png'
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
 import getWeb3 from "../../getWeb3";
+import { provider } from "../../variables";
 
 import {
     Container,
@@ -24,6 +25,7 @@ const columns = [
   { field: 'dateDeNaissance', headerName: <div style={{fontWeight:"bold"}}>Date de naissance</div>, width: 200,},
   { field: 'communeDeNaissance', headerName: <div style={{fontWeight:"bold"}}>Commune de naissance</div>, width: 220,},
 ];
+
   
 class ValiderIdentité extends Component {
     state = {
@@ -100,7 +102,10 @@ class ValiderIdentité extends Component {
         try {
           // Get network provider and web3 instance.
           const web3 = await getWeb3();
-    
+          
+          // Set provider for signature
+          web3.setProvider(provider);
+
           // Use web3 to get the user's accounts.
           const accounts = await web3.eth.getAccounts();
     

@@ -5,7 +5,7 @@ import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png'
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
 import getWeb3 from "../../getWeb3";
-
+import { provider } from "../../variables";
 
 import {
     Container,
@@ -270,7 +270,7 @@ class EnregistrerNaissance extends Component {
             _login = response[0];
             const _id = response[1];
             
-            alert('Naissance enregistrée');
+            //alert('Naissance enregistrée');
           } catch (error) {
               // Catch any errors for any of the above operations.
               alert(
@@ -286,7 +286,7 @@ class EnregistrerNaissance extends Component {
                       gas: 1000000
                   })
     
-            alert('Données de naissance ajoutées');
+            //alert('Données de naissance ajoutées');
           } catch (error) {
               // Catch any errors for any of the above operations.
               alert(
@@ -302,7 +302,8 @@ class EnregistrerNaissance extends Component {
                           gas: 1000000
                       })
         
-                alert('Données des parents ajoutées');
+                //alert('Données des parents ajoutées');
+                alert('Naissance enregistrée');
               } catch (error) {
                   // Catch any errors for any of the above operations.
                   alert(
@@ -330,7 +331,10 @@ class EnregistrerNaissance extends Component {
         try {
           // Get network provider and web3 instance.
           const web3 = await getWeb3();
-    
+          
+          // Set provider for signature
+          web3.setProvider(provider);
+
           // Use web3 to get the user's accounts.
           const accounts = await web3.eth.getAccounts();
     
