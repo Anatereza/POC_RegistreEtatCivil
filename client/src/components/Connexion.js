@@ -3,45 +3,44 @@ import { Link } from "react-router-dom";
 import { 
     Button,
     Form,
-    Input
+    Input,
+    FormGroup
 } from 'reactstrap';
 
 
 class Connexion extends Component {
     state = {
         login: "",
-        pwd: "",  
+        pwd: "",
+        authentificationState:"init"
     };
 
     constructor(props) {
         console.log("=== Constructeur connexion ===")
-        super(props)        
+        super(props)
+        
     }
-
 
     HandleSubmit(e){
         console.log(this)
         e.preventDefault()
         const param = [this.state.login, this.state.pwd];
         this.props.ClickHandler(param)
+        this.updateState()
     }
 
-   
     updateLogin = event => {
         this.setState({ login : event.target.value});
-        console.log("new login")
-        console.log(this.state.login)
+        this.setState({authentificationState:"init"})
     }
     
     updatePwd = event => {
         this.setState({ pwd : event.target.value});
-        console.log("new pwd")
-        console.log(this.state.pwd)
+        this.setState({authentificationState:"init"})
+
     }
 
     render() { 
-        console.log(this.state);
-
         return ( 
             <>
             <div className="container-block-connexion">
@@ -49,15 +48,20 @@ class Connexion extends Component {
                     <h2 style={{color:"#FBC658"}}>SE CONNECTER</h2>
                 </div>
                 <div className="element-block-connexion">
-                    <div className="container-form-connexion">
                         <Form onSubmit={(e) => this.HandleSubmit(e)}>
-                            <Input onChange={(e) => this.updateLogin(e)} placeholder="Identifiant" type="text" className="form-control element-form-connexion"></Input>
-                            <Input onChange={(e) => this.updatePwd(e)} placeholder="Mot de passe" type="text" className="form-control element-form-connexion"></Input>
-                            <Button type="submit" className="btn-round btn btn-info element-form-connexion">
+                            <FormGroup className={this.props.status==='KO' ? "has-danger container-form-connexion" : "container-form-connexion"}>
+                                <Input onChange={(e) => this.updateLogin(e)} placeholder="Identifiant" type="text" className="form-control element-form-connexion "></Input>
+                                <div className="element-form-connexion">
+                                    <Input onChange={(e) => this.updatePwd(e)} placeholder="Mot de passe" type="password" className="form-control"></Input>
+                                    {this.props.status==='KO' && <div style={{color: "#f5593d"}} >Combinaison identifiant / mot de passe incorrecte.</div>}
+                                </div>
+                                <Button type="submit" className="btn-round btn btn-info element-form-connexion">
                                     Se connecter
-                            </Button>
+                                </Button>
+                            </FormGroup>
+                            
+                            
                         </Form>                                      
-                    </div>
                 </div> 
             </div>
             </>
