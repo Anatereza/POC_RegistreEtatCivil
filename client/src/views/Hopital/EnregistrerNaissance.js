@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png'
+import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
 
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
@@ -19,6 +22,10 @@ import {
   } from "reactstrap";
 
 const TITLE = 'Hopital - Enregistrer une naissance'
+
+function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+}
 
 class EnregistrerNaissance extends Component {
     constructor(props){
@@ -59,6 +66,7 @@ class EnregistrerNaissance extends Component {
             fieldsStates: fieldsStates,
             fieldsValues: fieldsValues,
             formIsOK: true,
+<<<<<<< HEAD
             id: "0x"
         }
 
@@ -66,9 +74,30 @@ class EnregistrerNaissance extends Component {
             localStorage.setItem('wkfStateLocal',1)
             console.log("Initialiser wkfStateLocal si undefined")
         }        
+=======
+            snackBarSuccessOpen:false,
+            snackBarErrorOpen:false,
+        }
+        
      }
 
-     handleChange(field, e){         
+     handleCloseSuccessSnackBar(event, reason){
+            if (reason === 'clickaway') {
+            return;
+            }
+        this.setState({snackBarSuccessOpen:false})
+>>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
+     }
+
+     handleCloseErrorSnackBar(event, reason){
+        if (reason === 'clickaway') {
+        return;
+        }
+    this.setState({snackBarErrorOpen:false})
+ }
+
+
+    handleChange(field, e){         
         let fieldsValues = this.state.fieldsValues
         fieldsValues.set(field,e.target.value)
 
@@ -205,15 +234,17 @@ class EnregistrerNaissance extends Component {
                         }
                     )                    
                 }
-                
             }
         );
-        
     }
 
+<<<<<<< HEAD
     async addNaissance (){
     
         console.log(this.state.fieldsValues);
+=======
+    addNaissance = async () => {
+>>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
         let fieldsStates = this.state.fieldsStates
         let fieldsValues = this.state.fieldsValues
         let _sexe;
@@ -275,11 +306,10 @@ class EnregistrerNaissance extends Component {
 
         try {  
             await this.state.CivilStateInstance.methods.addNaissance(_sexe, _nomFamille, _nomUsage, _premierPrenom, _autresPrenoms)
-                  .send({
-                      from : this.state.account,
-                      gas: 1000000
-                  })
-            
+                .send({
+                    from : this.state.account,
+                    gas: 1000000
+                })
             const citoyenCount = await this.state.CivilStateInstance.methods.getCitoyensCount().call({from : this.state.account});      
             let idNaissance;
             if (citoyenCount == 0) {
@@ -291,16 +321,24 @@ class EnregistrerNaissance extends Component {
             // Récupérer le login, l'id et le statut
             const response = await this.state.CivilStateInstance.methods.getLoginIdStatut(idNaissance).call({from : this.state.account});
             _login = response[0];
+<<<<<<< HEAD
             _id = response[1];
+=======
+            const _id = response[1];
+            this.setState({snackBarOpen:true})
+
+        } catch (error) {
+            // Catch any errors for any of the above operations.
+            this.setState({snackBarErrorOpen:true}, function(){
+                console.log("** getLoginIdStatut ** => Failed to load web3, accounts, or contract. Check console for details.");
+            })
+            await timeout(2000);
+            this.props.history.push({
+                pathname:'hopital-naissance'
+            })
+>>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
             
-            //alert('Naissance enregistrée');
-          } catch (error) {
-              // Catch any errors for any of the above operations.
-              alert(
-                `Failed to load web3, accounts, or contract. Check console for details.`,
-              );
-              console.error(error);
-            }
+        }
         
         try {  
             await this.state.CivilStateInstance.methods.addDonneesNaissance(_login, _dateNaissance, _communeNaissance, _departementNaissance)
@@ -308,6 +346,7 @@ class EnregistrerNaissance extends Component {
                       from : this.state.account,
                       gas: 1000000
                   })
+<<<<<<< HEAD
     
             //alert('Données de naissance ajoutées');
         } catch (error) {
@@ -347,7 +386,38 @@ class EnregistrerNaissance extends Component {
                   pathname:'home-hopital'
               })*/
                     
+=======
+        } catch (error) {
+            // Catch any errors for any of the above operations.
+            this.setState({snackBarErrorOpen:true})
+            console.log("** addDonneesNaissance ** => Failed to load web3, accounts, or contract. Check console for details.");
+            await timeout(2000);
+            this.props.history.push({
+                pathname:'hopital-naissance'
+            })
+        } 
+>>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
 
+        try {  
+            await this.state.CivilStateInstance.methods.addDonneesParents(_login, _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere)
+                    .send({
+                        from : this.state.account,
+                        gas: 1000000
+                    })
+        } catch (error) {
+            // Catch any errors for any of the above operations.
+            this.setState({snackBarErrorOpen:true})
+            console.log("** addDonneesParents ** => Failed to load web3, accounts, or contract. Check console for details.");
+            await timeout(2000);
+            this.props.history.push({
+                pathname:'hopital-naissance'
+            })
+        }
+        this.setState({snackBarSuccessOpen:true})
+        await timeout(2000)
+        this.props.history.push({
+            pathname:'home-hopital'
+        })
     }
 
 
@@ -356,38 +426,39 @@ class EnregistrerNaissance extends Component {
     componentDidMount = async () => {
         // FOR REFRESHING PAGE ONLY ONCE -
         if(!window.location.hash){
-          window.location = window.location + '#loaded';
-          window.location.reload();
+            window.location = window.location + '#loaded';
+            window.location.reload();
         }
     
         try {
-          // Get network provider and web3 instance.
-          const web3 = await getWeb3();
-          
-          // Set provider for signature
-          web3.setProvider(provider);
+            // Get network provider and web3 instance.
+            const web3 = await getWeb3();
+            
+            // Set provider for signature
+            web3.setProvider(provider);
 
-          // Use web3 to get the user's accounts.
-          const accounts = await web3.eth.getAccounts();
-    
-          // Get the contract instance.
-          const networkId = await web3.eth.net.getId();
-          const deployedNetwork = CivilStateContract.networks[networkId];
-          const instance = new web3.eth.Contract(
-              CivilStateContract.abi, 
-              deployedNetwork && deployedNetwork.address,
-          );
+            // Use web3 to get the user's accounts.
+            const accounts = await web3.eth.getAccounts();
+        
+            // Get the contract instance.
+            const networkId = await web3.eth.net.getId();
+            const deployedNetwork = CivilStateContract.networks[networkId];
+            const instance = new web3.eth.Contract(
+                CivilStateContract.abi, 
+                deployedNetwork && deployedNetwork.address,
+            );
 
-          // account[0] = default account used by metamask
-          this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
-     
-          
+            // account[0] = default account used by metamask
+            this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
+
         } catch (error) {
-          // Catch any errors for any of the above operations.
-          alert(
-            `Failed to load web3, accounts, or contract. Check console for details.`,
-          );
-          console.error(error);
+            // Catch any errors for any of the above operations.
+            this.setState({snackBarErrorOpen:true})
+            console.log("** Connexion web3 ** => Failed to load web3, accounts, or contract. Check console for details.");
+            await timeout(2000);
+            this.props.history.push({
+                pathname:'hopital-naissance'
+            })
         }
     };
     // Back
@@ -398,7 +469,24 @@ class EnregistrerNaissance extends Component {
             <Helmet>
             <title>{ TITLE }</title>
             </Helmet>
+<<<<<<< HEAD
                        
+=======
+            <div>
+                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                    <MuiAlert elevation={6} variant="filled" severity="success">
+                        Naissance enregistrée.
+                    </MuiAlert>
+                </Snackbar>
+            </div>
+            <div>
+                <Snackbar open={this.state.snackBarErrorOpen} autoHideDuration={3000} onClose={this.handleCloseErrorSnackBar}>
+                    <MuiAlert elevation={6} variant="filled" severity="error">
+                        Erreur de communication avec la blockchain. Rechargement de la page.
+                    </MuiAlert>
+                </Snackbar>
+            </div>   
+>>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
             <Container>
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
@@ -479,7 +567,10 @@ class EnregistrerNaissance extends Component {
 
             </Container>
             
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
             </>
          );
     }
