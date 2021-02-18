@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+//import Snackbar from '@material-ui/core/Snackbar';
+//import MuiAlert from '@material-ui/lab/Alert';
+//import { makeStyles } from '@material-ui/core/styles';
 
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
@@ -305,7 +305,7 @@ class EnregistrerNaissance extends Component {
             _login = response[0];
             _id = response[1];
             
-        } catch {
+        } catch (error) {
               // Catch any errors for any of the above operations.
               alert(
                 `Failed to load web3, accounts, or contract. Check console for details.`,
