@@ -20,6 +20,9 @@ import EnregistrerNaissance from "views/Hopital/EnregistrerNaissance";
 import ValiderIdentité from "views/Préfecture/ValiderIdentité"
 import DeclarerMariage from "views/Mairie/DeclarerMariage";
 import HomepageHeader from 'components/Headers/HomepageHeader'
+// NaissanceValidee
+import NaissanceValidee from "views/Hopital/NaissanceValidee";
+import IdentiteValidee from "views/Préfecture/IdentiteValidee";
 
 function App() {
   return (
@@ -44,7 +47,8 @@ function App() {
           <Route path="/home-mairie" component={AccueilMairie} />
           <Route path="/home-hopital" component={AccueilHopital} />
           <Route path="/hopital-naissance" component={EnregistrerNaissance} />
-
+          <Route path="/naissance-validee" render={(props) => <NaissanceValidee {...props}/>}/>
+          <Route path="/identite-verifiee" render={(props) => <IdentiteValidee {...props}/>}/>
 
         </Switch>
       <DemoFooter/>

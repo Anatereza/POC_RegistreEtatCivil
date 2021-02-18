@@ -97,7 +97,7 @@ class FichePersonne extends Component {
                       gas: 1000000
                   })
                   
-            alert('Identité validée');
+            //alert('Identité validée');
           } catch (error) {
               // Catch any errors for any of the above operations.
               alert(
@@ -107,11 +107,17 @@ class FichePersonne extends Component {
          }
          
          //console.log(this.state.URL)
+         /*
          this.props.history.push({
              pathname:this.state.URL,
              state : 
               { URL : this.state.URL }
-         })
+         })*/
+         this.props.history.push({
+            pathname:'identite-verifiee',
+            state : this.state.ID
+             
+        })
     }
 
     HandleEditClick(e){

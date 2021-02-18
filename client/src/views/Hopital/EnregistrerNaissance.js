@@ -59,7 +59,13 @@ class EnregistrerNaissance extends Component {
             fieldsStates: fieldsStates,
             fieldsValues: fieldsValues,
             formIsOK: true,
+            id: "0x"
         }
+
+        if (localStorage.getItem('wkfStateLocal') < 1) {
+            localStorage.setItem('wkfStateLocal',1)
+            console.log("Initialiser wkfStateLocal si undefined")
+        }        
      }
 
      handleChange(field, e){         
@@ -178,10 +184,26 @@ class EnregistrerNaissance extends Component {
                 default:
             }
         }     
+        
         this.setState({fieldsStates:fieldsStates}, 
             function(){
                 if(this.state.formIsOK){
-                    this.addNaissance()
+                    //this.addNaissance()
+                    this.addNaissance().then(
+                        (result) => {
+                            console.log("** addNaissance done, promesse tenue : " + result + " **")
+                            
+                            if (result){
+                                console.log("Redirection page de validation")
+                                this.props.history.push({
+                                    pathname:'naissance-validee',
+                                    state: this.state.id
+                                })
+                            } else {
+                                console.log("Redirection page de validation")
+                            }
+                        }
+                    )                    
                 }
                 
             }
@@ -189,7 +211,8 @@ class EnregistrerNaissance extends Component {
         
     }
 
-    addNaissance = async () => {
+    async addNaissance (){
+    
         console.log(this.state.fieldsValues);
         let fieldsStates = this.state.fieldsStates
         let fieldsValues = this.state.fieldsValues
@@ -206,6 +229,7 @@ class EnregistrerNaissance extends Component {
         let _nomFamillePere;
         let _prenomPere;
         let _login;
+        let _id;
 
         for (const element of fieldsStates){
             switch (element[0]) {
@@ -248,7 +272,6 @@ class EnregistrerNaissance extends Component {
                 default:
             }
         }
-        console.log(_prenomPere);
 
         try {  
             await this.state.CivilStateInstance.methods.addNaissance(_sexe, _nomFamille, _nomUsage, _premierPrenom, _autresPrenoms)
@@ -268,7 +291,7 @@ class EnregistrerNaissance extends Component {
             // Récupérer le login, l'id et le statut
             const response = await this.state.CivilStateInstance.methods.getLoginIdStatut(idNaissance).call({from : this.state.account});
             _login = response[0];
-            const _id = response[1];
+            _id = response[1];
             
             //alert('Naissance enregistrée');
           } catch (error) {
@@ -287,38 +310,47 @@ class EnregistrerNaissance extends Component {
                   })
     
             //alert('Données de naissance ajoutées');
-          } catch (error) {
+        } catch (error) {
               // Catch any errors for any of the above operations.
               alert(
                 `Failed to load web3, accounts, or contract. Check console for details.`,
               );
               console.error(error);
-            } 
+        } 
 
-            try {  
-                await this.state.CivilStateInstance.methods.addDonneesParents(_login, _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere)
+        try {  
+                const response = await this.state.CivilStateInstance.methods.addDonneesParents(_login, _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere)
                       .send({
                           from : this.state.account,
                           gas: 1000000
-                      })
-        
-                //alert('Données des parents ajoutées');
-                alert('Naissance enregistrée');
-              } catch (error) {
+                      })  
+
+                if (response){
+                    this.setState({id: _id});
+                    console.log(this.state.id)
+                    return (true)
+                } else {
+                    return(false)
+                }
+        } catch (error) {
                   // Catch any errors for any of the above operations.
                   alert(
                     `Failed to load web3, accounts, or contract. Check console for details.`,
                   );
                   console.error(error);
-              }
-
+                  return(false)
+        }
+              //localStorage.setItem('wkfStateLocal',2)
+              /*
               console.log("Redirection homepage hopital")
               this.props.history.push({
                   pathname:'home-hopital'
-              })
+              })*/
                     
 
     }
+
+
 
     //Back
     componentDidMount = async () => {
@@ -366,6 +398,7 @@ class EnregistrerNaissance extends Component {
             <Helmet>
             <title>{ TITLE }</title>
             </Helmet>
+                       
             <Container>
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
@@ -445,6 +478,8 @@ class EnregistrerNaissance extends Component {
                 </Col>
 
             </Container>
+            
+
             </>
          );
     }
