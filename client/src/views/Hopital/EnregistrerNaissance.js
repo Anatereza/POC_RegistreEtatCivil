@@ -66,7 +66,6 @@ class EnregistrerNaissance extends Component {
             fieldsStates: fieldsStates,
             fieldsValues: fieldsValues,
             formIsOK: true,
-<<<<<<< HEAD
             id: "0x"
         }
 
@@ -74,19 +73,6 @@ class EnregistrerNaissance extends Component {
             localStorage.setItem('wkfStateLocal',1)
             console.log("Initialiser wkfStateLocal si undefined")
         }        
-=======
-            snackBarSuccessOpen:false,
-            snackBarErrorOpen:false,
-        }
-        
-     }
-
-     handleCloseSuccessSnackBar(event, reason){
-            if (reason === 'clickaway') {
-            return;
-            }
-        this.setState({snackBarSuccessOpen:false})
->>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
      }
 
      handleCloseErrorSnackBar(event, reason){
@@ -238,13 +224,9 @@ class EnregistrerNaissance extends Component {
         );
     }
 
-<<<<<<< HEAD
     async addNaissance (){
     
         console.log(this.state.fieldsValues);
-=======
-    addNaissance = async () => {
->>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
         let fieldsStates = this.state.fieldsStates
         let fieldsValues = this.state.fieldsValues
         let _sexe;
@@ -321,22 +303,7 @@ class EnregistrerNaissance extends Component {
             // Récupérer le login, l'id et le statut
             const response = await this.state.CivilStateInstance.methods.getLoginIdStatut(idNaissance).call({from : this.state.account});
             _login = response[0];
-<<<<<<< HEAD
             _id = response[1];
-=======
-            const _id = response[1];
-            this.setState({snackBarOpen:true})
-
-        } catch (error) {
-            // Catch any errors for any of the above operations.
-            this.setState({snackBarErrorOpen:true}, function(){
-                console.log("** getLoginIdStatut ** => Failed to load web3, accounts, or contract. Check console for details.");
-            })
-            await timeout(2000);
-            this.props.history.push({
-                pathname:'hopital-naissance'
-            })
->>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
             
         }
         
@@ -346,7 +313,6 @@ class EnregistrerNaissance extends Component {
                       from : this.state.account,
                       gas: 1000000
                   })
-<<<<<<< HEAD
     
             //alert('Données de naissance ajoutées');
         } catch (error) {
@@ -386,17 +352,6 @@ class EnregistrerNaissance extends Component {
                   pathname:'home-hopital'
               })*/
                     
-=======
-        } catch (error) {
-            // Catch any errors for any of the above operations.
-            this.setState({snackBarErrorOpen:true})
-            console.log("** addDonneesNaissance ** => Failed to load web3, accounts, or contract. Check console for details.");
-            await timeout(2000);
-            this.props.history.push({
-                pathname:'hopital-naissance'
-            })
-        } 
->>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
 
         try {  
             await this.state.CivilStateInstance.methods.addDonneesParents(_login, _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere)
@@ -469,24 +424,7 @@ class EnregistrerNaissance extends Component {
             <Helmet>
             <title>{ TITLE }</title>
             </Helmet>
-<<<<<<< HEAD
                        
-=======
-            <div>
-                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
-                    <MuiAlert elevation={6} variant="filled" severity="success">
-                        Naissance enregistrée.
-                    </MuiAlert>
-                </Snackbar>
-            </div>
-            <div>
-                <Snackbar open={this.state.snackBarErrorOpen} autoHideDuration={3000} onClose={this.handleCloseErrorSnackBar}>
-                    <MuiAlert elevation={6} variant="filled" severity="error">
-                        Erreur de communication avec la blockchain. Rechargement de la page.
-                    </MuiAlert>
-                </Snackbar>
-            </div>   
->>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
             <Container>
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
@@ -567,10 +505,7 @@ class EnregistrerNaissance extends Component {
 
             </Container>
             
-<<<<<<< HEAD
 
-=======
->>>>>>> 5ca13d745c930eb98dfa1356db29706b81754c6b
             </>
          );
     }
