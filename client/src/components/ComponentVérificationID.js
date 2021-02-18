@@ -178,6 +178,9 @@ class ComponentVérificationID extends Component {
             this.setState({login: responseLogin});
             console.log(responseLogin);
 
+            // Récupérer l'ID à partir du login
+            const _id = await this.state.CivilStateInstance.methods.getIdFromLogin(responseLogin).call({from : this.state.account});
+
             // Donnees identification citoyen
             const responseInfoIdentificationCitoyen = await this.state.CivilStateInstance.methods.getInfoIdentificationCitoyen(responseLogin).call({from : this.state.account});
             const _sexe =  responseInfoIdentificationCitoyen[0];
@@ -206,7 +209,7 @@ class ComponentVérificationID extends Component {
             // Alimentation de la liste "infosCitoyen" pour appel de "getPerson" et affichage
             const _infosCitoyen = [_sexe, _nomFamille, _nomUsage, _premierPrenom, _autresPrenoms, _etatCivil, 
                             _dateNaissance, _communeNaissance, _departementNaissance,
-                            _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere];
+                            _nomFamilleMere, _prenomMere, _nomFamillePere, _prenomPere, _id];
             
             this.setState({infosCitoyen : _infosCitoyen});     
             localStorage.setItem('infoCitoyenLocal', _infosCitoyen);
