@@ -28,7 +28,12 @@ function App() {
   return (
     <Router>
       <div className="App">
-      <Navbar/>
+        <Switch>
+          <Route path="/" exact component={Navbar} />
+          <Route path="/home" component={Navbar} />
+          <Route path="/verification-id" component={Navbar} />
+          <Route path="/home-citoyen" component={Navbar}/>
+      </Switch>
       <HomepageHeader/>
         <Switch>
           <Route path="/" exact component={PageAdmin} />

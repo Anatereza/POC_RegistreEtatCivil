@@ -14,13 +14,13 @@ class Navbar extends Component {
                             <li className="element-menu-navbar">Papiers</li>
                             <li className="element-menu-navbar">Famille</li>
                         </ul>
-                        <div className="connexion-navbar">
+                        {/* <div className="connexion-navbar">
                             <span style={{textAlign:"center"}}>
                                 <i style={{paddingRight:"30px"}}class="fa fa-user"></i>
                                 Se connecter
                             </span>
                             
-                        </div>
+                        </div> */}
                     </div>
                 </Container>
             </div>
