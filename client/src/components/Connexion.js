@@ -46,7 +46,6 @@ class Connexion extends Component {
     render() { 
         return ( 
             <>
-            <div>{this.props.status}</div>
             <div className="container-block-connexion">
                 <div className="element-block-connexion">
                     <h2 style={{color:"#FBC658"}}>SE CONNECTER</h2>
