@@ -22,7 +22,7 @@ class VueVérificationIdentité extends Component {
             <Container style={{minHeight:"100vh"}}>
                 <Row style={{height:"100px"}}></Row>
                 <Row style={{height:"100%"}}>
-                    <Col md={{ size: 8, offset: 0 }}>
+                    <Col md={{ size: 9, offset: 0 }}>
                         <Row className="text-center" style={{paddingTop:"50px"}, {marginBottom:"50px"}}>
                             <h1 style={{color:"gray"}}>Vérifier une identité</h1>
                         </Row>

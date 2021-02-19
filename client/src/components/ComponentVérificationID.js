@@ -5,16 +5,21 @@ import {
     Input,
     Form,
   } from "reactstrap";
-import checkHash from 'services/checkHash';
 import getPerson from 'services/getPerson';
 import ErrorMessage from './ErrorMessage';
 import InfoPersonne from './InfoPersonne';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 // Back 
 import CivilStateContract from "../contracts/CivilState.json";
 import getWeb3 from "../getWeb3";
 import { provider } from "../variables";
 
+async function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+}
 
 class ComponentVérificationID extends Component {
     state = {
@@ -37,6 +42,9 @@ class ComponentVérificationID extends Component {
         login: '',
         infosCitoyen: [],
         hashFieldHasChanged:false,
+        loading:false,
+        snackBarErrorOpen:false,
+        snackBarSuccessOpen:false,
       }
 
     constructor(props) {
@@ -46,12 +54,21 @@ class ComponentVérificationID extends Component {
         this.setState = this.setState.bind(this);
     }
 
-    test(){
-        console.log('=== Test ===');
+    handleCloseErrorSnackBar(event, reason){
+        if (reason === 'clickaway') {
+        return;
+        }
+        this.setState({snackBarErrorOpen:false})
+    }
+
+    handleCloseSuccessSnackBar(event, reason){
+        if (reason === 'clickaway') {
+        return;
+        }
+        this.setState({snackBarSuccessOpen:false})
     }
 
     checkHash(hash){
-        //TODO : Définir le format du return 
         console.log("=== checkHash ===")
         let hashVerified;
         let _infosCitoyen = []
@@ -60,85 +77,52 @@ class ComponentVérificationID extends Component {
         this.verifyHash().then(
             (result) => {
                 console.log("** verifyHash done, promesse tenue : " + result + " **")
-                //this.updateState()
-                if (result){
+                if (result){  
                     _infosCitoyen = localStorage.getItem('infoCitoyenLocal');
                     login = localStorage.getItem('LoginLocal');
-                    this.setState({hashIsOk: true, hashSent:true}, function () {console.log("** hashIsOk = true **"); this.updateState()})
+                    this.setState({hashIsOk: true, hashSent:true, snackBarSuccessOpen: true}, function () {this.setState({loading:false}); this.updateState()})
+                    timeout(3000).then((result) => {
+                        this.setState({snackBarSuccessOpen: false})
+                    })
+                    
                 } else {
-        
-                    this.setState({hashIsOk: false, hashSent:true}, function () {console.log("** hashIsOk = false **");; this.updateState()})
+                    this.setState({hashIsOk: false, hashSent:true}, 
+                        function (){
+                            this.setState({loading:false}); 
+                            this.updateState()
+                        }
+                    )
                 }
             }
         )
-
-        /*if (hashVerified){
-            _infosCitoyen = localStorage.getItem('infoCitoyenLocal');
-            login = localStorage.getItem('LoginLocal');
-            this.setState({hashIsOk: true}, function () {console.log("** hashIsOk = true **");})
-        } else {
-
-            this.setState({hashIsOk: false}, function () {console.log("** hashIsOk = false **");})
-        }*/
-        
-
-        /*console.log("checkHash : local login")
-        console.log(login)
-        console.log("checkHash : local citoyen")
-        console.log(_infosCitoyen)*/
-
-        //const boolLogin = login.isEmpty();
-        //console.log(boolLogin);
-
-        /*if (login === '') {
-            hashVerified = false;
-        } else {
-            hashVerified = true;
-            _infosCitoyen = localStorage.getItem('infoCitoyenLocal');
-            login = localStorage.getItem('LoginLocal');
-        }
-
-
-        if (hashVerified) {
-            this.setState({hashIsOk: true})
-            
-        } else {
-            this.setState({hashIsOk: false})
-        }*/
-        //Passage à true de l'état hashSent pour signifier que le hash a été envoyé à la BC
-        //Appel de la fonction de mise à jour de updateState pour ajuster stateComponent en fonction
-        //console.log(this.state.hashIsOk)
-        //this.setState({hashSent: true}, function() {this.updateState()})
     }
 
     updateState(){
         console.log("=== updateSate ===")      
-
         if (this.state.hashSent) {
             if (this.state.hashIsOk) {
                 this.setState(() => ({stateComponent:"HashOK"}))
             } else {
                 this.setState(() => ({stateComponent:"HashKO"}))
             }
-        }
-        console.log(this.state);
+        }    
     }
     
     handleSubmit(e){
         e.preventDefault()
         console.log("=== handleSubmit ===")
-
-        if(this.state.hashFieldHasChanged===false && this.props.defaultHash!=="loaded"){
+        console.log(this.state)
+        if(this.state.fieldValue && this.state.hashFieldHasChanged===false && this.props.defaultHash!=="loaded"){
             this.setState({fieldValue: this.props.defaultHash}, function(){console.log(this.state.fieldValue);})
+            this.setState({loading:true})
         }
 
         if (this.state.fieldValue){
             //Recopie dans sentHash la valeur de fieldValue (qui est mise à jour on change) 
             //Lorsque c'est fait, appel de la fonction de check du hash contenu dans sentHash dans la BC
             this.setState({sentHash: this.state.fieldValue}, function() {this.checkHash(this.state.sentHash)})
-            //this.setState({sentHash: this.state.fieldValue})
+            this.setState({loading:true})
         }
-        //this.verifyHash();     
     }
 
     handleInputChange(e){
@@ -161,6 +145,8 @@ class ComponentVérificationID extends Component {
     handleClick(e){
         console.log("=== handleClick ===")
         this.setState({hashSent:false, hashIsOk:false, stateComponent:"init"})
+        window.location="verification-id"
+        window.location.reload();
     }
 
     // Back 
@@ -176,7 +162,6 @@ class ComponentVérificationID extends Component {
             const responseLogin = await this.state.CivilStateInstance.methods.verifyCertification(this.state.sentHash).call({from : this.state.account});
             localStorage.setItem('LoginLocal', responseLogin);
             this.setState({login: responseLogin});
-            console.log(responseLogin);
 
             // Récupérer l'ID à partir du login
             const _id = await this.state.CivilStateInstance.methods.getIdFromLogin(responseLogin).call({from : this.state.account});
@@ -222,12 +207,14 @@ class ComponentVérificationID extends Component {
            
             
         } catch (error) {
-        console.log("-- verifyHash => Catch");
-          this.setState({hashIsOk: false})
-          this.setState({hashSent: true}, function() {this.updateState()})
-          //alert(`Impossible de vérifier ce hash`,);
-          console.error(error);
-          return (false)
+            console.log("-- verifyHash => Catch");
+            this.setState({hashIsOk: false})
+            this.setState({hashSent: true},
+                function(){
+                    this.updateState();
+                }
+            )
+            console.error(error);  
         }
     }    
 
@@ -273,19 +260,41 @@ class ComponentVérificationID extends Component {
 
 
     render() {
-
         return (
+            <>
+            <div>
+                <Snackbar open={this.state.snackBarErrorOpen} autoHideDuration={3000} onClose={this.handleCloseErrorSnackBar}>
+                    <MuiAlert elevation={6}  severity="error">
+                        Erreur de communication avec la blockchain. Rechargement de la page.
+                    </MuiAlert>
+                </Snackbar>
+            </div>
+            <div>
+                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                    <MuiAlert elevation={6}  severity="success">
+                        Cette identité a été validée par les services d'état civil.
+                    </MuiAlert>
+                </Snackbar>
+            </div>
             <div style={{width:"100%"}}>
                 <Form style={{marginBottom:"70px"}} onSubmit={e=> {this.handleSubmit(e)}}>
                     <FormGroup className="container-input-hash">
-                        <Input className="element-input-hash" placeholder="Hash" value={this.defineInputValue()} type="text" onChange={e=> {this.handleInputChange(e)}}/>
-                        <Button className="element-input-hash" color="info" type="submit" onClickVerifier={()=>{this.handleClickVerifier()}}>
-                            Vérifier
-                        </Button>
+                        {this.state.stateComponent==="init" && 
+                        <>
+                            <Input className="element-input-hash large-input" placeholder="Clé de sécurité" value={this.defineInputValue()} type="text" onChange={e=> {this.handleInputChange(e)}}/>
+                            <Button className="element-input-hash" color="info" type="submit" onClickVerifier={()=>{this.handleClickVerifier()}}>
+                                Vérifier
+                            </Button>
+                        </>
+                        }
                         {this.state.stateComponent!=="init" &&
-                        <Button onClick={(e)=>{this.handleClick(e)}} type="button" className="btn-link ml-5 element-input-hash" color="info">
-                            Nouvelle recherche
-                        </Button>}
+                        <>
+                            <Input value={this.state.sentHash} className="element-input-hash" ></Input>
+                            <Button onClick={(e)=>{this.handleClick(e)}} type="button" className="btn-link ml-5 element-input-hash" color="info">
+                                Nouvelle recherche
+                            </Button>
+                        </>
+                        }
                     </FormGroup>
                 </Form>
                 {this.state.stateComponent==="HashOK" &&
@@ -293,12 +302,14 @@ class ComponentVérificationID extends Component {
                 {this.state.stateComponent==="HashKO" &&
                     <div style={{margin:"60px"}}>
                     <ErrorMessage 
-                        message="L'identifiant que vous avez saisi  ne correspond à aucune identité validée."
+                        message="La clé de sécurité que vous avez saisi  ne correspond à aucune identité validée."
                         sousMessage="Assurez-vous de l'avoir saisi correctement.">
                     </ErrorMessage>
                     </div>
                 }
+                {this.state.loading && <CircularProgress />}
             </div>
+            </>
          );
     }
 }
