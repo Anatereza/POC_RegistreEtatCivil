@@ -23,11 +23,11 @@ class AccueilMairie extends Component {
                 <title>{ TITLE }</title>
             </Helmet>
             <Container className="body-container">
-                <Row style={{paddingTop:"100px"}}>
+                {/* <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
                         <h1 className="ml-4" style={{color:"gray"}}>ACCUEIL</h1>
                     </div>
-                </Row>
+                </Row> */}
                 <Row style={{paddingTop:"100px"}}>
                         <Col className="mr-auto ml-auto" md="2" sm="3">
                             <Link to={{
