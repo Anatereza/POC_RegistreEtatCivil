@@ -3,7 +3,7 @@ import  { Component } from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { Helmet } from 'react-helmet'
 import imageValider from 'assets/img/IconesAccueils/Valider.png'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
 import getWeb3 from "../../getWeb3";
@@ -38,7 +38,8 @@ class ValiderIdentité extends Component {
         URL:"valider-identite",
         rows: [],
         tableHeight : "",
-        ID : ""
+        ID : "",
+        loading:true,
       }
 
     handleClick(e){
@@ -121,6 +122,7 @@ class ValiderIdentité extends Component {
           this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
         
           this.contructNaissanceList();
+          this.setState({loading:false})
           
         } catch (error) {
           // Catch any errors for any of the above operations.
@@ -128,7 +130,9 @@ class ValiderIdentité extends Component {
             `Failed to load web3, accounts, or contract. Check console for details.`,
           );
           console.error(error);
+          
         }
+        
     };
     // Back    
 
@@ -137,7 +141,7 @@ class ValiderIdentité extends Component {
         console.log(this.state.tableHeight)
         const rows = this.state.rows;
         const tableHeight = this.state.tableHeight;
-
+        
         return ( 
             <>
             <Helmet>
@@ -151,13 +155,16 @@ class ValiderIdentité extends Component {
                     </div>
                 </Row>
                 <div style={{height:"80px"}}></div>
+                {this.state.loading ? <CircularProgress/> :
                 <div style={{ height: tableHeight, width: '100%' }}>
-                    {Object.keys(rows).length !== 0 ? 
-                    <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={(e) => this.handleClick(e)}></DataGrid> :
-                    <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
-                }
-                    
-                </div>
+                {Object.keys(rows).length !== 0 ? 
+                <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={(e) => this.handleClick(e)}></DataGrid> :
+                <CircularProgress/>
+            }
+                
+            </div>
+              }
+                
             </Container>
             </>
          );
