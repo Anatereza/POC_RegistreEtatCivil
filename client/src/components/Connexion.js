@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { 
     Button,
     Form,
     Input,
-    FormGroup
+    FormGroup,
+    Row,
 } from 'reactstrap';
 
 
@@ -12,21 +14,22 @@ class Connexion extends Component {
     state = {
         login: "",
         pwd: "",
-        authentificationState:"init"
+        authentificationState:"init",
+        loading: false,
     };
 
     constructor(props) {
         console.log("=== Constructeur connexion ===")
         super(props)
-        
     }
 
     HandleSubmit(e){
-        console.log(this)
         e.preventDefault()
+        this.setState({loading:true})
         const param = [this.state.login, this.state.pwd];
         this.props.ClickHandler(param)
         this.updateState()
+        this.setState({loading:false})
     }
 
     updateLogin = event => {
@@ -43,6 +46,7 @@ class Connexion extends Component {
     render() { 
         return ( 
             <>
+            <div>{this.props.status}</div>
             <div className="container-block-connexion">
                 <div className="element-block-connexion">
                     <h2 style={{color:"#FBC658"}}>SE CONNECTER</h2>
@@ -55,9 +59,12 @@ class Connexion extends Component {
                                     <Input onChange={(e) => this.updatePwd(e)} placeholder="Mot de passe" type="password" className="form-control"></Input>
                                     {this.props.status==='KO' && <div style={{color: "#f5593d"}} >Combinaison identifiant / mot de passe incorrecte.</div>}
                                 </div>
-                                <Button type="submit" className="btn-round btn btn-info element-form-connexion">
-                                    Se connecter
-                                </Button>
+                                <Row className="flex-container-right-center">
+                                    {this.state.loading && <CircularProgress />}
+                                    <Button type="submit" className="btn-round btn btn-info element-form-connexion ml-4">
+                                        Se connecter
+                                    </Button>
+                                </Row>
                             </FormGroup>
                             
                             

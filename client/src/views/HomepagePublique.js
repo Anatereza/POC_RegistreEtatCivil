@@ -31,7 +31,7 @@ class HomepagePublique extends Component {
         CivilStateInstance: undefined,
         account: null,
         web3: null,
-        authentificationState:"init"
+        authentificationState:"init",
     }
 
     constructor(props) {
@@ -41,6 +41,7 @@ class HomepagePublique extends Component {
       }
 
     HandleClick(param){
+        
         console.log("=== handleClick ===")
         const identifiant = param[0];
         const mdp = param[1];
@@ -88,16 +89,17 @@ class HomepagePublique extends Component {
     // Back
     async getAuthentification  () {
         console.log("=== getAuthentification ===");
+        
         // Vérifier authentification
         const _identifiant = localStorage.getItem('IdentifiantLocal');
         const _pwd = localStorage.getItem('MdpLocal');
-
+        
         const responseAuth = await this.state.CivilStateInstance.methods.verifyAuthentification(_identifiant, _pwd).call({from : this.state.account});
         const _auth = responseAuth[0];
         
         this.setState({ auth: _auth});
         localStorage.setItem('AuthLocal', _auth);
-
+        
         if (_auth==="ko"){
             return (false)
         } else {
