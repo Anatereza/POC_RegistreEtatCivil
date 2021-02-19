@@ -293,7 +293,7 @@ class ComponentVérificationID extends Component {
                 {this.state.stateComponent==="HashKO" &&
                     <div style={{margin:"60px"}}>
                     <ErrorMessage 
-                        message="Le hash que vous avez saisi  ne correspond à aucune identité validée."
+                        message="L'identifiant que vous avez saisi  ne correspond à aucune identité validée."
                         sousMessage="Assurez-vous de l'avoir saisi correctement.">
                     </ErrorMessage>
                     </div>

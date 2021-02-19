@@ -420,7 +420,7 @@ class EnregistrerNaissance extends Component {
                         <FormGroup className={this.state.fieldsStates.get("Sexe")==="notValid" && "has-danger"}>
                             <Label for="oui">Sexe</Label>
                             <Input onChange={this.handleChange.bind(this, "Sexe")} type="select" placeholder="Sexe">
-                                <option>Féminin</option>
+                                <option>Feminin</option>
                                 <option>Masculin</option>
                             </Input>
                         </FormGroup>

@@ -245,7 +245,8 @@ class HomepageCitoyen extends Component {
                                             <PDFDownloadLink document={ActeDeNaissance(this.state.personnePDF)} fileName="ActeDeNaissance.pdf" className="btn-download-file">
                                                 {
                                                     ({ blob, url, loading, error }) => (loading ? 'Loading Générer mon acte de naissance...' :
-                                                        <Button type="button" className="btn-round ml-1 btn-download-file" color="info" onClick={() => (this.setState({ ready: false }))}>
+                                                        <Button type="button" className="btn-round ml-1 btn-download-file" color="info" style={{fontWeight:"bold", textTransform: 'none'}}
+                                                            onClick={() => (this.setState({ ready: false }))}>
                                                             <i class="fa fa-download mr-1"></i>
                                                             Télécharger mon acte de naissance
                                                         </Button>
@@ -257,13 +258,14 @@ class HomepageCitoyen extends Component {
                                         
                                         {!ready && (
                                             <Button type="button" className="btn-round ml-1 btn-download-file" color="info" 
+                                                style={{fontWeight:"bold", textTransform: 'none'}}
                                                 onClick={() => this.toggle()}>
                                                 <i class="fa fa-download mr-1"></i>    
                                                 Générer mon acte de naissance
                                             </Button>
                                         )}                                                                         
 
-                                <Button type="button" className="btn-round ml-1" color="info">
+                                <Button type="button" className="btn-round ml-1 btn-download-file" color="info" style={{fontWeight:"bold", textTransform: 'none'}}>
                                     <i class="fa fa-download mr-1"></i>Générer mon acte de mariage
                                 </Button>
                                 {/*<BlobProvider document={MyDocument()}>

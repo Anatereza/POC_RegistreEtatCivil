@@ -6,7 +6,7 @@ class QuestionsRéponses extends Component {
         return (
             <div className="liste-actus" style={{marginBottom:"50px"}}>
                 <div className="element-actu">
-                    <h2 style={{color:"#FBC658"}}>QESTIONS / REPONSES</h2>
+                    <h2 style={{color:"#FBC658"}}>QUESTIONS / REPONSES</h2>
                 </div >
                 
                 <a className="lien-hypertexte ligne-menu" href="#" style={{textAlign:"left"}}>Comment contester un refus de la mairie en matière d'état civil ?</a>

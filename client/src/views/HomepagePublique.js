@@ -76,6 +76,15 @@ class HomepagePublique extends Component {
         this.setState({ isConnexionState: true })
     }
 
+    /*Fonction pour rédiriger vers 'verification-id'*/
+      triggerClickHash = (e) => {
+        console.log("=== triggerClickHash ===")
+        this.setState({isTileState: false})
+        this.props.history.push({
+            pathname:'verification-id'
+        });
+    }
+
     // Back
     async getAuthentification  () {
         console.log("=== getAuthentification ===");
@@ -166,9 +175,10 @@ class HomepagePublique extends Component {
                                 <TileLogoButton action={this.triggerClickConnexion} titre="PARTICULIERS" type="connexion" contenu="Connectez-vous à votre espace personnel pour consulter votre état civil et accéder à vos démarches."/>
                             </Row>
                             <Row>
-                                <Link to="/verification-id">
-                                    <TileLogoButton titre="VERIFIEZ UNE IDENTITE" contenu="Le service de vérification d’identité vous permet de confirmer les déclarations d’identité."/>
-                                </Link>
+                                <TileLogoButton
+                                    action={this.triggerClickHash}
+                                    titre="VERIFIEZ UNE IDENTITE" contenu="Le service de vérification d’identité vous permet de confirmer les déclarations d’identité."
+                                /> 
                             </Row></>}
                         </div>
                         <div>{this.state.isConnexionState}{this.state.isConnexionState && 
