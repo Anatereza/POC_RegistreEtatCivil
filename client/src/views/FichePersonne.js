@@ -15,7 +15,7 @@ import CivilStateContract from "../contracts/CivilState.json";
 import getWeb3 from "../getWeb3";
 import { provider } from "../variables";
 
-const TITLE = 'Fiche personne'
+const TITLE = 'Côte d’Ivoire - Fiche personne'
 
 class FichePersonne extends Component {
     

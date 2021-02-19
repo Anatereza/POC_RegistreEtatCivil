@@ -11,7 +11,7 @@ import {
     Button,
   } from "reactstrap";
 
-const TITLE = 'Hopital - Naissance validée'
+const TITLE = 'Côte d’Ivoire - Naissance enregistrée'
 
 class NaissanceValidee extends Component {
     

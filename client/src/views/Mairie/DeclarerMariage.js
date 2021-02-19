@@ -24,7 +24,7 @@ import {
   } from "reactstrap";
 
 
-const TITLE = 'Mairie - Déclarer un mariage'
+const TITLE = 'Côte d’Ivoire - Déclarer un mariage'
 
 const columns = [
     { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>N° d’identification unique</div>, width: 240 },
@@ -368,7 +368,7 @@ class DeclarerMariage extends Component {
                       from : this.state.account,
                       gas: 1000000
                   })               
-            alert('Mariage validé');            
+            //alert('Mariage validé');            
 
           } catch (error) {
               // Catch any errors for any of the above operations.

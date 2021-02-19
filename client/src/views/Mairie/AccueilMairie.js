@@ -12,7 +12,7 @@ import {
   } from "reactstrap";
 
 
-  const TITLE = 'Mairie - Accueil'
+  const TITLE = 'Côte d’Ivoire - Accueil Mairie'
 
 class AccueilMairie extends Component {
     state = {  }

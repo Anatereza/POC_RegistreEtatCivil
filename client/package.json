@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/data-grid": "^4.0.0-alpha.19",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@react-pdf/renderer": "^1.6.13",
     "@truffle/hdwallet-provider": "^1.2.2",
     "classnames": "2.2.6",

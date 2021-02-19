@@ -15,7 +15,7 @@ import {
   } from "reactstrap";
 import ErrorMessage from 'components/ErrorMessage';
 
-const TITLE = 'Préfecture - Valider une identité'
+const TITLE = 'Côte d’Ivoire - Valider une identité'
 
 const columns = [
   { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>N° d’identification unique</div>, width: 240 },

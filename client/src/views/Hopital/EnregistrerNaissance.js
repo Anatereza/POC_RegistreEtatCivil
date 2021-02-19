@@ -21,7 +21,7 @@ import {
     Label,
   } from "reactstrap";
 
-const TITLE = 'Hopital - Enregistrer une naissance'
+const TITLE = 'Côte d’Ivoire - Enregistrer une naissance'
 
 function timeout(delay) {
     return new Promise( res => setTimeout(res, delay) );
