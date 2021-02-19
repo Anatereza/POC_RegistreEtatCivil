@@ -3,6 +3,8 @@ import InfoPersonne from "components/InfoPersonne"
 import ActeDeNaissance from "components/GeneratePDF"
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import logoHomeCitoyen from 'assets/img/icon_homepage_citizen.jpg'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 import {
     Button,
@@ -192,18 +194,20 @@ class HomepageCitoyen extends Component {
 
         if (!this.state.web3) {      
             return (
-              <div className="HomePageCitoyen">
-                  <div className="HomePageCitoyen-title">
-                    <h1>
-                      Loading Web3, accounts, and contract...
-                    </h1>
-                  </div>                  
-              </div>
+                <Container className="body-container">
+                    <Row style={{paddingTop:"50px"}}>
+                        <Col className="offset-md-2 text-center">
+                            <CircularProgress />
+                            <div>Chargement des données</div>
+                        </Col>
+                    </Row>
+                </Container>
             );
         }        
 
         return (
             <Container className="body-container">
+
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
                         <img style={{width:"80px"}} alt="..." src={logoHomeCitoyen}/>
