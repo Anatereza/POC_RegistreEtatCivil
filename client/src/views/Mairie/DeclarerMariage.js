@@ -5,7 +5,9 @@ import { Helmet } from 'react-helmet';
 import ErrorMessage from 'components/ErrorMessage';
 import SimpleTable from 'components/SimpleTable';
 import image from 'assets/img/IconesAccueils/Valider.png'
-
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
 import getWeb3 from "../../getWeb3";
@@ -20,10 +22,14 @@ import {
     Input,
     Button,
     Col,
-    Progress
+    Progress,
+    
   } from "reactstrap";
 
-
+async function timeout(delay) {
+    return new Promise( res => setTimeout(res, delay) );
+    
+}
 const TITLE = 'Côte d’Ivoire - Déclarer un mariage'
 
 const columns = [
@@ -39,8 +45,6 @@ const columns = [
 class DeclarerMariage extends Component {
     constructor(props){
         super(props);
-
-        console.log(this.props)
 
         // Maps pour le formulaire détails du mariage
         const fieldsValues = new Map();
@@ -81,18 +85,26 @@ class DeclarerMariage extends Component {
             stateSearchComponent:"init",
             rows: [],
             tableHeight : "",
+            loading:true,
+            snackBarSuccessOpen:true,
         }
 
 
 
         console.log("=== constructeur ===")
+        //this.setState({loading:true})
+        
+        timeout(3000).then((result) => {
+            this.setState({snackBarSuccessOpen: false})
+        })
+
         this.HandleClick = this.HandleClick.bind(this);
         this.HandleClickSuivant = this.HandleClickSuivant.bind(this);
         this.HandleSubmitMariage = this.HandleSubmitMariage.bind(this);
 
         if (localStorage.getItem('wkfStateLocal') < 1) {
             localStorage.setItem('wkfStateLocal',1)
-            console.log("Initialiser wkfStateLocal si undefined")
+
         }
 
         if(this.props.location.state){
@@ -100,7 +112,6 @@ class DeclarerMariage extends Component {
                 case "clickBack" :
                     switch (localStorage.getItem('wkfStateLocal')){
                         case "1" :
-                            console.log("cas wkf=1")
                             localStorage.setItem('premierConjoint', "")
                         break;
                         case "2" :                    
@@ -124,12 +135,19 @@ class DeclarerMariage extends Component {
         let fieldsValues = this.state.fieldsValues
         fieldsValues.set(field,e.target.value)
         this.setState({fieldsValues});
-        console.log(this.state.fieldsValues);
     }
 
     //Gestionnaire du clic pour la validation des informations complémentaires sur le mariage
     HandleSubmitMariage(e){
         e.preventDefault()
+
+        this.setState({snackBarSuccessOpen: true})
+
+        timeout(3000).then((result) => {
+            console.log("timeout");
+            this.setState({snackBarSuccessOpen: false})
+        })
+
         let fieldsStates = this.state.fieldsStates
         let fieldsValues = this.state.fieldsValues
         let formIsValid = true
@@ -204,11 +222,8 @@ class DeclarerMariage extends Component {
                 }
             }
         this.setState({fieldsStates:fieldsStates}, function(){console.log(this.state.fieldsStates)});
-        
-        console.log("formIsValid : " + formIsValid)
         //Réinitialisation du compteur workflow
         if (formIsValid){
-            console.log(localStorage.getItem('mariageNomTémoin2'))
             localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
             this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
         }
@@ -220,10 +235,22 @@ class DeclarerMariage extends Component {
     }
 
     HandleClickValidation(e){
-        
+        this.setState({snackBarSuccessOpen: true})
+
         localStorage.setItem('wkfStateLocal', 5)
         this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
-        this.handleClickValiderMariage(); // Après : Reset compteur wkf & Retour page d'accueil        
+        this.handleClickValiderMariage(); // Après : Reset compteur wkf & Retour page d'accueil
+        
+        timeout(3000).then((result) => {
+
+            localStorage.setItem('wkfStateLocal', 1);
+            this.props.history.push({
+
+                pathname:'home-mairie'
+            }) 
+        })
+        
+               
     }
 
     HandleClick(e){
@@ -244,7 +271,7 @@ class DeclarerMariage extends Component {
         }
 
 
-        this.setState((prevState) => ({...prevState,["personne"] :personne}), function() {console.log(this.state.personne);});
+        this.setState((prevState) => ({...prevState,["personne"] :personne}));
         
         if (localStorage.getItem('wkfStateLocal')==='1'){
             localStorage.setItem('premierConjoint', personne)
@@ -265,9 +292,6 @@ class DeclarerMariage extends Component {
             localStorage.setItem('dateDeNaissance2', dateDeNaissance)
             localStorage.setItem('communeDeNaissance2', communeDeNaissance)
         }
-
-        console.log(localStorage.getItem('nom1'));
-        console.log(localStorage.getItem('dateDeNaissance1'));
 
         this.props.history.push({
             pathname:'fiche-personne',
@@ -316,23 +340,19 @@ class DeclarerMariage extends Component {
         e.preventDefault()
         if (this.state.IDSearchFieldValue){
             this.setState({IDSearch: this.state.fieldValue}, 
-                function() {
-                console.log(this.state.IDSearch); 
-                this.setState({stateSearchComponent:"search"}, 
-                    function() {
-                    console.log(this.state.stateSearchComponent)})
+                function(){
+                    this.setState({stateSearchComponent:"search"})
                 }
             )
-
         }
     }
 
     HandleIDInputChange(e){
-        this.setState({IDSearchFieldValue:e.target.value}, function() {console.log(this.state.IDSearchFieldValue)})
+        this.setState({IDSearchFieldValue:e.target.value})
     }
 
     HandleClickNvlleRecherche(e){
-        this.setState({stateSearchComponent:"init"}, function(){console.log("stateSearchComponent" + this.state.stateSearchComponent)})
+        this.setState({stateSearchComponent:"init"})
     }
 
     handleClickValiderMariage = async () => {
@@ -350,9 +370,9 @@ class DeclarerMariage extends Component {
  
         try {  
             // Récupérer le login avec l'ID
+            console.log("handleClickValiderMariage => try")
             const responseLogin1 = await this.state.CivilStateInstance.methods.getLoginFromId(idConjoint1).call({from : this.state.account});
             const responseLogin2 = await this.state.CivilStateInstance.methods.getLoginFromId(idConjoint2).call({from : this.state.account});
-
 
             // Appel pour marier premier conjoint
             await this.state.CivilStateInstance.methods.declareMariage(responseLogin1, etatCivilConjoint1)
@@ -368,26 +388,19 @@ class DeclarerMariage extends Component {
                       from : this.state.account,
                       gas: 1000000
                   })               
-            //alert('Mariage validé');            
+            //alert('Mariage validé');
+            
+
 
           } catch (error) {
               // Catch any errors for any of the above operations.
-              alert(
-                `En cours de chargement`,
-              );
+              console.log("handleClickValiderMariage => catch")
               console.error(error);
-         }
-         
-         localStorage.setItem('wkfStateLocal', 1);
-         this.props.history.push({
-             pathname:'home-mairie'
-         })
+          }
     }    
 
     contructIdentiteList = async () => {
-       
         const citoyenCount = await this.state.CivilStateInstance.methods.getCitoyensCount().call({from : this.state.account});
-        console.log(citoyenCount);
         for (let i = 0; i < citoyenCount; i++) {
       
             // Récupérer le login, l'id et le statut
@@ -411,18 +424,17 @@ class DeclarerMariage extends Component {
               const _i = i + 1;
               const identiteVerifie = {id: _i, ID : _id, nom: _nomFamille, prenom: _premierPrenom, sexe: _sexe, dateDeNaissance: _dateNaissance, communeDeNaissance: _communeNaissance}
               this.setState({rows : [...this.state.rows, identiteVerifie]});
-              console.log(identiteVerifie);
             }
       
         }
 
         const defTableHeight = 56+52+10+Object.keys(this.state.rows).length*52;
         this.setState({tableHeight : defTableHeight});
-        console.log(this.state.rows);
       }
 
     //Back
     componentDidMount = async () => {
+        console.log("=== componentDidMount ===");
         // FOR REFRESHING PAGE ONLY ONCE -
         if(!window.location.hash){
           window.location = window.location + '#loaded';
@@ -451,6 +463,7 @@ class DeclarerMariage extends Component {
           this.setState({ CivilStateInstance: instance, web3: web3, account: accounts[0] });
         
           this.contructIdentiteList();
+          this.setState({loading:false})
           
         } catch (error) {
           // Catch any errors for any of the above operations.
@@ -462,12 +475,24 @@ class DeclarerMariage extends Component {
     };
     // Back       
     
-    render() {
-        console.log("---render")
-        console.log(localStorage.getItem('wkfStateLocal'))
-        console.log(this.state.wkfState)
-        
+    render() {     
         return (
+            <>
+            {this.state.loading ? 
+
+                <Container className="body-container">
+                    <Helmet>
+                        <title>{ TITLE }</title>
+                    </Helmet>
+                    <Row style={{paddingTop:"100px"}}>
+                        <div className="flex-container-left-center">
+                            <img style={{width:"80px"}} alt="..." src={image}/>
+                            <h1 className="ml-4" style={{color:"gray"}}>Déclarer un mariage</h1>
+                        </div>
+                    </Row>
+                    <div style={{height:"80px"}}></div>
+                    <CircularProgress/>
+                </Container> :
             <>
             <Helmet>
                 <title>{ TITLE }</title>
@@ -521,7 +546,9 @@ class DeclarerMariage extends Component {
                 <br/>
                 {localStorage.getItem('wkfStateLocal')==1 && 
                     <div>
+                        {this.state.loading ? <CircularProgress></CircularProgress> :
                         <div style={{width:"70%"}}>
+                        
                             <Form style={{marginBottom:"30px"}} onSubmit={e=> {this.HandleSubmitRecherche(e)}}>
                                 <FormGroup className="container-input-hash">
                                     <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
@@ -537,9 +564,12 @@ class DeclarerMariage extends Component {
 
                                 </FormGroup>
                             </Form>
+                        
                         </div>
+                        }
                         <div style={{ height: this.state.tableHeight, width: '100%' }}>
-                            {Object.keys(this.state.rows).length !== 0 ? 
+                            
+                            {Object.keys(this.state.rows).length !== 0 && !this.state.loading ? 
                             <DataGrid rows={this.state.rows} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
                             <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
                             }
@@ -548,7 +578,12 @@ class DeclarerMariage extends Component {
                 }
                 {localStorage.getItem('wkfStateLocal')==2 && 
                 <div style={{ height: this.state.tableHeight, width: '100%' }}>
-                    {Object.keys(this.state.rows).length !== 0 ? 
+                    <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                            <MuiAlert elevation={6} variant="filled" severity="success">
+                                Premier conjoint validé.
+                            </MuiAlert>
+                    </Snackbar>
+                    {Object.keys(this.state.rows).length !== 0 && !this.state.loading ? 
                     <DataGrid rows={this.state.rows} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
                     <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
                     }
@@ -556,6 +591,11 @@ class DeclarerMariage extends Component {
                 
                 {localStorage.getItem('wkfStateLocal')==3 &&
                     <div>
+                        <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                            <MuiAlert elevation={6} variant="filled" severity="success">
+                                Second conjoint validé.
+                            </MuiAlert>
+                        </Snackbar>
                         <Row style={{paddingTop:"30px"}}></Row>
                         <Row>
                             <Col className="col-4 ">
@@ -638,8 +678,22 @@ class DeclarerMariage extends Component {
                         </Row>
                     </div>
                 }
-                {localStorage.getItem('wkfStateLocal')==4 &&
+                {localStorage.getItem('wkfStateLocal')>=4 &&
                 <>
+                {localStorage.getItem('wkfStateLocal')==4 &&
+                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                        <MuiAlert elevation={6} variant="filled" severity="success">
+                            Données complémentaires validées.
+                        </MuiAlert>
+                </Snackbar>
+                }
+                {localStorage.getItem('wkfStateLocal')==5 &&
+                        <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                            <MuiAlert elevation={6} variant="filled" severity="success">
+                                Mariage validé. Redirection.
+                            </MuiAlert>
+                        </Snackbar>
+                }      
                 <Row >
                     <Col className="offset-sm-2">
                         <Row style={{paddingTop:"30px"}}>
@@ -666,11 +720,17 @@ class DeclarerMariage extends Component {
                             </Col>
                         </Row>
                     </Col>
+                    
+                    
+                    
+                       
                 </Row>
                 </>
                 }
                 
             </Container>
+            </>
+            }
             </>
          );
     }

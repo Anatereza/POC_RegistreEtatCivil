@@ -9010,7 +9010,7 @@ td.rdtYear:hover {
 }
 
 .body-container {
-	min-height: calc(100vh - 32px - 150px - 160px);
+	min-height: calc(100vh - 150px - 160px);
 }
 
 Label {
