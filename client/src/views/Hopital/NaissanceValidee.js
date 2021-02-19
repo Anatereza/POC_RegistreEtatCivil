@@ -57,7 +57,7 @@ class NaissanceValidee extends Component {
                             <div>
                                 <h1 style={{color:"gray"}}>Naissance saisie</h1>
                                 <SimpleTable className="simple-table-validation"  data={this.MakeTableRecap().slice(0,1)}/>
-                                <div style={{paddingTop:"30px"}}>Cette naissance va maintenant être soumise à validation par le service des états civils</div>
+                                <div style={{paddingTop:"30px"}}>Cette naissance va maintenant être soumise à validation au service des états civils</div>
                             </div >
                         </div>
                         <Row style={{paddingTop:"30px"}}>

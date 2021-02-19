@@ -4,7 +4,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { Helmet } from 'react-helmet';
 import ErrorMessage from 'components/ErrorMessage';
 import SimpleTable from 'components/SimpleTable';
-import image from 'assets/img/IconesAccueils/Valider.png'
+import image from 'assets/img/IconesAccueils/Mariage.png'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -87,6 +87,8 @@ class DeclarerMariage extends Component {
             tableHeight : "",
             loading:true,
             snackBarSuccessOpen:true,
+            filteredList:[],
+            searchLaunched:false,
         }
 
 
@@ -336,19 +338,37 @@ class DeclarerMariage extends Component {
         return (result);
     }
     
-    HandleSubmitRecherche(e){
-        e.preventDefault()
-        if (this.state.IDSearchFieldValue){
-            this.setState({IDSearch: this.state.fieldValue}, 
-                function(){
-                    this.setState({stateSearchComponent:"search"})
-                }
-            )
-        }
-    }
-
     HandleIDInputChange(e){
-        this.setState({IDSearchFieldValue:e.target.value})
+        this.setState({IDSearchFieldValue:e.target.value}, function(){
+            if (this.state.IDSearchFieldValue){
+                this.setState({searchLaunched:true})
+                
+                    this.setState({IDSearch: this.state.fieldValue}, 
+                        function(){
+                            this.setState({stateSearchComponent:"search"})
+                        }
+                    )
+                
+                const fullList = this.state.rows
+                let filteredList =[]
+                let i = 0
+                for (const element of fullList){
+                    
+                    if (element["ID"].includes(this.state.IDSearchFieldValue)){
+                        i+=1
+                        filteredList.push(element)
+                    }
+                }
+                const defTableHeight = 56+52+10+i*52;
+                console.log(defTableHeight)            
+                this.setState({tableHeight : defTableHeight, filteredList:filteredList})
+                this.forceUpdate()
+            }else{
+                this.setState({searchLaunched:false})
+                this.forceUpdate()
+            }
+        })
+        
     }
 
     HandleClickNvlleRecherche(e){
@@ -428,8 +448,7 @@ class DeclarerMariage extends Component {
       
         }
 
-        const defTableHeight = 56+52+10+Object.keys(this.state.rows).length*52;
-        this.setState({tableHeight : defTableHeight});
+        
       }
 
     //Back
@@ -549,31 +568,22 @@ class DeclarerMariage extends Component {
                         {this.state.loading ? <CircularProgress></CircularProgress> :
                         <div style={{width:"70%"}}>
                         
-                            <Form style={{marginBottom:"30px"}} onSubmit={e=> {this.HandleSubmitRecherche(e)}}>
+                            <Form style={{marginBottom:"30px"}}>
                                 <FormGroup className="container-input-hash">
                                     <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
-                                    <Button className="element-input-hash" color="info" type="submit">
-                                        Rechercher
-                                    </Button>
-                                    
-                                    {this.state.stateSearchComponent=="search" &&
-                                    <Button onClick={(e)=>{this.HandleClickNvlleRecherche(e)}} type="button" className="btn-link ml-5 element-input-hash" color="info">
-                                        Nouvelle recherche
-                                    </Button>
-                                    }
-
                                 </FormGroup>
                             </Form>
                         
                         </div>
                         }
                         <div style={{ height: this.state.tableHeight, width: '100%' }}>
-                            
-                            {Object.keys(this.state.rows).length !== 0 && !this.state.loading ? 
-                            <DataGrid rows={this.state.rows} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
-                            <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
-                            }
-                        </div>
+
+                        {Object.keys(this.state.filteredList).length === 0 ?
+                            <> {this.state.searchLaunched ? <ErrorMessage message="Aucune personne ne correspond à cet identifiant unique"></ErrorMessage> 
+                        :<div></div>}</>
+                        : <DataGrid rows={this.state.filteredList} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid>
+                        }
+                        </div> 
                     </div>
                 }
                 {localStorage.getItem('wkfStateLocal')==2 && 
@@ -583,9 +593,21 @@ class DeclarerMariage extends Component {
                                 Premier conjoint validé.
                             </MuiAlert>
                     </Snackbar>
-                    {Object.keys(this.state.rows).length !== 0 && !this.state.loading ? 
-                    <DataGrid rows={this.state.rows} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid> :
-                    <ErrorMessage message="Il n'y a aucune identité à valider"></ErrorMessage>
+                    {this.state.loading ? <CircularProgress></CircularProgress> :
+                        <div style={{width:"70%"}}>
+                        
+                            <Form style={{marginBottom:"30px"}}>
+                                <FormGroup className="container-input-hash">
+                                    <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
+                                </FormGroup>
+                            </Form>
+                        
+                        </div>
+                        }
+                    {Object.keys(this.state.filteredList).length === 0 ?
+                            <> {this.state.searchLaunched ? <ErrorMessage message="Aucune personne ne correspond à cet identifiant unique"></ErrorMessage> 
+                        :<div></div>}</>
+                        : <DataGrid rows={this.state.filteredList} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid>
                     }
                 </div>}
                 
