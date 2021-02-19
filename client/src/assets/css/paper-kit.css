@@ -8940,8 +8940,8 @@ td.rdtYear:hover {
 }
 
 .element-menu-navbar:nth-child(4) {
-	border-bottom-color: #fbbc05;
-	color: #fbbc05;
+	border-bottom-color: #be8f00;
+	color: #be8f00;
 	border-bottom-style: solid;
 	border-bottom-width: 2px;
 	border-right-color: white;
@@ -9002,7 +9002,7 @@ td.rdtYear:hover {
 }
 
 .body-container {
-	min-height: calc(100vh - 32px - 150px);
+	min-height: calc(100vh - 32px - 150px - 160px);
 }
 
 Label {
@@ -9051,6 +9051,26 @@ Label {
 
 .fa-check:hover {
 	cursor: pointer;
+}
+
+.container-tile-validation {
+	display: flex;
+	direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 65%;
+	text-align: left;
+	flex-wrap: wrap;
+}
+
+.img-tile-valider {
+	width: 80px;
+	height: 80px;
+}
+
+.container-tile-validation .simple-table {
+	width: 600px;
+	line-height: 40px;
 }
 
 /*# sourceMappingURL=paper-kit.css.map */
