@@ -5,15 +5,6 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import logoHomeCitoyen from 'assets/img/icon_homepage_citizen.jpg'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
-
 import {
     Button,
     Container,
