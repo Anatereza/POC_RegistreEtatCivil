@@ -51,7 +51,7 @@ class IdentiteValidee extends Component {
             <title>{ TITLE }</title>
             </Helmet>
             
-            <Container>
+            {/* <Container>
             <Row style={{paddingTop:"100px"}}>
                 <div className="flex-container-left-center">
                     <img style={{width:"80px"}} alt="..." src={imageValider}/>
@@ -77,7 +77,28 @@ class IdentiteValidee extends Component {
                     </Form>
                 </Col>            
 
-        </Container>             
+        </Container>   */}  
+        <Container className="body-container">
+                <Row style={{paddingTop:"180px"}} />
+                <Row className="text-center">
+                    <Col className="col-sm-12 col-md-12 offset-md-2">
+                        <div className="container-tile-validation">
+                            <img className="img-tile-valider" alt="..." src={imageValider}/>
+                            <div>
+                                <h1 style={{color:"gray"}}>Identité validée</h1>
+                                <SimpleTable className="simple-table-validation"  data={this.MakeTableRecap().slice(0,1)}/>
+                            </div >
+                        </div>
+                        <Row style={{paddingTop:"30px"}}>
+                            <Col className="offset-md-12">
+                                <Button onClick={(e)=>{this.handleClick(e)}} className="btn-round btn ml-8 btn-info" color="info">
+                                    Terminer
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>            
             
             
             </>
