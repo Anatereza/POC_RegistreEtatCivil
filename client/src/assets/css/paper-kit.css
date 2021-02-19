@@ -6184,7 +6184,7 @@ License - nucleoapp.com/license/
 }
 
 .page-header {
-	background-color: #ededed;
+	background-color: #fcf9f8;
 	background-position: center center;
 	background-size: cover;
 	min-height: 10vh;
@@ -8829,8 +8829,7 @@ td.rdtYear:hover {
 	color: white;
 	font-family: "Montserrat", "Helvetica", Arial, sans-serif;
 }
-è
-.btn-download-file:hover {
+è .btn-download-file:hover {
 	font-size: 1rem;
 	font-weight: 400;
 	color: white;
@@ -8999,6 +8998,14 @@ td.rdtYear:hover {
 	align-items: center;
 }
 
+.flex-container-col-left {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	height: 850px;
+}
+
 .ml-1 {
 	margin-left: 2px;
 }
@@ -9130,4 +9137,35 @@ Label {
 .bold {
 	font-weight: bold;
 }
+
+.round-numbers {
+	background: linear-gradient(to bottom right, #51cbce, #6bd098);
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	color: white;
+	border-radius: 100%;
+	font-weight: bold;
+	font-size: x-large;
+	margin: 0px;
+	text-align: center;
+	margin-right: 20px;
+}
+
+.text-how-to {
+	font-family: "Montserrat", "Helvetica", Aria regular, sans-serif;
+	font-size: 16px;
+}
+
+.img-verif-id {
+	align-self: center;
+}
+
+.bloc-how-to {
+	background-color: #fcf9f8;
+	padding: 30px;
+	padding-left: 40px;
+	border-radius: 10px;
+}
+
 /*# sourceMappingURL=paper-kit.css.map */
