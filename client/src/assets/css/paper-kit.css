@@ -8804,6 +8804,16 @@ td.rdtYear:hover {
 }
 
 .ligne-menu {
+	margin-left: 15px;
+	width: 100%;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	border-bottom: solid 1px #bebbb7;
+	font-family: "Montserrat", "Helvetica", Arial, sans-serif;
+	text-align: left;
+}
+
+.ligne-menu-titre {
 	padding-left: 15px;
 	width: 100%;
 	padding-top: 10px;
@@ -8819,7 +8829,7 @@ td.rdtYear:hover {
 	color: white;
 	font-family: "Montserrat", "Helvetica", Arial, sans-serif;
 }
-
+è
 .btn-download-file:hover {
 	font-size: 1rem;
 	font-weight: 400;
@@ -9085,4 +9095,39 @@ Label {
 	width: 2000px;
 }
 
+.ct-bleu {
+	color: #0b6ba8;
+}
+
+.ct-rouge {
+	color: #a63950;
+}
+
+.ct-vert {
+	color: #0c7b38;
+}
+
+.ct-jaune {
+	color: #be8f00;
+}
+
+.bg-bleu {
+	background-color: #a3dcff;
+}
+
+.bg-rouge {
+	background-color: #a63950;
+}
+
+.bg-vert {
+	background-color: #0c7b38;
+}
+
+.bg-jaune {
+	background-color: #be8f00;
+}
+
+.bold {
+	font-weight: bold;
+}
 /*# sourceMappingURL=paper-kit.css.map */

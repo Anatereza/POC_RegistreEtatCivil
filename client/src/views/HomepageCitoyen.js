@@ -5,6 +5,14 @@ import { PDFDownloadLink } from '@react-pdf/renderer'
 import logoHomeCitoyen from 'assets/img/icon_homepage_citizen.jpg'
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 import {
     Button,
@@ -277,19 +285,67 @@ class HomepageCitoyen extends Component {
                         </Row>
                         <Row style={{paddingTop:"30px"}, {display:"flex"}, {flexDirection:"column"}, {alignItems:"flex-start"}}>
                             <h2 className="ct-orange" style={{textAlign:"left"}}>MES DEMARCHES</h2>
-                            <h6 style={{paddingTop:"30px"}}>Etats Civils</h6>
-                            <div className="ligne-menu">Changement d'état civil</div>
-                            <div className="ligne-menu">Livret de famille</div>
-                            <div className="ligne-menu" style={{fontWeight:"bold"}}>Actes d’états civils</div>
-                            <h6 style={{paddingTop:"30px"}}>Elections</h6>
-                            <div className="ligne-menu">S’inscrire sur les listes électorales</div>
-                            <div className="ligne-menu">Déclarer un changement de circonscription</div>
-                            <h6 style={{paddingTop:"30px"}}>Papiers</h6>
-                            <div className="ligne-menu">Faire une demande de passeport</div>
-                            <div className="ligne-menu">Faire une demande de titre d’identité</div>
-                            <h6 style={{paddingTop:"30px"}}>Famille</h6>
-                            <div className="ligne-menu">Déclarer un décès</div>
-                            <div className="ligne-menu">Faire une demande de divorce</div>
+                            <h6 className="ct-bleu bold ligne-menu-titre" style={{paddingTop:"30px"}}>Etats Civils</h6>
+                            <div className="ct-bleu ligne-menu">Changement d'état civil</div>
+                            <div className="ct-bleu ligne-menu">Livret de famille</div>
+                            <div className="ct-bleu ligne-menu flex-container-left-center" style={{fontWeight:"bold"}}>
+                                <i class="fa fa-angle-right bold"></i>
+                                Actes d’états civils
+                            </div>
+                            <h6 className="ct-rouge bold ligne-menu-titre" style={{paddingTop:"30px"}}>Elections</h6>
+                            <div className="ct-rouge ligne-menu">S’inscrire sur les listes électorales</div>
+                            <div className="ct-rouge ligne-menu">Déclarer un changement de circonscription</div>
+                            <h6 className="ct-vert bold ligne-menu-titre" style={{paddingTop:"30px"}}>Papiers</h6>
+                            <div className="ligne-menu ct-vert">Faire une demande de passeport</div>
+                            <div className="ligne-menu ct-vert">Faire une demande de titre d’identité</div>
+                            <h6 className="ct-jaune bold ligne-menu-titre" style={{paddingTop:"30px"}}>Famille</h6>
+                            <div className="ligne-menu ct-jaune">Déclarer un décès</div>
+                            <div className="ligne-menu ct-jaune">Faire une demande de divorce</div>
+                            {/* <Accordion style={{width:"100px"}} expanded>
+                                <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                                >
+                                    <h6 className="ct-bleu bold">Etats Civils</h6>
+                                </AccordionSummary>
+                                <AccordionDetails style={{display:"flex"}, {direction:"row"}}>
+                                    <div className="ligne-menu">Changement d'état civil</div>
+                                    <div className="ligne-menu">Livret de famille</div>
+                                    <div className="ligne-menu">Actes d’états civils</div>
+                                </AccordionDetails>
+                            </Accordion>
+                            <Accordion style={{width:"100%"}}>
+                                <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel2a-content"
+                                id="panel2a-header"
+                                >
+                                    <h6 className="ct-rouge bold ">Elections</h6>
+                                </AccordionSummary>
+                                <AccordionDetails >   
+                                    <div style={{width:"100%"}}>test</div>
+                                    <div style={{width:"100%"}}>test</div>
+                                </AccordionDetails>
+                            </Accordion>
+                            <Accordion style={{width:"100%"}}>
+                                <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel3a-content"
+                                id="panel3a-header"
+                                >
+                                    <h6 className="ct-vert bold ">Papiers</h6>
+                                </AccordionSummary>
+                            </Accordion>
+                            <Accordion style={{width:"100%"}}>
+                                <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel3a-content"
+                                id="panel3a-header"
+                                >
+                                    <h6 className="ct-jaune bold ">Famille</h6>
+                                </AccordionSummary>
+                            </Accordion> */}
                         </Row>
                     </Col>
                 </Row>
