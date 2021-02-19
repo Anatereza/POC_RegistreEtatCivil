@@ -8,7 +8,7 @@ import {
 
 class VueVérificationIdentité extends Component {
     state = {
-        paramHash : this.props.history.location.hash.slice(1,this.props.history.location.hash.length)
+        paramHash : this.props.history.location.search.slice(1,this.props.history.location.search.length)
     }
 
     constructor(props) {
@@ -16,6 +16,8 @@ class VueVérificationIdentité extends Component {
     }
 
     render() { 
+
+        console.log(this.props.history);
         return (
             <Container style={{minHeight:"100vh"}}>
                 <Row style={{height:"100px"}}></Row>
