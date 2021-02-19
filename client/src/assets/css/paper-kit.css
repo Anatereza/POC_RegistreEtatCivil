@@ -8844,13 +8844,13 @@ td.rdtYear:hover {
 
 .container-input-hash {
 	display: flex;
-
+	align-items: center;
 	width: 100%;
 	height: 38px;
 }
 
 .element-input-hash:nth-child(1) {
-	max-width: 250px;
+	max-width: 600px;
 }
 
 .element-input-hash:nth-child(2) {
@@ -8981,6 +8981,14 @@ td.rdtYear:hover {
 	align-items: center;
 }
 
+.flex-container-right-center {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+}
+
 .ml-1 {
 	margin-left: 2px;
 }
@@ -9071,6 +9079,10 @@ Label {
 .container-tile-validation .simple-table {
 	width: 600px;
 	line-height: 40px;
+}
+
+.large-input {
+	width: 2000px;
 }
 
 /*# sourceMappingURL=paper-kit.css.map */
