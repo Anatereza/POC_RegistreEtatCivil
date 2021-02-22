@@ -21,14 +21,20 @@ class VueVérificationIdentité extends Component {
 
     constructor(props) {
         super(props)
+        this.HandleClickNvlleRecherche = this.HandleClickNvlleRecherche.bind(this)
+    }
+
+    HandleClickNvlleRecherche(){
+        this.props.history.push({
+            pathname:"verification-id"
+        })
+        this.setState({paramHash:""})
     }
 
     render() { 
-
-        console.log(this.props.history);
         return (
             <Container style={{minHeight:"100vh"}}>
-                <Row className="flex-container-spread-center" style={{height:"400px"}}>
+                <Row className="flex-container-spread-center" style={{height:"370px"}}>
                     <div className="flex-container-col-center">
                         <img alt="..." style={{width:"70px"}} src={secure}/>
                         <div className="text-how-to bold element-col-center">Sécurisé</div>
@@ -53,14 +59,14 @@ class VueVérificationIdentité extends Component {
                 </Row>
                 <Row style={{height:"100%"}}>
                     <Col md={{ size: 7, offset: 0 }}>
-                        <Row className="text-center" style={{paddingTop:"50px"}, {marginBottom:"30px"}}>
-                            <h3 style={{color:"gray"}}>Vérifier une identité</h3>
+                        <Row  className="text-center" style={{paddingTop:"50px"}, {marginBottom:"30px"}}>
+                            <h3 className="bold" style={{color:"#FBC658"}}>Vérifier une identité</h3>
                         </Row>
                         <Row  style={{paddingBottom:"50px"}}>
                             <div style={{color:"#66615B"}}>Pour vérifier l’identité d’un citoyen, saisissez la clé de sécurité indiquée sur son extrait d’acte de naissance.</div>
                         </Row>
                         <Row style={{marginTop:"20px"}}>
-                            <ComponentVérificationID defaultHash={this.state.paramHash && this.state.paramHash}></ComponentVérificationID>
+                            <ComponentVérificationID RedirectionHandler={this.HandleClickNvlleRecherche} defaultHash={this.state.paramHash && this.state.paramHash}></ComponentVérificationID>
                         </Row>
                     </Col>
                     <Col md={{ size: 1, offset: 0 }}></Col>

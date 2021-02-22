@@ -33,7 +33,7 @@ class ComponentVérificationID extends Component {
          *  true    |   false  | "HaskKO"
          *  true    |   true   | "HashOK"
          */
-        fieldValue:"", //Valeur tapée dans le champs input, mise à jour on change
+        fieldValue:this.props.defaultHash, //Valeur tapée dans le champs input, mise à jour on change
         sentHash:"", //Valeur envoyée dans au back (hash complet), mise à jour on submit
         userData : "", //Données utilisateur retournées. TODO : format à définir
         CivilStateInstance: undefined,
@@ -112,7 +112,8 @@ class ComponentVérificationID extends Component {
         e.preventDefault()
         console.log("=== handleSubmit ===")
         console.log(this.state)
-        if(this.state.fieldValue && this.state.hashFieldHasChanged===false && this.props.defaultHash!=="loaded"){
+
+        if(this.state.fieldValue && this.state.hashFieldHasChanged===false){
             this.setState({fieldValue: this.props.defaultHash}, function(){console.log(this.state.fieldValue);})
             this.setState({loading:true})
         }
@@ -144,9 +145,9 @@ class ComponentVérificationID extends Component {
 
     handleClick(e){
         console.log("=== handleClick ===")
-        this.setState({hashSent:false, hashIsOk:false, stateComponent:"init"})
-        window.location="verification-id"
-        window.location.reload();
+        this.setState({hashSent:false, hashIsOk:false, stateComponent:"init"}, function(){
+            this.props.RedirectionHandler()
+        })
     }
 
     // Back 
