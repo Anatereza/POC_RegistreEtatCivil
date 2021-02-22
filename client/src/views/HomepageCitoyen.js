@@ -19,16 +19,6 @@ import CivilStateContract from "../contracts/CivilState.json";
 import getWeb3 from "../getWeb3";
 import { provider } from "../variables";
 
-// test
-const Person =[
-    "Salvador", //0
-    "20/01/1962", //1
-    "Philipe", //2
-    "Claude, Michel", //3
-    "DURAND", //4
-    "Masculin", //5
-    "0289 0382", //6
-];
 
 class HomepageCitoyen extends Component {
 
@@ -123,7 +113,8 @@ class HomepageCitoyen extends Component {
             this.state.autresPrenoms,
             this.state.nomFamille,
             this.state.sexe,
-            "0289 0382"
+            "0289 0382",
+            this.state.hash
         ]
         this.setState({personnePDF : person});
 
