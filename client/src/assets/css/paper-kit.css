@@ -8884,7 +8884,7 @@ td.rdtYear:hover {
 }
 
 .navbar-perso {
-	background-color: #d4d4d4;
+	background-color: #ebe3e1;
 	height: inherit;
 }
 
@@ -8898,13 +8898,13 @@ td.rdtYear:hover {
 	display: flex;
 	flex-direction: row;
 	list-style: none;
-	height: 32px;
+	height: 35px;
 	margin-bottom: 0px;
 	padding-left: 0px;
 }
 
 .element-menu-navbar {
-	background-color: #d4d4d4;
+	background-color: #ebe3e1;
 	font-family: "Montserrat", "Helvetica", Arial, sans-serif;
 	width: 180px;
 	height: inherit;
@@ -9002,7 +9002,7 @@ td.rdtYear:hover {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	align-items: flex-start;
+	align-items: center;
 	height: 850px;
 }
 
@@ -9140,21 +9140,21 @@ Label {
 
 .round-numbers {
 	background: linear-gradient(to bottom right, #51cbce, #6bd098);
-	width: 50px;
-	height: 50px;
-	line-height: 50px;
+	width: 40px;
+	height: 40px;
+	line-height: 40px;
 	color: white;
 	border-radius: 100%;
 	font-weight: bold;
 	font-size: x-large;
 	margin: 0px;
 	text-align: center;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 
 .text-how-to {
 	font-family: "Montserrat", "Helvetica", Aria regular, sans-serif;
-	font-size: 16px;
+	font-size: 15px;
 }
 
 .img-verif-id {
@@ -9170,6 +9170,32 @@ Label {
 
 .img-header:hover {
 	cursor: pointer;
+}
+
+.flex-container-spread-center {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.flex-container-col-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	width: 200px;
+	height: 250px;
+}
+
+.element-col-center:last-child {
+	justify-self: flex-end;
+}
+
+.icon-verif-id {
+	font-size: 80px;
+	color: white;
+	-webkit-text-stroke: 2px;
+	-webkit-text-stroke-color: #6bd098;
 }
 
 /*# sourceMappingURL=paper-kit.css.map */

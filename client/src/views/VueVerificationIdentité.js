@@ -4,8 +4,9 @@ import image1 from "assets/img/ImagesHomeCitoyen/Image1.png";
 import image2 from "assets/img/ImagesHomeCitoyen/Image2.png";
 import image3 from "assets/img/ImagesHomeCitoyen/Image3.png";
 import image4 from "assets/img/ImagesHomeCitoyen/Image4.png";
-import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png'
- 
+import secure from "assets/img/ImagesHomeCitoyen/secure.png";
+import rapide from "assets/img/ImagesHomeCitoyen/rapide.png";
+import simple from "assets/img/ImagesHomeCitoyen/simple.png";
 
 import {
     Container,
@@ -27,41 +28,63 @@ class VueVérificationIdentité extends Component {
         console.log(this.props.history);
         return (
             <Container style={{minHeight:"100vh"}}>
-                <Row style={{height:"100px"}}></Row>
+                <Row className="flex-container-spread-center" style={{height:"400px"}}>
+                    <div className="flex-container-col-center">
+                        <img alt="..." style={{width:"70px"}} src={secure}/>
+                        <div className="text-how-to bold element-col-center">Sécurisé</div>
+                        <div className="text-how-to element-col-center">
+                            Grâce à la technologie blockchain, les faits d'état civil sont certifiés conformes
+                        </div>
+                    </div>
+                    <div className="flex-container-col-center">
+                    <img alt="..." style={{width:"80px"}} src={rapide}/>
+                        <div className="text-how-to bold">Instantané</div>
+                        <div className="text-how-to element-col-center">
+                            Les preuves de conformité sont fournies instantanément 
+                        </div>
+                    </div>
+                    <div className="flex-container-col-center">
+                        <img alt="..." style={{width:"70px"}} src={simple}/>
+                        <div className="text-how-to bold">Simple</div>
+                        <div className="text-how-to element-col-center">
+                            La conformité des informations est vérifiable en quelques clics
+                        </div>
+                    </div>
+                </Row>
                 <Row style={{height:"100%"}}>
-                    <Col md={{ size: 8, offset: 0 }}>
-                        <Row className="text-center" style={{paddingTop:"50px"}, {marginBottom:"50px"}}>
-                            <h1 style={{color:"gray"}}>Vérifier une identité</h1>
+                    <Col md={{ size: 7, offset: 0 }}>
+                        <Row className="text-center" style={{paddingTop:"50px"}, {marginBottom:"30px"}}>
+                            <h3 style={{color:"gray"}}>Vérifier une identité</h3>
                         </Row>
-                        <Row className="text-center" style={{paddingTop:"50px"}, {paddingBottom:"50px"}}>
-                            <div style={{color:"#66615B"}}>Pour vérifier l’identité d’un citoyen, saisissez le hash indiqué sur son extrait d’acte de naissance.</div>
+                        <Row  style={{paddingBottom:"50px"}}>
+                            <div style={{color:"#66615B"}}>Pour vérifier l’identité d’un citoyen, saisissez la clé de sécurité indiquée sur son extrait d’acte de naissance.</div>
                         </Row>
                         <Row style={{marginTop:"20px"}}>
                             <ComponentVérificationID defaultHash={this.state.paramHash && this.state.paramHash}></ComponentVérificationID>
                         </Row>
                     </Col>
-
-                    <Col className="no-gutter flex-container-col-left bloc-how-to" style={{marginLeft:"20px"}}>
-                        <h4>Comment ça marche ? </h4>
+                    <Col md={{ size: 1, offset: 0 }}></Col>
+                    <Col md={{ size: 3, offset: 0 }} className="flex-container-col-left bloc-how-to" style={{marginLeft:"20px"}}>
+                        <h5>Comment ça marche ? </h5>
                         <Row className="flex-container-left-center" > 
                             <p className="round-numbers"><div style={{verticalAlign:"middle"}}>1</div></p>
-                            <div className="text-how-to">Je saisi la clé de sécurité</div>  
+                            <div className="text-how-to">Je saisis la clé de sécurité</div>  
                         </Row>
-                        <img className="img-verif-id" alt="..." style={{width:"250px"}} src={image1}/>
+                        <img className="img-verif-id" alt="..." style={{width:"200px"}} src={image1}/>
                         <Row className="flex-container-left-center" >
                             <p className="round-numbers"><div style={{verticalAlign:"middle"}}>2</div></p>
                             <div className="text-how-to">Je lance la recherche</div>
                         </Row>
-                        <img className="img-verif-id" alt="..." style={{width:"250px"}} src={image2}/>
+                        <img className="img-verif-id" alt="..." style={{width:"200px"}} src={image2}/>
                         <Row className="flex-container-left-center" >
                             <p className="round-numbers"><div style={{verticalAlign:"middle"}}>3</div></p>
                             <div className="text-how-to">Les données sont certifiées</div>
                         </Row>
-                        <img className="img-verif-id" alt="..." style={{width:"250px"}} src={image3}/>
+                        <img className="img-verif-id" alt="..." style={{width:"200px"}} src={image3}/>
                         <Row className="flex-container-left-center" >
-                            <div style={{marginLeft:"70px"}} className="text-how-to">Sinon je suis averti.e</div>
+                            <div style={{marginLeft:"50px"}} className="text-how-to">Sinon je suis averti.e</div>
                         </Row>
-                        <img className="img-verif-id" alt="..." style={{width:"250px"}} src={image4}/>
+                        <img className="img-verif-id" alt="..." style={{width:"200px"}} src={image4}/>
                     </Col>
                 </Row>
             </Container>
