@@ -7,7 +7,7 @@ class Actualités extends Component {
         return ( 
             <div className="liste-actus">
                 <div className="element-actu">
-                    <h2 style={{color:"#FBC658"}}>ACTUALITES</h2>
+                    <h2 className="bold" style={{color:"#FBC658"}}>ACTUALITES</h2>
                 </div>
                 <div className="element-actu">
                     <Actualité></Actualité>

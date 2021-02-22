@@ -86,7 +86,7 @@ class IdentiteValidee extends Component {
                             <img className="img-tile-valider" alt="..." src={imageValider}/>
                             <div>
                                 <h1 style={{color:"gray"}}>Identité validée</h1>
-                                <SimpleTable className="simple-table-validation"  data={this.MakeTableRecap().slice(0,1)}/>
+                                <SimpleTable className="simple-table-validation" bold={true} data={this.MakeTableRecap().slice(0,1)}/>
                             </div >
                         </div>
                         <Row style={{paddingTop:"30px"}}>

@@ -23,7 +23,7 @@ class ProductRow extends React.Component {
     return (
       <tr>
         <td className="simple-table-td" style={{width:"50%"}}>{name}</td>
-        <td className="simple-table-td simple-table-second-col">{product.price}</td>
+        <td className={this.props.bold ? "simple-table-td simple-table-second-col bold" : "simple-table-td simple-table-second-col"} >{product.price}</td>
       </tr>
     );
   }
@@ -44,6 +44,7 @@ class ProductTable extends React.Component {
       }
       rows.push(
         <ProductRow
+          bold={this.props.bold}
           product={product}
           key={product.name}/>
       );
@@ -78,7 +79,7 @@ class SimpleTable extends React.Component {
 
     return (
       <>
-        <ProductTable products={this.props.data}/>
+        <ProductTable bold={this.props.bold} products={this.props.data}/>
       </>
     );
   }

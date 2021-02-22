@@ -17,8 +17,6 @@ class HomepageHeader extends Component {
     }
 
     HandleClick(){
-        console.log(this.state)
-        console.log(this.props.location.pathname.includes("valider-identite"));
         
         if(this.props.location.pathname.includes("valider-identite")){
             this.props.history.push({
@@ -59,8 +57,6 @@ class HomepageHeader extends Component {
     }
 
     render() { 
-        console.log("=== Header ===")
-        console.log(this.props.location.pathname)
         return (
             <>
             <div className="page-header">

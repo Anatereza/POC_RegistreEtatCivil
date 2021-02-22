@@ -24,12 +24,12 @@ class Connexion extends Component {
     }
 
     HandleSubmit(e){
+        console.log("=== HandleSubmit ===");
         e.preventDefault()
-        this.setState({loading:true})
+        this.setState({loading:false})
         const param = [this.state.login, this.state.pwd];
         this.props.ClickHandler(param)
         this.updateState()
-        this.setState({loading:false})
     }
 
     updateLogin = event => {
@@ -48,7 +48,7 @@ class Connexion extends Component {
             <>
             <div className="container-block-connexion">
                 <div className="element-block-connexion">
-                    <h2 style={{color:"#FBC658"}}>SE CONNECTER</h2>
+                    <h2 className="bold" style={{color:"#FBC658"}}>SE CONNECTER</h2>
                 </div>
                 <div className="element-block-connexion">
                         <Form onSubmit={(e) => this.HandleSubmit(e)}>

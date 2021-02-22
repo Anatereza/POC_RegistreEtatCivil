@@ -10,6 +10,7 @@ import {
     Form,
     Button,
   } from "reactstrap";
+import { createTrue } from 'typescript';
 
 const TITLE = 'Côte d’Ivoire - Naissance enregistrée'
 
@@ -50,14 +51,14 @@ class NaissanceValidee extends Component {
             
             <Container className="body-container">
                 <Row style={{paddingTop:"180px"}} />
-                <Row className="text-center">
+                <Row style={{height:"300px"}} className="text-center">
                     <Col className="col-sm-12 col-md-12 offset-md-2">
                         <div className="container-tile-validation">
                             <img className="img-tile-valider" alt="..." src={imageValider}/>
                             <div>
                                 <h1 style={{color:"gray"}}>Naissance saisie</h1>
-                                <SimpleTable className="simple-table-validation"  data={this.MakeTableRecap().slice(0,1)}/>
-                                <div style={{paddingTop:"30px"}}>Cette naissance va maintenant être soumise à validation au service des états civils</div>
+                                <SimpleTable bold={true} data={this.MakeTableRecap().slice(0,1)}/>
+                                <div style={{paddingTop:"30px"}}>Cette naissance va maintenant être soumise à validation au service des états civils.</div>
                             </div >
                         </div>
                         <Row style={{paddingTop:"30px"}}>
