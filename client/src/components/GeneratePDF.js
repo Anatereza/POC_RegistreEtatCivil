@@ -26,24 +26,6 @@ const styles = StyleSheet.create({
 
 });
 
-/*props.person. 
-- CommuneDeNaissance
-- PremierPrenom
-- AutresPrenoms
-- NomDeNaissance
-- Sexe
-- Marié ? => Date de mariage, époux.se
-*/
-/*const Person =[
-    "Montpellier", //0
-    "20/01/1962", //1
-    "Philipe", //2
-    "Claude, Michel", //3
-    "DURAND", //4
-    "Masculin", //5
-    "0289 0382", //6
-];*/
-
 function RandomNumber () {
     return Math.floor(Math.random() * Math.floor(9999));
 }

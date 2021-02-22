@@ -32,7 +32,7 @@ class EnregistrerNaissance extends Component {
         super(props);
 
         const fieldsValues = new Map();
-        fieldsValues.set("Sexe","Féminin")
+        fieldsValues.set("Sexe","Feminin")
         fieldsValues.set("Nom de famille","")
         fieldsValues.set("Nom d'usage","")
         fieldsValues.set("Premier prénom","")
