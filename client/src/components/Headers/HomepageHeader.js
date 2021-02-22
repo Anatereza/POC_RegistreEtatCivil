@@ -50,6 +50,11 @@ class HomepageHeader extends Component {
                 pathname:"home-prefecture"
             })
         }
+        if(this.props.location.pathname.includes("home-citoyen")){
+            this.props.history.push({
+                pathname:"home"
+            })
+        }
         
     }
 
