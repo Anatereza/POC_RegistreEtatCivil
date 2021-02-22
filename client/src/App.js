@@ -34,8 +34,11 @@ function App() {
           <Route path="/verification-id" component={Navbar} />
           <Route path="/home-citoyen" component={Navbar}/>
       </Switch>
-      <HomepageHeader/>
+      <Switch>
+      <Route render={(props) => <HomepageHeader {...props}/>}/>
+      </Switch>
         <Switch>
+        
           <Route path="/" exact component={PageAdmin} />
           <Route path="/hopital" component={Hopital} />
           <Route path="/mairie" component={Mairie} />

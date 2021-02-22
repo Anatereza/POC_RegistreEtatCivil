@@ -9168,4 +9168,8 @@ Label {
 	border-radius: 10px;
 }
 
+.img-header:hover {
+	cursor: pointer;
+}
+
 /*# sourceMappingURL=paper-kit.css.map */

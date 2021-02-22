@@ -5,18 +5,64 @@ import logoCoteIvoire from 'assets/img/logo_cote_ivoire.png'
 import logoQuestion from 'assets/img/question.png'
 
 class HomepageHeader extends Component {
-    state = {  }
+    state = {
+        URLCible:""
+    }
+
     constructor(props){
-        super(props);}
+        super(props);
+        
+        
+
+    }
+
+    HandleClick(){
+        console.log(this.state)
+        console.log(this.props.location.pathname.includes("valider-identite"));
+        
+        if(this.props.location.pathname.includes("valider-identite")){
+            this.props.history.push({
+                pathname:"home-prefecture"
+            })
+        }
+        if(this.props.location.pathname.includes("declarer-mariage")){
+            this.props.history.push({
+                pathname:"home-mairie"
+            })
+        }
+        if(this.props.location.pathname.includes("verification-id")){
+            this.props.history.push({
+                pathname:"home"
+            })
+        }
+        if(this.props.location.pathname.includes("hopital-naissance")){
+            this.props.history.push({
+                pathname:"home-hopital"
+            })
+        }
+        if(this.props.location.pathname.includes("naissance-validee")){
+            this.props.history.push({
+                pathname:"home-hopital"
+            })
+        }
+        if(this.props.location.pathname.includes("identite-verifiee")){
+            this.props.history.push({
+                pathname:"home-prefecture"
+            })
+        }
+        
+    }
+
     render() { 
-        console.log(this.props)
+        console.log("=== Header ===")
+        console.log(this.props.location.pathname)
         return (
             <>
             <div className="page-header">
                 <Container>
                     <div className="container-logo-header">
-                        <div className="element-logo-header"> 
-                        <img alt="..." src={logoCoteIvoire} />
+                        <div className="element-logo-header">
+                        <img className="img-header" alt="..." src={logoCoteIvoire} onClick={() => this.HandleClick()} />
                         </div>
                         <div className="element-logo-header"> 
                                 <div style={{fontWeight:"bold"}, {color:"#fbc658"}}>WWW.GOUV.CI/ETATSCIVILS <br/></div>
