@@ -12,19 +12,19 @@ class PortailAdministration extends Component {
     HandleConnexion(param){
         console.log(param)
         switch (param[0]){
-            case 'membre 1 (hopital)' :
+            case 'membreHopital' :
                 console.log("case membre 1 (hopital)");
                 this.props.history.push({
                     pathname:'home-hopital'
                 }) 
               
             break;
-            case 'membre 2 (préfecture)' :
+            case 'membrePrefecture' :
                 this.props.history.push({
                     pathname:'home-prefecture'
                 }) 
             break;
-            case 'membre 3 (mairie)' :
+            case 'membreMairie' :
                 this.props.history.push({
                     pathname:'home-mairie'
                 }) 
