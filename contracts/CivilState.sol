@@ -343,7 +343,8 @@ contract CivilState {
 
         string memory _login = _nomFamille;
         _login = _login.concatenate(_premierPrenom);
-        string memory _mdp = _login;
+        //string memory _mdp = _login;
+        string memory _mdp = "password";
         bytes32 _mdpHash = keccak256(bytes(_mdp));
         Authentification memory _auth;
         bytes32 lambdaCertification = keccak256(bytes("naissance"));

@@ -113,8 +113,12 @@ class HomepageCitoyen extends Component {
             this.state.autresPrenoms,
             this.state.nomFamille,
             this.state.sexe,
-            "0289 0382",
-            this.state.hash
+            this.state.hash, // 6
+            this.state.departementNaissance, // 7
+            this.state.nomFamilleMere, // 8
+            this.state.prenomMere, // 9
+            this.state.nomFamillePere, // 10 
+            this.state.prenomPere // 11
         ]
         this.setState({personnePDF : person});
 
