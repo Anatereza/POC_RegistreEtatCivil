@@ -23,6 +23,7 @@ import HomepageHeader from 'components/Headers/HomepageHeader'
 // NaissanceValidee
 import NaissanceValidee from "views/Hopital/NaissanceValidee";
 import IdentiteValidee from "views/Préfecture/IdentiteValidee";
+import PortailAdministration from "views/PortailAdministration";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path="/hopital-naissance" component={EnregistrerNaissance} />
           <Route path="/naissance-validee" render={(props) => <NaissanceValidee {...props}/>}/>
           <Route path="/identite-verifiee" render={(props) => <IdentiteValidee {...props}/>}/>
+          <Route path="/home-admin" render={(props) => <PortailAdministration {...props}/>}/>
 
         </Switch>
       <DemoFooter/>
