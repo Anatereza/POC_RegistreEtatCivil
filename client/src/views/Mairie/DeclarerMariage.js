@@ -627,7 +627,7 @@ class DeclarerMariage extends Component {
                                             <h2 style={{color:"gray"}}>Conjoint 1</h2>
                                         </Row>
                                         <Row>
-                                            <div>Numéro d’identification unique :  {localStorage.getItem('ID1')}</div>
+                                            <div>N° d’identification unique :  {localStorage.getItem('ID1')}</div>
                                         </Row>
                                         <Row>
                                             <div>{localStorage.getItem('prenom1')} {localStorage.getItem('nom1')}</div>
@@ -639,7 +639,7 @@ class DeclarerMariage extends Component {
                                             <h2 style={{color:"gray"}}>Conjoint 2</h2>
                                         </Row>
                                         <Row>
-                                            <div>Numéro d’identification unique :  {localStorage.getItem('ID2')}</div>
+                                            <div>N° d’identification unique :  {localStorage.getItem('ID2')}</div>
                                         </Row>
                                         <Row>
                                             <div>{localStorage.getItem('prenom2')} {localStorage.getItem('nom2')}</div>
