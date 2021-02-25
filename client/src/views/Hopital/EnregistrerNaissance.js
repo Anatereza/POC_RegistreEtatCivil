@@ -20,6 +20,10 @@ import {
     FormGroup,
     Label,
   } from "reactstrap";
+  
+  import TextField from "@material-ui/core/TextField";
+  import _isEmpty from "lodash/isEmpty";
+  import SimpleTable from 'components/SimpleTable';
 
 const TITLE = 'Côte d’Ivoire - Enregistrer une naissance'
 
@@ -66,7 +70,8 @@ class EnregistrerNaissance extends Component {
             fieldsStates: fieldsStates,
             fieldsValues: fieldsValues,
             formIsOK: true,
-            id: "0x"
+            id: "0x",
+            name: ""
         }
 
         if (localStorage.getItem('wkfStateLocal') < 1) {
@@ -397,7 +402,16 @@ class EnregistrerNaissance extends Component {
     };
     // Back
 
-    render() { 
+    MakeTableDoc(){
+        console.log(this.state.name)
+        const result = [
+            {name : "Document chargé", price : this.state.name},
+          ]
+
+        return (result);
+    }    
+    render() {
+        let file; 
         return ( 
             <>
             <Helmet>
@@ -474,6 +488,60 @@ class EnregistrerNaissance extends Component {
                             <Label>Prénom du père</Label>
                             <Input onChange={this.handleChange.bind(this, "Prenom du père")} type="text" placeholder="Prénom du père" />
                         </FormGroup>
+                        {/** CHARGEMENT DOCUMENT */}
+                        <Row style={{paddingTop:"30px"}}>
+                            <h2 style={{color:"gray"}}>Documents</h2>
+                        </Row>                                               
+                        <Row style={{paddingTop:"30px"}} >
+                            <Col >
+                                <FormGroup className="Preuve de naissance">
+                                    <Label>Preuve de naissance</Label>
+                                </FormGroup>                             
+                                <Button className="btn-round btn ml-8 btn-info" color="info">
+                                    Charger document
+                                    {(
+                                    <input
+                                        id="docupload"
+                                        type="file"
+                                        style={{
+                                            cursor: "pointer",
+                                            position: "absolute",
+                                            top: 0,
+                                            bottom: 0,
+                                            right: 0,
+                                            left: 0,
+                                            width: "100%",
+                                            opacity: 0
+                                          }}
+                                        onChange={event => {
+                                        if (event.target.files) {
+                                            file = event.target.files[0];
+                                            const reader = new FileReader();
+                                            reader.onloadend = e => {
+                                            if (e.target.result !== undefined) {
+                                                const dataUrl = e.target.result.split(";base64,")[1];
+                                                console.log(e.target.result)
+                                                //console.log(dataUrl)
+                                                this.setState({ name: file.name });
+                                                localStorage.setItem('dataUrlLocal',dataUrl)
+                                                localStorage.setItem('base64Local',e.target.result)
+
+                                            }
+
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                        }}
+                                    />
+                                    
+                                    )}
+                                </Button>
+                                {_isEmpty(this.state.name) ? null : (
+                                        <SimpleTable bold={true} data={this.MakeTableDoc().slice(0,1)}/>
+                                    )}                                                            
+                            </Col>
+                        </Row>                        
+                        {/**CHARGEMENT DOCUMENT */}
                         <Row style={{paddingTop:"30px"}} >
                             <Col className="offset-sm-8">
                                 <Button className="btn-round btn ml-8 btn-info" color="info">Enregistrer</Button>

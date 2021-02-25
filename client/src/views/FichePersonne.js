@@ -15,6 +15,9 @@ import CivilStateContract from "../contracts/CivilState.json";
 import getWeb3 from "../getWeb3";
 import { provider } from "../variables";
 
+import Base64Downloader from 'react-base64-downloader';
+import SimpleTable from 'components/SimpleTable';
+
 const TITLE = 'Côte d’Ivoire - Fiche personne'
 
 class FichePersonne extends Component {
@@ -64,9 +67,6 @@ class FichePersonne extends Component {
     handleClickBack(e){
         console.log("=== handleClickBack ===")
 
-        // VOIR LES ELEMENTS DU STATE NECESSAIRES
-        //console.log("URL state")
-        //console.log(this.state.URL)
         this.props.history.push({
             pathname:this.state.URL,
             state : 
@@ -97,7 +97,6 @@ class FichePersonne extends Component {
                       gas: 1000000
                   })
                   
-            //alert('Identité validée');
           } catch (error) {
               // Catch any errors for any of the above operations.
               alert(
@@ -106,13 +105,7 @@ class FichePersonne extends Component {
               console.error(error);
          }
          
-         //console.log(this.state.URL)
-         /*
-         this.props.history.push({
-             pathname:this.state.URL,
-             state : 
-              { URL : this.state.URL }
-         })*/
+
          this.props.history.push({
             pathname:'identite-verifiee',
             state : this.state.ID
@@ -282,11 +275,31 @@ class FichePersonne extends Component {
 
     };
     
+    MakeTableDoc(){
+        
+        
+        const result = [
+            {name : "Preuve de naissance", price : this.state.ID},
+          ]
+
+        return (result);
+    }
     
     // Back
     
     render() {
-        //console.log(this.state)
+        
+        const base64 = localStorage.getItem('base64Local')
+        console.log(base64)
+
+        let afficherDownloadButton;
+        if (this.state.URL==="valider-identite" && base64) {
+            afficherDownloadButton = true;
+        } else {
+            afficherDownloadButton = false;
+        }
+        
+
         return (
         <>  
             <Helmet>
@@ -294,17 +307,40 @@ class FichePersonne extends Component {
             </Helmet>
             
             <Container>
+                
                 <Row style={{paddingTop:"100px"}}>
                     <div className="flex-container-left-center">
                         <i onClick={(e) => this.handleClickBack(e)} class="fa fa-arrow-left mr-10 fa-3x" style={{}}></i>                         
                         <h1 className="ml-4" style={{color:"gray"}}>FICHE PERSONNE</h1>
                     </div>
                 </Row>
+             
                 <div>{this.props.state}</div>
                 <Row style={{paddingTop:"100px"}}>     
                     <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
                 </Row>
-
+                {/** TELECHARGEMENT DOCUMENT */}
+                <Row style={{paddingTop:"30px"}}>
+                    <h2 style={{color:"gray"}}>Documents</h2>
+                </Row>                        
+                <Row style={{paddingTop:"30px"}} >
+                    <Col >
+                    {!afficherDownloadButton ? null : (
+                                        <SimpleTable bold={true} data={this.MakeTableDoc().slice(0,1)}/>
+                                    )}
+                    </Col>
+                </Row>                        
+                <Row style={{paddingTop:"30px"}} >
+                    <Col >                                    
+                    {!afficherDownloadButton ? null : (
+                                
+                                <Base64Downloader base64={base64} downloadName={this.state.ID} className="btn-round btn ml-8 btn-info" color="info">
+                                Télécharger document
+                                </Base64Downloader>                            
+                            )}                                                                             
+                    </Col>
+                </Row> 
+                {/**TELECHARGEMENT DOCUMENT */}
                 <Row style={{paddingTop:"50px"}}>
                     <Col className="col-sm-auto offset-sm-7">
                         {this.state.URL==="valider-identite" && 
@@ -312,6 +348,7 @@ class FichePersonne extends Component {
                                 Valider cette identité
                             </Button>
                         }
+                                               
                         {this.state.URL==="declarer-mariage" && 
                             <Button onClick={() => this.handleClickMariage()} color="info">
                                 Valider ce conjoint
