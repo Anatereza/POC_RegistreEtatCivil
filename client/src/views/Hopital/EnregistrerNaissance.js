@@ -4,6 +4,11 @@ import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png';
 //import Snackbar from '@material-ui/core/Snackbar';
 //import MuiAlert from '@material-ui/lab/Alert';
 //import { makeStyles } from '@material-ui/core/styles';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
+
+import { Card, CardHeader, CardBody, CardTitle, CardText } from 'reactstrap';
 
 // Back 
 import CivilStateContract from "../../contracts/CivilState.json";
@@ -490,15 +495,14 @@ class EnregistrerNaissance extends Component {
                         </FormGroup>
                         {/** CHARGEMENT DOCUMENT */}
                         <Row style={{paddingTop:"30px"}}>
-                            <h2 style={{color:"gray"}}>Documents</h2>
+                            <h2 style={{color:"gray"}}>Document justificatif</h2>
                         </Row>                                               
-                        <Row style={{paddingTop:"30px"}} >
+                        <Row style={{paddingTop:"30px"}} >                        
                             <Col >
-                                <FormGroup className="Preuve de naissance">
-                                    <Label>Preuve de naissance</Label>
-                                </FormGroup>                             
-                                <Button className="btn-round btn ml-8 btn-info" color="info">
-                                    Charger document
+                            <div className="flex-container-left-center">
+                            <Button className="btn-round btn-icon" color="info">
+                                    {/*<i className="fa fa-heart" />*/}
+                                    <i><AddToPhotosIcon /></i>
                                     {(
                                     <input
                                         id="docupload"
@@ -536,10 +540,24 @@ class EnregistrerNaissance extends Component {
                                     
                                     )}
                                 </Button>
-                                {_isEmpty(this.state.name) ? null : (
+                                <h6 className="ml-4" style={{color:"gray"}}>Ajouter un document</h6>                                 
+                            </div>                                                                                   
+                            </Col>                                             
+                        </Row>
+                        <div style={{height:"10px"}}></div>                       
+                        <Row>
+
+                        <div className="flex-container-left-center">
+                        {/*_isEmpty(this.state.name) ? null : (
+                                        <div className="flex-container-left-center">
                                         <SimpleTable bold={true} data={this.MakeTableDoc().slice(0,1)}/>
-                                    )}                                                            
-                            </Col>
+                                        </div>
+                                    )*/}                            
+                        {_isEmpty(this.state.name) ? null : (
+                            <h8 className="ml-4" style={{color:"gray", fontWeight:"bold"}}>{this.state.name}</h8>
+                                                        
+                        )}    
+                        </div>
                         </Row>                        
                         {/**CHARGEMENT DOCUMENT */}
                         <Row style={{paddingTop:"30px"}} >
