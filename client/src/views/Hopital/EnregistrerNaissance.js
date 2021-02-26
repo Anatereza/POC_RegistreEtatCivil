@@ -4,8 +4,7 @@ import imageAjouter from 'assets/img/IconesAccueils/Ajouter.png';
 //import Snackbar from '@material-ui/core/Snackbar';
 //import MuiAlert from '@material-ui/lab/Alert';
 //import { makeStyles } from '@material-ui/core/styles';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+
 import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 
 import { Card, CardHeader, CardBody, CardTitle, CardText } from 'reactstrap';
