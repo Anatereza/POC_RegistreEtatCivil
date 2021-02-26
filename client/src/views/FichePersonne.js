@@ -17,6 +17,8 @@ import { provider } from "../variables";
 
 import Base64Downloader from 'react-base64-downloader';
 import SimpleTable from 'components/SimpleTable';
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const TITLE = 'Côte d’Ivoire - Fiche personne'
 
@@ -321,25 +323,28 @@ class FichePersonne extends Component {
                 </Row>
                 {/** TELECHARGEMENT DOCUMENT */}
                 <Row style={{paddingTop:"30px"}}>
-                    <h2 style={{color:"gray"}}>Documents</h2>
+                    <h2 style={{color:"gray"}}>Document justificatif</h2>
                 </Row>                        
                 <Row style={{paddingTop:"30px"}} >
+                
                     <Col >
+                    <div className="flex-container-left-center">
                     {!afficherDownloadButton ? null : (
-                                        <SimpleTable bold={true} data={this.MakeTableDoc().slice(0,1)}/>
+                                        <h6 className="ml-4" style={{color:"gray", fontWeight:"bold"}}>{this.state.ID}</h6>
+                                        //<SimpleTable bold={true} data={this.MakeTableDoc().slice(0,1)}/>
                                     )}
-                    </Col>
-                </Row>                        
-                <Row style={{paddingTop:"30px"}} >
-                    <Col >                                    
+                    <Col>
                     {!afficherDownloadButton ? null : (
                                 
-                                <Base64Downloader base64={base64} downloadName={this.state.ID} className="btn-round btn ml-8 btn-info" color="info">
-                                Télécharger document
+                                <Base64Downloader size="lg" base64={base64} downloadName={this.state.ID} className="btn-round btn ml-8 btn-info" color="info">
+                                <i><VisibilityIcon /></i>
                                 </Base64Downloader>                            
-                            )}                                                                             
+                    )}
+                    </Col>                     
+                    </div>
                     </Col>
-                </Row> 
+                
+                </Row>                        
                 {/**TELECHARGEMENT DOCUMENT */}
                 <Row style={{paddingTop:"50px"}}>
                     <Col className="col-sm-auto offset-sm-7">
