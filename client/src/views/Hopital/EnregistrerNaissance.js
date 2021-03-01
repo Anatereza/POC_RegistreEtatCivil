@@ -494,14 +494,14 @@ class EnregistrerNaissance extends Component {
                         </FormGroup>
                         {/** CHARGEMENT DOCUMENT */}
                         <Row style={{paddingTop:"30px"}}>
-                            <h2 style={{color:"gray"}}>Document justificatif</h2>
+                            <h2 style={{color:"gray"}}>Documents justificatifs</h2>
                         </Row>                                               
                         <Row style={{paddingTop:"30px"}} >                        
                             <Col >
                             <div className="flex-container-left-center">
-                            <Button className="btn-round btn-icon" color="info">
-                                    {/*<i className="fa fa-heart" />*/}
-                                    <i><AddToPhotosIcon /></i>
+                            <Button className="btn-link" color="info" outline>
+                                    
+                                    <i><AddToPhotosIcon style={{ color: "#51bcda" }}/></i>
                                     {(
                                     <input
                                         id="docupload"

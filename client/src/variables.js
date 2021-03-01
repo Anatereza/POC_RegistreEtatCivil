@@ -3,7 +3,7 @@
 export const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 // A modifier après chaque lancement de ganache
-export const mnemonicPhrase = "giant angry leisure square purse inmate pluck abuse uncover picture inch slice"; // 12 word mnemonic
+export const mnemonicPhrase = "maze amateur corn skull forest answer ugly present victory monkey garment tongue"; // 12 word mnemonic
 
 export const networkUrl = "http://localhost:8545"
 export const provider = new HDWalletProvider({
