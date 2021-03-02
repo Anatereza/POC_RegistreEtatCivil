@@ -336,7 +336,7 @@ class FichePersonne extends Component {
                                     )}
                     <Col>
                     {!afficherDownloadButton ? null : (                          
-                        <VisibilityIcon style={{ color: "#51bcda" }}
+                        <VisibilityIcon style={{ color: "17A2B8" }}
                             onClick={() => triggerBase64Download(base64, this.state.ID)}>
                         </VisibilityIcon>                                                             
                                                          
