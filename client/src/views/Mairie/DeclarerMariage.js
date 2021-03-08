@@ -95,6 +95,8 @@ class DeclarerMariage extends Component {
 
         console.log("=== constructeur ===")
         //this.setState({loading:true})
+        console.log(localStorage.getItem('wkfStateLocal'));
+        console.log(this.props.location.state);
         
         timeout(3000).then((result) => {
             this.setState({snackBarSuccessOpen: false})
@@ -108,6 +110,8 @@ class DeclarerMariage extends Component {
             localStorage.setItem('wkfStateLocal',1)
 
         }
+
+
 
         if(this.props.location.state){
             switch (this.props.location.state.source){
@@ -129,7 +133,7 @@ class DeclarerMariage extends Component {
                 break;
                 default:
             }
-        } 
+        }
     }
 
     //Gestionnaire des changement de champs du formulaire pour les informations complémentaires sur le mariage

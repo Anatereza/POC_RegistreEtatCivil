@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet'
 import { Link } from "react-router-dom";
 import imageMariage from 'assets/img/IconesAccueils/Mariage.png';
-import imagePACS from 'assets/img/IconesAccueils/PACS.png';
+import imageDeces from 'assets/img/IconesAccueils/Deces.png';
 import imageDivorce from 'assets/img/IconesAccueils/Divorce.png';
 
 import {
@@ -31,7 +31,7 @@ class AccueilMairie extends Component {
                 <Row style={{paddingTop:"100px"}}>
                         <Col className="mr-auto ml-auto" md="2" sm="3">
                             <Link to={{
-                            pathname: '/declarer-mariage',
+                            pathname: '/declarer-mariage', 
                             }}>
                                 <img
                                 alt="..."
@@ -47,15 +47,15 @@ class AccueilMairie extends Component {
                             className="img-circle img-no-padding img-responsive"
                             src={imageDivorce}
                             />
-                            <p style ={{fontWeight:"bold"}} className="text-center ct-blue">Déclarer un divorce</p>
+                            <p style ={{fontWeight:"bold"}} className="text-center ct-green">Déclarer un divorce</p>
                         </Col>
                         <Col className="mr-auto ml-auto" md="2" sm="3">
                             <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={imagePACS}
+                            src={imageDeces}
                             />
-                            <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Déclarer un PACS</p>
+                            <p style ={{fontWeight:"bold"}} className="text-center ct-azure">Déclarer un décès</p>
                         </Col>
                 </Row>
             </Container>

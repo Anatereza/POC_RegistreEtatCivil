@@ -8829,7 +8829,7 @@ td.rdtYear:hover {
 	color: white;
 	font-family: "Montserrat", "Helvetica", Arial, sans-serif;
 }
-è .btn-download-file:hover {
+.btn-download-file:hover {
 	font-size: 1rem;
 	font-weight: 400;
 	color: white;
@@ -9196,6 +9196,10 @@ Label {
 	color: white;
 	-webkit-text-stroke: 2px;
 	-webkit-text-stroke-color: #6bd098;
+}
+
+.link:hover {
+	cursor:pointer;
 }
 
 /*# sourceMappingURL=paper-kit.css.map */

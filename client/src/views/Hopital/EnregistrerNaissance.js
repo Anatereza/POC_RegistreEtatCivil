@@ -501,7 +501,7 @@ class EnregistrerNaissance extends Component {
                             <div className="flex-container-left-center">
                             <Button className="btn-link" color="info" outline>
                                     
-                                    <i><AddToPhotosIcon style={{ color: "#51bcda" }}/></i>
+                                    <i><AddToPhotosIcon style={{ color: "#17A2B8" }}/></i>
                                     {(
                                     <input
                                         id="docupload"

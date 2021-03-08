@@ -323,9 +323,11 @@ class FichePersonne extends Component {
                     <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
                 </Row>
                 {/** TELECHARGEMENT DOCUMENT */}
-                <Row style={{paddingTop:"30px"}}>
-                    <h2 style={{color:"gray"}}>Documents justificatifs</h2>
-                </Row>                        
+                {!afficherDownloadButton ? null : ( 
+                    <Row style={{paddingTop:"30px"}}>
+                        <h2 style={{color:"gray"}}>Documents justificatifs</h2>
+                    </Row>
+                )}                 
                 <Row style={{paddingTop:"30px"}} >
                 
                     <Col >
@@ -334,9 +336,9 @@ class FichePersonne extends Component {
                                         <h6 className="ml-4" style={{color:"gray", fontWeight:"bold"}}>{this.state.ID}</h6>
                                         
                                     )}
-                    <Col>
+                    <Col className="col-3">
                     {!afficherDownloadButton ? null : (                          
-                        <VisibilityIcon style={{ color: "#51bcda" }}
+                        <VisibilityIcon className="link" style={{ color: "#51bcda" }}
                             onClick={() => triggerBase64Download(base64, this.state.ID)}>
                         </VisibilityIcon>                                                             
                                                          
