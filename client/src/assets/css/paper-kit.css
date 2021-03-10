@@ -9199,7 +9199,20 @@ Label {
 }
 
 .link:hover {
-	cursor:pointer;
+	cursor: pointer;
+}
+
+.decision-justice {
+	height: 30px;
+	padding-left: 30px;
+	margin-top: 10px;
+	font-family: "Montserrat", "Helvetica", Arial, sans-serif;
+	font-weight: 400;
+	border-bottom: solid #d4c8b9 1px;
+}
+
+.decision-justice:last-child {
+	border: 0px;
 }
 
 /*# sourceMappingURL=paper-kit.css.map */
