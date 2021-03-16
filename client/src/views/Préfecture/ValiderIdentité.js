@@ -13,7 +13,6 @@ import {
     Container,
     Row,
   } from "reactstrap";
-import ErrorMessage from 'components/ErrorMessage';
 
 const TITLE = 'Côte d’Ivoire - Valider une identité'
 
@@ -40,18 +39,37 @@ class ValiderIdentité extends Component {
         tableHeight : "",
         ID : "",
         loading:true,
+        windowWidth: 0,
+        windowHeight: 0
       }
+    
+    constructor(props){
+      super(props);
+      this.updateDimensions();
+      window.addEventListener("resize", this.updateDimensions);
+      console.log(this.state.windowWidth);
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+      let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+      this.setState((prevState) => ({...prevState,["windowWidth"] :windowWidth}));
+      console.log(this.state.windowWidth);
+    }
 
     handleClick(e){
-        const ID = e.row.ID;
-        this.setState((prevState) => ({...prevState,["ID"] :ID}));
-        this.props.history.push({
-            pathname:'fiche-personne',
-            state: {
-              ID : this.state.ID, 
-              URL : this.state.URL,
-            }
-        });
+      const ID = e.row.ID;
+      this.setState((prevState) => ({...prevState,["ID"] :ID}));
+      this.props.history.push({
+          pathname:'fiche-personne',
+          state: {
+            ID : this.state.ID, 
+            URL : this.state.URL,
+          }
+      });
     }
 
     contructNaissanceList = async () => {
@@ -140,7 +158,7 @@ class ValiderIdentité extends Component {
         console.log(this.state.rows)
         console.log(this.state.tableHeight)
         const rows = this.state.rows;
-        const tableHeight = this.state.tableHeight;
+        const tableHeight = this.state.tableHeight+10;
         
         return ( 
             <>
@@ -148,23 +166,44 @@ class ValiderIdentité extends Component {
                 <title>{ TITLE }</title>
             </Helmet>
             <Container className="body-container">
-                <Row style={{paddingTop:"100px"}}>
-                    <div className="flex-container-left-center">
-                        <img style={{width:"80px"}} alt="..." src={imageValider}/>
-                        <h1 className="ml-4" style={{color:"gray"}}>Valider une identité</h1>
-                    </div>
+              {this.state.windowWidth <= 1024 ?
+              <>
+                <Row style={{paddingTop:"30px"}}>
+                  <div className="flex-container-left-center">
+                      <img className="mg-10" style={{width:"60px"}} alt="..." src={imageValider}/>
+                      <h4 className="ml-4" style={{color:"gray"}}>Valider une identité</h4>
+                  </div>
                 </Row>
                 <div style={{height:"80px"}}></div>
                 {this.state.loading ? <CircularProgress/> :
-                <div style={{ height: tableHeight, width: '100%' }}>
-                {Object.keys(rows).length !== 0 ? 
-                <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={(e) => this.handleClick(e)}></DataGrid> :
-                <CircularProgress/>
-            }
-                
-            </div>
+                  <div style={{ height: tableHeight, width: '100%' }}>
+                    {Object.keys(rows).length !== 0 ? 
+                      <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={(e) => this.handleClick(e)}></DataGrid> :
+                      <CircularProgress/>
+                    }
+                  </div>
+                }
+              </>
+              :
+              <>
+                <Row style={{paddingTop:"100px"}}>
+                  <div className="flex-container-left-center">
+                      <img style={{width:"80px"}} alt="..." src={imageValider}/>
+                      <h1 className="ml-4" style={{color:"gray"}}>Valider une identité</h1>
+                  </div>
+                </Row>
+                <div style={{height:"80px"}}></div>
+                {this.state.loading ? <CircularProgress/> :
+                  <div style={{ height: tableHeight, width: '100%' }}>
+                    {Object.keys(rows).length !== 0 ? 
+                      <DataGrid rows={rows} columns={columns} pageSize={Object.keys(rows).length} hideFooterSelectedRowCount onRowClick={(e) => this.handleClick(e)}></DataGrid> :
+                      <CircularProgress/>
+                    }
+                  </div>
+                }
+              </>
               }
-                
+              
             </Container>
             </>
          );

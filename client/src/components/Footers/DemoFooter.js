@@ -26,16 +26,16 @@ function DemoFooter() {
   return (
     <footer className=" footer-nav-perso">
       <Container>
-        <Row>
+        <Row className="container-footer">
           <div>FAQ</div>                
-          <div className="credits ml-auto">
-            <span className="copyright">
-              BearingPoint 2021
-            </span>
-          </div>
+          <div>BearingPoint 2021</div> 
         </Row>
       </Container>
     </footer>
+
+    
+
+
   );
 }
 

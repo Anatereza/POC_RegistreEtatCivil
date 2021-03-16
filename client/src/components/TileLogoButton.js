@@ -12,7 +12,7 @@ class TileLogoButton extends Component {
                     <img className="img-tile" alt="..." src={this.props.type==="connexion" ? logoConnexion : logoVerification} />
                 </div>
                 <div className="container-content-tile">
-                        <h2 className={this.props.type==="connexion" ? "ct-azure" : "ct-green"}>{this.props.titre}</h2>
+                        <h3 className={this.props.type==="connexion" ? "ct-azure" : "ct-green"}>{this.props.titre}</h3>
                         <div className={this.props.type==="connexion" ? "ct-azure" : "ct-green"}>{this.props.contenu}</div>
                         <button onClick={this.props.action} className={this.props.type==="connexion" ? "btn-round mr-1 btn btn-info" : "btn-round mr-1 btn btn-success"}>
                             {this.props.type==="connexion" ? "Se connecter" : "Accéder au service"}

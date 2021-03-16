@@ -31,9 +31,7 @@ function RandomNumber () {
 }
 
 const date = new Date()
-console.log(date);
 const aujourdhui = date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0"+(date.getDate())).slice(-2)
-console.log(aujourdhui)
 
 const ActeDeNaissance = param => (
     <Document>

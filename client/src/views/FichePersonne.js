@@ -59,8 +59,24 @@ class FichePersonne extends Component {
             infosCitoyen : [],   
             stateTableRow : ["init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init", "init"],
             modifiedFieldValue :"",
+            windowWidth: 0,
+            windowHeight: 0
         }
         this.refInputChange = React.createRef();
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+        console.log("--- updateDimensions ---");
+        let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+        this.setState({ windowWidth, windowHeight });
     }
     
     getPerson(e){
@@ -309,62 +325,79 @@ class FichePersonne extends Component {
                 <title>{ TITLE }</title>
             </Helmet>
             
-            <Container>
-                
-                <Row style={{paddingTop:"100px"}}>
-                    <div className="flex-container-left-center">
-                        <i onClick={(e) => this.handleClickBack(e)} class="fa fa-arrow-left mr-10 fa-3x" style={{}}></i>                         
-                        <h1 className="ml-4" style={{color:"gray"}}>FICHE PERSONNE</h1>
-                    </div>
-                </Row>
-             
-                <div>{this.props.state}</div>
-                <Row style={{paddingTop:"100px"}}>     
-                    <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
-                </Row>
-                {/** TELECHARGEMENT DOCUMENT */}
-                {!afficherDownloadButton ? null : ( 
-                    <Row style={{paddingTop:"30px"}}>
-                        <h2 style={{color:"gray"}}>Documents justificatifs</h2>
+            <Container className="body-container">
+                {this.state.windowWidth <= 1200 ?
+                    <Row style={{paddingTop:"20px"}}>
+                        <div className="flex-container-left-center">
+                            <i onClick={(e) => this.handleClickBack(e)} class="fa fa-arrow-left mr-10 fa-3x mg-10" style={{}}></i>                         
+                            <h4 className="ml-4 mb-0" style={{color:"gray"}}>FICHE PERSONNE</h4>
+                        </div>
                     </Row>
-                )}                 
-                <Row style={{paddingTop:"30px"}} >
-                
-                    <Col >
-                    <div className="flex-container-left-center">
-                    {!afficherDownloadButton ? null : (
-                                        <h6 className="ml-4" style={{color:"gray", fontWeight:"bold"}}>{this.state.ID}</h6>
-                                        
-                                    )}
-                    <Col className="col-3">
-                    {!afficherDownloadButton ? null : (                          
-                        <VisibilityIcon className="link" style={{ color: "#51bcda" }}
-                            onClick={() => triggerBase64Download(base64, this.state.ID)}>
-                        </VisibilityIcon>                                                             
-                                                         
-                    )}
-                    </Col>                     
-                    </div>
-                    </Col>
-                
-                </Row>                        
-                {/**TELECHARGEMENT DOCUMENT */}
-                <Row style={{paddingTop:"50px"}}>
-                    <Col className="col-sm-auto offset-sm-7">
-                        {this.state.URL==="valider-identite" && 
-                            <Button onClick={() => this.handleClickValiderIdentite()} color="info">
-                                Valider cette identité
-                            </Button>
-                        }
-                                               
-                        {this.state.URL==="declarer-mariage" && 
-                            <Button onClick={() => this.handleClickMariage()} color="info">
-                                Valider ce conjoint
-                            </Button>
-                        }
-                    </Col>
-                </Row>
-                
+                :
+                    <Row style={{paddingTop:"100px"}}>
+                        <div className="flex-container-left-center">
+                            <i onClick={(e) => this.handleClickBack(e)} class="fa fa-arrow-left mr-10 fa-3x" style={{}}></i>                         
+                            <h1 className="ml-4" style={{color:"gray"}}>FICHE PERSONNE</h1>
+                        </div>
+                    </Row>
+                }
+                <Col style={{marginLeft:"10px"}}>
+                    {this.state.windowWidth <= 1200 ?
+                    <Row style={{paddingTop:"20px"}}>     
+                        <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
+                    </Row>
+                    :
+                    <Row style={{paddingTop:"100px"}}>     
+                        <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
+                    </Row>
+                    }
+                    {/** TELECHARGEMENT DOCUMENT */}
+                    {!afficherDownloadButton ? null : 
+                            <Row style={{paddingTop:"30px"}}>
+                                {this.state.windowWidth <= 1200 ? 
+                                <h4 style={{color:"gray"}}>Documents justificatifs</h4> :
+                                <h2 style={{color:"gray"}}>Documents justificatifs</h2>
+                                }
+                                
+                            </Row>
+                    }                 
+                    <Row style={{paddingTop:"30px"}} >
+                    
+                        <Col >
+                        <div className="flex-container-left-center">
+                        {!afficherDownloadButton ? null : (
+                                            <h6 className="ml-4" style={{color:"gray", fontWeight:"bold"}}>{this.state.ID}</h6>
+                                            
+                                        )}
+                        <Col className="col-3">
+                        {!afficherDownloadButton ? null : (                          
+                            <VisibilityIcon className="link" style={{ color: "#51bcda" }}
+                                onClick={() => triggerBase64Download(base64, this.state.ID)}>
+                            </VisibilityIcon>                                                             
+                                                            
+                        )}
+                        </Col>                     
+                        </div>
+                        </Col>
+                    
+                    </Row>                        
+                    {/**TELECHARGEMENT DOCUMENT */}
+                    <Row style={{paddingTop:"50px"}}>
+                        <Col className="col-sm-auto offset-sm-7">
+                            {this.state.URL==="valider-identite" && 
+                                <Button onClick={() => this.handleClickValiderIdentite()} color="info">
+                                    Valider cette identité
+                                </Button>
+                            }
+                                                
+                            {this.state.URL==="declarer-mariage" && 
+                                <Button onClick={() => this.handleClickMariage()} color="info">
+                                    Valider ce conjoint
+                                </Button>
+                            }
+                        </Col>
+                    </Row>  
+                </Col>
                 
 
             </Container>

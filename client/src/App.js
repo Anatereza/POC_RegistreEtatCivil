@@ -55,7 +55,7 @@ function App() {
           <Route path="/home-prefecture" component={AccueilPrefecture} />
           <Route path="/home-mairie" component={AccueilMairie} />
           <Route path="/home-hopital" component={AccueilHopital} />
-          <Route path="/hopital-naissance" component={EnregistrerNaissance} />
+          <Route path="/hopital-naissance" render={(props) => <EnregistrerNaissance {...props}/>}/>
           <Route path="/naissance-validee" render={(props) => <NaissanceValidee {...props}/>}/>
           <Route path="/identite-verifiee" render={(props) => <IdentiteValidee {...props}/>}/>
           <Route path="/home-admin" render={(props) => <PortailAdministration {...props}/>}/>

@@ -32,13 +32,33 @@ class HomepagePublique extends Component {
         account: null,
         web3: null,
         authentificationState:"init",
+        windowWidth: 0,
+        windowHeight: 0,
     }
 
     constructor(props) {
         super(props)
         this.HandleClick = this.HandleClick.bind(this);
         this.setState = this.setState.bind(this)
-      }
+        this.updateDimensions = this.updateDimensions.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+        let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+        this.setState({ windowWidth, windowHeight });
+        console.log(this.state);
+    }
 
     HandleClick(param){
         
@@ -160,7 +180,7 @@ class HomepagePublique extends Component {
                             <CarouselComponent/>
                         </Row>
                     </Col>
-                    <Col style={{marginLeft:"30px"}}>
+                    <Col style={{marginLeft:"20px"}}>
                         <Row>
                             <Actualités style={{height:"445px"}} className="ml-auto"/>
                         </Row>
@@ -168,7 +188,7 @@ class HomepagePublique extends Component {
                 </Row>
                 <div style={{height:"20px"}}/>
                 <Row>
-                    <Col   md={{ size: 7, offset: 0 }}>
+                    <Col md={{ size: 7, offset: 0 }}>
                         {/*Le composant affiché par défaut est celui composé des deux tuiles connexion et vérification d'identité.
                         Au clic sur le bouton "Se connecter", ce composant est remplacé par le composant formulaire 
                         de connexin */}
@@ -188,10 +208,17 @@ class HomepagePublique extends Component {
                             <Connexion status={this.state.authentificationState} ClickHandler={(e) => this.HandleClick(e)}/> }
                         </div>
                     </Col>
-                    <Col style={{marginLeft:"30px"}}>
+                    
+                    <Col style={{marginLeft:"20px"}}>
+                    {this.state.windowWidth < 1200 && 
+                        <Row style={{height:"40px"}}></Row>
+                    }
                         <Row>
                             <QuestionsRéponses/>
-                            <div style={{height:"50px"}}/>
+                            {this.state.windowWidth > 1200 &&
+                                <div style={{height:"50px"}}/>
+                            }
+                            
                             <TextesRef />
                         </Row>
                     </Col>

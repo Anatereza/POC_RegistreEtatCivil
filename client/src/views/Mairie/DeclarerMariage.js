@@ -89,14 +89,9 @@ class DeclarerMariage extends Component {
             snackBarSuccessOpen:true,
             filteredList:[],
             searchLaunched:false,
+            windowWidth: 0,
+            windowHeight: 0
         }
-
-
-
-        console.log("=== constructeur ===")
-        //this.setState({loading:true})
-        console.log(localStorage.getItem('wkfStateLocal'));
-        console.log(this.props.location.state);
         
         timeout(3000).then((result) => {
             this.setState({snackBarSuccessOpen: false})
@@ -108,7 +103,6 @@ class DeclarerMariage extends Component {
 
         if (localStorage.getItem('wkfStateLocal') < 1) {
             localStorage.setItem('wkfStateLocal',1)
-
         }
 
 
@@ -134,6 +128,19 @@ class DeclarerMariage extends Component {
                 default:
             }
         }
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+        let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+        this.setState({ windowWidth, windowHeight });
     }
 
     //Gestionnaire des changement de champs du formulaire pour les informations complémentaires sur le mariage
@@ -501,262 +508,474 @@ class DeclarerMariage extends Component {
     render() {     
         return (
             <>
-            {this.state.loading ? 
-
-                <Container className="body-container">
+            
+            {/* MOBILE */}
+            {this.state.windowHeight < 1024 &&
+            <>
+                {this.state.loading ? 
+                    <Container className="body-container">
+                        <Helmet>
+                            <title>{ TITLE }</title>
+                        </Helmet>
+                        <Row style={{paddingTop:"100px"}}>
+                            <div className="flex-container-left-center">
+                                <img className="mg-10" style={{width:"60px"}} alt="..." src={image}/>
+                                <h4 className="ml-4" style={{color:"gray"}}>Déclarer un mariage</h4>
+                            </div>
+                        </Row>
+                        <div style={{height:"80px"}}></div>
+                        <CircularProgress/>
+                    </Container> 
+                :
+                    <>
                     <Helmet>
                         <title>{ TITLE }</title>
                     </Helmet>
-                    <Row style={{paddingTop:"100px"}}>
-                        <div className="flex-container-left-center">
-                            <img style={{width:"80px"}} alt="..." src={image}/>
-                            <h1 className="ml-4" style={{color:"gray"}}>Déclarer un mariage</h1>
-                        </div>
-                    </Row>
-                    <div style={{height:"80px"}}></div>
-                    <CircularProgress/>
-                </Container> :
-            <>
-            <Helmet>
-                <title>{ TITLE }</title>
-            </Helmet>
-            <Container className="body-container">
-                <Row style={{paddingTop:"100px"}}>
-                    <div className="flex-container-left-center">
-                        <img style={{width:"80px"}} alt="..." src={image}/>
-                        <h1 className="ml-4" style={{color:"gray"}}>Déclarer un mariage</h1>
-                    </div>
-                </Row>
-                <div style={{height:"80px"}}></div>
-                <Row>
-                    <Col className="col-6 col-sm-3">
-                        <div 
-                        className={localStorage.getItem('wkfStateLocal') > 1 ? "progress-active" : "progress-inactive" }
-                        >
-                        Premier conjoint
-                        </div>
-                    </Col>
-                    <Col className="col-6 col-sm-3 ">
-                        <div 
-                        className={localStorage.getItem('wkfStateLocal') > 2 ? "progress-active" : "progress-inactive" }
-                        >
-                        Second conjoint
-                        </div>
-                    </Col>
-                    <Col className="col-6 col-sm-3">
-                        <div 
-                        className={localStorage.getItem('wkfStateLocal') > 3 ? "progress-active" : "progress-inactive" }
-                        >
-                        Mariage
-                        </div>
-                    </Col>
-                    <Col className="col-sm-3">
-                        <div 
-                        className={localStorage.getItem('wkfStateLocal') > 4 ? "progress-active" : "progress-inactive" }
-                        >
-                        Validation
-                        </div>
-                    </Col>
-
-                </Row>
-                <br/>
-                <Progress
-                    max="4"
-                    value={Number(parseInt(localStorage.getItem('wkfStateLocal'),10)-1)}
-                    barClassName="progress-bar-success"
-                    style={{backgroundColor: "6bd098"}}
-                />
-                <br/>
-                {localStorage.getItem('wkfStateLocal')==1 && 
-                    <div>
-                        {this.state.loading ? <CircularProgress></CircularProgress> :
-                        <div style={{width:"70%"}}>
-                        
-                            <Form style={{marginBottom:"30px"}}>
-                                <FormGroup className="container-input-hash">
-                                    <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
-                                </FormGroup>
-                            </Form>
-                        
-                        </div>
-                        }
-                        <div style={{ height: this.state.tableHeight, width: '100%' }}>
-
-                        {Object.keys(this.state.filteredList).length === 0 ?
-                            <> {this.state.searchLaunched ? <ErrorMessage message="Aucune personne ne correspond à cet identifiant unique"></ErrorMessage> 
-                        :<div></div>}</>
-                        : <DataGrid rows={this.state.filteredList} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid>
-                        }
-                        </div> 
-                    </div>
-                }
-                {localStorage.getItem('wkfStateLocal')==2 && 
-                <div style={{ height: this.state.tableHeight, width: '100%' }}>
-                    <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
-                            <MuiAlert elevation={6} variant="filled" severity="success">
-                                Premier conjoint validé.
-                            </MuiAlert>
-                    </Snackbar>
-                    {this.state.loading ? <CircularProgress></CircularProgress> :
-                        <div style={{width:"70%"}}>
-                        
-                            <Form style={{marginBottom:"30px"}}>
-                                <FormGroup className="container-input-hash">
-                                    <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
-                                </FormGroup>
-                            </Form>
-                        
-                        </div>
-                        }
-                    {Object.keys(this.state.filteredList).length === 0 ?
-                            <> {this.state.searchLaunched ? <ErrorMessage message="Aucune personne ne correspond à cet identifiant unique"></ErrorMessage> 
-                        :<div></div>}</>
-                        : <DataGrid rows={this.state.filteredList} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid>
-                    }
-                </div>}
-                
-                {localStorage.getItem('wkfStateLocal')==3 &&
-                    <div>
-                        <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
-                            <MuiAlert elevation={6} variant="filled" severity="success">
-                                Second conjoint validé.
-                            </MuiAlert>
-                        </Snackbar>
-                        <Row style={{paddingTop:"30px"}}></Row>
+                    <Container className="body-container">
+                        <Row className="mg-10" style={{paddingTop:"20px"}}>
+                            <div className="flex-container-left-center">
+                                <img className="mg-10" style={{width:"60px"}} alt="..." src={image}/>
+                                <h4 className="ml-4" style={{color:"gray"}}>Déclarer un mariage</h4>
+                            </div>
+                        </Row>
+                        <div style={{height:"80px"}}></div>
                         <Row>
-                            <Col className="col-4 ">
-                                <Row className="recap-maries">
-                                    <Col className="offset-sm-1">
-                                        <Row style={{paddingTop:"30px"}}>
-                                            <h2 style={{color:"gray"}}>Conjoint 1</h2>
-                                        </Row>
-                                        <Row>
-                                            <div>N° d’identification unique :  {localStorage.getItem('ID1')}</div>
-                                        </Row>
-                                        <Row>
-                                            <div>{localStorage.getItem('prenom1')} {localStorage.getItem('nom1')}</div>
-                                        </Row>
-                                        <Row>  
-                                            <div>Né le {localStorage.getItem('dateDeNaissance1')} à {localStorage.getItem('communeDeNaissance1')}</div>
-                                        </Row>
-                                        <Row style={{paddingTop:"30px"}}>
-                                            <h2 style={{color:"gray"}}>Conjoint 2</h2>
-                                        </Row>
-                                        <Row>
-                                            <div>N° d’identification unique :  {localStorage.getItem('ID2')}</div>
-                                        </Row>
-                                        <Row>
-                                            <div>{localStorage.getItem('prenom2')} {localStorage.getItem('nom2')}</div>
-                                        </Row>
-                                        <Row style={{paddingBottom:"30px"}}>  
-                                            <div>Né le {localStorage.getItem('dateDeNaissance2')} à {localStorage.getItem('communeDeNaissance2')}</div>
-                                        </Row>
+                            <Col className="">
+                                {localStorage.getItem('wkfStateLocal') == 1 && 
+                                    <div className="progress-active">1/4 - Premier conjoint</div>}
+                                {localStorage.getItem('wkfStateLocal') == 2 && 
+                                    <div className="progress-active">2/4 - Second conjoint</div>} 
+                                {localStorage.getItem('wkfStateLocal') == 3 && 
+                                    <div className="progress-active">3/4 - Mariage</div>}
+                                {localStorage.getItem('wkfStateLocal') == 4 && 
+                                    <div className="progress-active">4/4 - Validation</div>}
+                            </Col>
+                        </Row>
+                        <br/>
+                        <Progress
+                            max="4"
+                            value={Number(parseInt(localStorage.getItem('wkfStateLocal'),10)-1)}
+                            barClassName="progress-bar-success"
+                            style={{backgroundColor: "6bd098"}}
+                        />
+                        <br/>
+                        {localStorage.getItem('wkfStateLocal')==1 && 
+                            <div>
+                                {this.state.loading ? <CircularProgress></CircularProgress> :
+                                <div style={{width:"70%"}}>
+                                
+                                    <Form style={{marginBottom:"30px"}}>
+                                        <FormGroup className="container-input-hash">
+                                            <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
+                                        </FormGroup>
+                                    </Form>
+                                
+                                </div>
+                                }
+                                <div style={{ height: this.state.tableHeight, width: '100%' }}>
+    
+                                {Object.keys(this.state.filteredList).length === 0 ?
+                                    <> {this.state.searchLaunched ? <ErrorMessage message="Aucune personne ne correspond à cet identifiant unique"></ErrorMessage> 
+                                :<div></div>}</>
+                                : <DataGrid rows={this.state.filteredList} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid>
+                                }
+                                </div> 
+                            </div>
+                        }
+                        {localStorage.getItem('wkfStateLocal')==2 && 
+                        <div style={{ height: this.state.tableHeight, width: '100%' }}>
+                            <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                    <MuiAlert elevation={6} variant="filled" severity="success">
+                                        Premier conjoint validé.
+                                    </MuiAlert>
+                            </Snackbar>
+                            {this.state.loading ? <CircularProgress></CircularProgress> :
+                                <div style={{width:"70%"}}>
+                                
+                                    <Form style={{marginBottom:"30px"}}>
+                                        <FormGroup className="container-input-hash">
+                                            <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
+                                        </FormGroup>
+                                    </Form>
+                                
+                                </div>
+                                }
+                            {Object.keys(this.state.filteredList).length === 0 ?
+                                    <> {this.state.searchLaunched ? <ErrorMessage message="Aucune personne ne correspond à cet identifiant unique"></ErrorMessage> 
+                                :<div></div>}</>
+                                : <DataGrid rows={this.state.filteredList} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid>
+                            }
+                        </div>}
+                        
+                        {localStorage.getItem('wkfStateLocal')==3 &&
+                            <div>
+                                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                    <MuiAlert elevation={6} variant="filled" severity="success">
+                                        Second conjoint validé.
+                                    </MuiAlert>
+                                </Snackbar>
+                                <Row style={{paddingTop:"30px"}}></Row>
+                                <Row>
+                                    <Col className="text-left mg-10">
+                                        <Form>
+                                            <Row>
+                                                <h2 style={{color:"gray"}}>Mariage</h2>
+                                            </Row>
+                                            <FormGroup className={this.state.fieldsStates.get("Date du mariage")==="notValid" && "has-danger"}>
+                                                <Label> Date du mariage</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Date du mariage")} placeHolder="Date du mariage" type="Date"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Commune de mariage")==="notValid" && "has-danger"}>
+                                                <Label>Commune de mariage</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Commune de mariage")} placeHolder="Commune de mariage" type="text"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Régime matrimonial")==="notValid" && "has-danger"}>
+                                                <Label>Régime matrimonial</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Régime matrimonial")} placeHolder="Régime matrimonial" type="select">
+                                                    <option>Communauté réduite aux acquêts</option>
+                                                    <option>Communauté universelle</option>
+                                                    <option>Séparation de biens</option>
+                                                    <option>Participation aux acquêts</option>
+                                                </Input>
+                                            </FormGroup>
+                                            <Row style={{paddingTop:"30px"}}>
+                                                <h2 style={{color:"gray"}}>Témoins</h2>
+                                            </Row>
+                                            <FormGroup className={this.state.fieldsStates.get("Nom du témoin 1")==="notValid" && "has-danger"}>
+                                                <Label>Nom du témoin 1</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Nom du témoin 1")} placeHolder="Nom du témoin 1" type="text"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Prénom du témoin 1")==="notValid" && "has-danger"}>
+                                                <Label>Prénom du témoin 1</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Prénom du témoin 1")} placeHolder="Prénom du témoin 1" type="text"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Nom du témoin 2")==="notValid" && "has-danger"}>
+                                                <Label>Nom du témoin 2</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Nom du témoin 2")} placeHolder="Nom du témoin 2" type="text"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Prénom du témoin 2")==="notValid" && "has-danger"}>
+                                                <Label>Prénom du témoin 2</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Prénom du témoin 2")} placeHolder="Prénom du témoin 2" type="text"></Input>
+                                            </FormGroup>
+                                            
+                                            <Button onClick={this.HandleSubmitMariage} type="submit" color="info">
+                                                    Suivant
+                                            </Button>
+                                        </Form>
+                                    </Col>
+                                </Row>
+                            </div>
+                        }
+                        {localStorage.getItem('wkfStateLocal')>=4 &&
+                        <>
+                        {localStorage.getItem('wkfStateLocal')==4 &&
+                        <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                <MuiAlert elevation={6} variant="filled" severity="success">
+                                    Données complémentaires validées.
+                                </MuiAlert>
+                        </Snackbar>
+                        }
+                        {localStorage.getItem('wkfStateLocal')==5 &&
+                                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                    <MuiAlert elevation={6} variant="filled" severity="success">
+                                        Mariage validé. Redirection.
+                                    </MuiAlert>
+                                </Snackbar>
+                        }      
+                        <Row >
+                            <Col className="offset-sm-2">
+                                <Row style={{paddingTop:"30px"}}>
+                                    <h2 style={{color:"gray"}}>Premier conjoint</h2>
+                                </Row>
+                                <Row style={{marginLeft:"30px"}}> 
+                                    <SimpleTable data={this.MakeTablePersons().slice(0,6)}/>
+                                </Row>
+                                <Row style={{paddingTop:"30px"}}>
+                                    <h2 style={{color:"gray"}}>Second conjoint</h2>
+                                </Row>
+                                <Row style={{marginLeft:"30px"}}> 
+                                    <SimpleTable data={this.MakeTablePersons().slice(6,11)}/>
+                                </Row>
+                                <Row style={{paddingTop:"30px"}}>
+                                    <h2 style={{color:"gray"}}>Mariage</h2>
+                                </Row>
+                                <Row style={{marginLeft:"30px"}}> 
+                                    <SimpleTable data={this.MakeTableMariage().slice(0,7)}/>
+                                </Row>
+                                <Row style={{paddingTop:"30px"}}>
+                                    <Col className="offset-sm-5">
+                                        <Button color="info" onClick={(e)=>this.HandleClickValidation(e)}>Valider le mariage</Button>
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col className="col-7 offset-sm-1 text-left">
-                                <Form>
-                                    <Row>
-                                        <h2 style={{color:"gray"}}>Mariage</h2>
-                                    </Row>
-                                    <FormGroup className={this.state.fieldsStates.get("Date du mariage")==="notValid" && "has-danger"}>
-                                        <Label> Date du mariage</Label>
-                                        <Input onChange={this.HandleChange.bind(this, "Date du mariage")} placeHolder="Date du mariage" type="Date"></Input>
-                                    </FormGroup>
-                                    <FormGroup className={this.state.fieldsStates.get("Commune de mariage")==="notValid" && "has-danger"}>
-                                        <Label>Commune de mariage</Label>
-                                        <Input onChange={this.HandleChange.bind(this, "Commune de mariage")} placeHolder="Commune de mariage" type="text"></Input>
-                                    </FormGroup>
-                                    <FormGroup className={this.state.fieldsStates.get("Régime matrimonial")==="notValid" && "has-danger"}>
-                                        <Label>Régime matrimonial</Label>
-                                        <Input onChange={this.HandleChange.bind(this, "Régime matrimonial")} placeHolder="Régime matrimonial" type="select">
-                                            <option>Communauté réduite aux acquêts</option>
-                                            <option>Communauté universelle</option>
-                                            <option>Séparation de biens</option>
-                                            <option>Participation aux acquêts</option>
-                                        </Input>
-                                    </FormGroup>
-                                    <Row style={{paddingTop:"30px"}}>
-                                        <h2 style={{color:"gray"}}>Témoins</h2>
-                                    </Row>
-                                    <FormGroup className={this.state.fieldsStates.get("Nom du témoin 1")==="notValid" && "has-danger"}>
-                                        <Label>Nom du témoin 1</Label>
-                                        <Input onChange={this.HandleChange.bind(this, "Nom du témoin 1")} placeHolder="Nom du témoin 1" type="text"></Input>
-                                    </FormGroup>
-                                    <FormGroup className={this.state.fieldsStates.get("Prénom du témoin 1")==="notValid" && "has-danger"}>
-                                        <Label>Prénom du témoin 1</Label>
-                                        <Input onChange={this.HandleChange.bind(this, "Prénom du témoin 1")} placeHolder="Prénom du témoin 1" type="text"></Input>
-                                    </FormGroup>
-                                    <FormGroup className={this.state.fieldsStates.get("Nom du témoin 2")==="notValid" && "has-danger"}>
-                                        <Label>Nom du témoin 2</Label>
-                                        <Input onChange={this.HandleChange.bind(this, "Nom du témoin 2")} placeHolder="Nom du témoin 2" type="text"></Input>
-                                    </FormGroup>
-                                    <FormGroup className={this.state.fieldsStates.get("Prénom du témoin 2")==="notValid" && "has-danger"}>
-                                        <Label>Prénom du témoin 2</Label>
-                                        <Input onChange={this.HandleChange.bind(this, "Prénom du témoin 2")} placeHolder="Prénom du témoin 2" type="text"></Input>
-                                    </FormGroup>
-                                    
-                                    <Button onClick={this.HandleSubmitMariage} type="submit" color="info">
-                                            Suivant
-                                    </Button>
-                                </Form>
-                            </Col>
                         </Row>
-                    </div>
-                }
-                {localStorage.getItem('wkfStateLocal')>=4 &&
-                <>
-                {localStorage.getItem('wkfStateLocal')==4 &&
-                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
-                        <MuiAlert elevation={6} variant="filled" severity="success">
-                            Données complémentaires validées.
-                        </MuiAlert>
-                </Snackbar>
-                }
-                {localStorage.getItem('wkfStateLocal')==5 &&
-                        <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
-                            <MuiAlert elevation={6} variant="filled" severity="success">
-                                Mariage validé. Redirection.
-                            </MuiAlert>
-                        </Snackbar>
-                }      
-                <Row >
-                    <Col className="offset-sm-2">
-                        <Row style={{paddingTop:"30px"}}>
-                            <h2 style={{color:"gray"}}>Premier conjoint</h2>
-                        </Row>
-                        <Row style={{marginLeft:"30px"}}> 
-                            <SimpleTable data={this.MakeTablePersons().slice(0,6)}/>
-                        </Row>
-                        <Row style={{paddingTop:"30px"}}>
-                            <h2 style={{color:"gray"}}>Second conjoint</h2>
-                        </Row>
-                        <Row style={{marginLeft:"30px"}}> 
-                            <SimpleTable data={this.MakeTablePersons().slice(6,11)}/>
-                        </Row>
-                        <Row style={{paddingTop:"30px"}}>
-                            <h2 style={{color:"gray"}}>Mariage</h2>
-                        </Row>
-                        <Row style={{marginLeft:"30px"}}> 
-                            <SimpleTable data={this.MakeTableMariage().slice(0,7)}/>
-                        </Row>
-                        <Row style={{paddingTop:"30px"}}>
-                            <Col className="offset-sm-5">
-                                <Button color="info" onClick={(e)=>this.HandleClickValidation(e)}>Valider le mariage</Button>
-                            </Col>
-                        </Row>
-                    </Col>
-                    
-                    
-                    
-                       
-                </Row>
-                </>
-                }
-                
-            </Container>
+                        </>
+                    }
+                        
+                    </Container>
+                    </>
+                    }
             </>
             }
+
+            {/* DESKTOP */}
+            {this.state.windowHeight >= 1024 && <>
+                {this.state.loading ? 
+                    <Container className="body-container">
+                        <Helmet>
+                            <title>{ TITLE }</title>
+                        </Helmet>
+                        <Row style={{paddingTop:"100px"}}>
+                            <div className="flex-container-left-center">
+                                <img style={{width:"80px"}} alt="..." src={image}/>
+                                <h1 className="ml-4" style={{color:"gray"}}>Déclarer un mariage</h1>
+                            </div>
+                        </Row>
+                        <div style={{height:"80px"}}></div>
+                        <CircularProgress/>
+                    </Container> 
+                :
+                    <>
+                    <Helmet>
+                        <title>{ TITLE }</title>
+                    </Helmet>
+                    <Container className="body-container">
+                        <Row style={{paddingTop:"100px"}}>
+                            <div className="flex-container-left-center">
+                                <img style={{width:"80px"}} alt="..." src={image}/>
+                                <h1 className="ml-4" style={{color:"gray"}}>Déclarer un mariage</h1>
+                            </div>
+                        </Row>
+                        <div style={{height:"80px"}}></div>
+                        <Row>
+                            <Col className="col-6 col-sm-3">
+                                <div 
+                                className={localStorage.getItem('wkfStateLocal') > 1 ? "progress-active" : "progress-inactive" }
+                                >
+                                Premier conjoint
+                                </div>
+                            </Col>
+                            <Col className="col-6 col-sm-3 ">
+                                <div 
+                                className={localStorage.getItem('wkfStateLocal') > 2 ? "progress-active" : "progress-inactive" }
+                                >
+                                Second conjoint
+                                </div>
+                            </Col>
+                            <Col className="col-6 col-sm-3">
+                                <div 
+                                className={localStorage.getItem('wkfStateLocal') > 3 ? "progress-active" : "progress-inactive" }
+                                >
+                                Mariage
+                                </div>
+                            </Col>
+                            <Col className="col-sm-3">
+                                <div 
+                                className={localStorage.getItem('wkfStateLocal') > 4 ? "progress-active" : "progress-inactive" }
+                                >
+                                Validation
+                                </div>
+                            </Col>
+    
+                        </Row>
+                        <br/>
+                        <Progress
+                            max="4"
+                            value={Number(parseInt(localStorage.getItem('wkfStateLocal'),10)-1)}
+                            barClassName="progress-bar-success"
+                            style={{backgroundColor: "6bd098"}}
+                        />
+                        <br/>
+                        {localStorage.getItem('wkfStateLocal')==1 && 
+                            <div>
+                                {this.state.loading ? <CircularProgress></CircularProgress> :
+                                <div style={{width:"70%"}}>
+                                
+                                    <Form style={{marginBottom:"30px"}}>
+                                        <FormGroup className="container-input-hash">
+                                            <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
+                                        </FormGroup>
+                                    </Form>
+                                
+                                </div>
+                                }
+                                <div style={{ height: this.state.tableHeight, width: '100%' }}>
+    
+                                {Object.keys(this.state.filteredList).length === 0 ?
+                                    <> {this.state.searchLaunched ? <ErrorMessage message="Aucune personne ne correspond à cet identifiant unique"></ErrorMessage> 
+                                :<div></div>}</>
+                                : <DataGrid rows={this.state.filteredList} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid>
+                                }
+                                </div> 
+                            </div>
+                        }
+                        {localStorage.getItem('wkfStateLocal')==2 && 
+                        <div style={{ height: this.state.tableHeight, width: '100%' }}>
+                            <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                    <MuiAlert elevation={6} variant="filled" severity="success">
+                                        Premier conjoint validé.
+                                    </MuiAlert>
+                            </Snackbar>
+                            {this.state.loading ? <CircularProgress></CircularProgress> :
+                                <div style={{width:"70%"}}>
+                                
+                                    <Form style={{marginBottom:"30px"}}>
+                                        <FormGroup className="container-input-hash">
+                                            <Input className="element-input-hash" placeholder="Numéro d’identification unique" type="text" onChange={e=> {this.HandleIDInputChange(e)}}/>
+                                        </FormGroup>
+                                    </Form>
+                                
+                                </div>
+                                }
+                            {Object.keys(this.state.filteredList).length === 0 ?
+                                    <> {this.state.searchLaunched ? <ErrorMessage message="Aucune personne ne correspond à cet identifiant unique"></ErrorMessage> 
+                                :<div></div>}</>
+                                : <DataGrid rows={this.state.filteredList} columns={columns} pageSize={Object.keys(this.state.rows).length} hideFooterSelectedRowCount onRowClick={this.HandleClick}></DataGrid>
+                            }
+                        </div>}
+                        
+                        {localStorage.getItem('wkfStateLocal')==3 &&
+                            <div>
+                                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                    <MuiAlert elevation={6} variant="filled" severity="success">
+                                        Second conjoint validé.
+                                    </MuiAlert>
+                                </Snackbar>
+                                <Row style={{paddingTop:"30px"}}></Row>
+                                <Row>
+                                    <Col className="col-4 ">
+                                        <Row className="recap-maries">
+                                            <Col className="offset-sm-1">
+                                                <Row style={{paddingTop:"30px"}}>
+                                                    <h2 style={{color:"gray"}}>Conjoint 1</h2>
+                                                </Row>
+                                                <Row>
+                                                    <div>N° d’identification unique :  {localStorage.getItem('ID1')}</div>
+                                                </Row>
+                                                <Row>
+                                                    <div>{localStorage.getItem('prenom1')} {localStorage.getItem('nom1')}</div>
+                                                </Row>
+                                                <Row>  
+                                                    <div>Né le {localStorage.getItem('dateDeNaissance1')} à {localStorage.getItem('communeDeNaissance1')}</div>
+                                                </Row>
+                                                <Row style={{paddingTop:"30px"}}>
+                                                    <h2 style={{color:"gray"}}>Conjoint 2</h2>
+                                                </Row>
+                                                <Row>
+                                                    <div>N° d’identification unique :  {localStorage.getItem('ID2')}</div>
+                                                </Row>
+                                                <Row>
+                                                    <div>{localStorage.getItem('prenom2')} {localStorage.getItem('nom2')}</div>
+                                                </Row>
+                                                <Row style={{paddingBottom:"30px"}}>  
+                                                    <div>Né le {localStorage.getItem('dateDeNaissance2')} à {localStorage.getItem('communeDeNaissance2')}</div>
+                                                </Row>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col className="col-7 offset-sm-1 text-left">
+                                        <Form>
+                                            <Row>
+                                                <h2 style={{color:"gray"}}>Mariage</h2>
+                                            </Row>
+                                            <FormGroup className={this.state.fieldsStates.get("Date du mariage")==="notValid" && "has-danger"}>
+                                                <Label> Date du mariage</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Date du mariage")} placeHolder="Date du mariage" type="Date"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Commune de mariage")==="notValid" && "has-danger"}>
+                                                <Label>Commune de mariage</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Commune de mariage")} placeHolder="Commune de mariage" type="text"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Régime matrimonial")==="notValid" && "has-danger"}>
+                                                <Label>Régime matrimonial</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Régime matrimonial")} placeHolder="Régime matrimonial" type="select">
+                                                    <option>Communauté réduite aux acquêts</option>
+                                                    <option>Communauté universelle</option>
+                                                    <option>Séparation de biens</option>
+                                                    <option>Participation aux acquêts</option>
+                                                </Input>
+                                            </FormGroup>
+                                            <Row style={{paddingTop:"30px"}}>
+                                                <h2 style={{color:"gray"}}>Témoins</h2>
+                                            </Row>
+                                            <FormGroup className={this.state.fieldsStates.get("Nom du témoin 1")==="notValid" && "has-danger"}>
+                                                <Label>Nom du témoin 1</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Nom du témoin 1")} placeHolder="Nom du témoin 1" type="text"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Prénom du témoin 1")==="notValid" && "has-danger"}>
+                                                <Label>Prénom du témoin 1</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Prénom du témoin 1")} placeHolder="Prénom du témoin 1" type="text"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Nom du témoin 2")==="notValid" && "has-danger"}>
+                                                <Label>Nom du témoin 2</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Nom du témoin 2")} placeHolder="Nom du témoin 2" type="text"></Input>
+                                            </FormGroup>
+                                            <FormGroup className={this.state.fieldsStates.get("Prénom du témoin 2")==="notValid" && "has-danger"}>
+                                                <Label>Prénom du témoin 2</Label>
+                                                <Input onChange={this.HandleChange.bind(this, "Prénom du témoin 2")} placeHolder="Prénom du témoin 2" type="text"></Input>
+                                            </FormGroup>
+                                            
+                                            <Button onClick={this.HandleSubmitMariage} type="submit" color="info">
+                                                    Suivant
+                                            </Button>
+                                        </Form>
+                                    </Col>
+                                </Row>
+                            </div>
+                        }
+                        {localStorage.getItem('wkfStateLocal')>=4 &&
+                        <>
+                        {localStorage.getItem('wkfStateLocal')==4 &&
+                        <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                <MuiAlert elevation={6} variant="filled" severity="success">
+                                    Données complémentaires validées.
+                                </MuiAlert>
+                        </Snackbar>
+                        }
+                        {localStorage.getItem('wkfStateLocal')==5 &&
+                                <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                    <MuiAlert elevation={6} variant="filled" severity="success">
+                                        Mariage validé. Redirection.
+                                    </MuiAlert>
+                                </Snackbar>
+                        }      
+                        <Row >
+                            <Col className="offset-sm-2">
+                                <Row style={{paddingTop:"30px"}}>
+                                    <h2 style={{color:"gray"}}>Premier conjoint</h2>
+                                </Row>
+                                <Row style={{marginLeft:"30px"}}> 
+                                    <SimpleTable data={this.MakeTablePersons().slice(0,6)}/>
+                                </Row>
+                                <Row style={{paddingTop:"30px"}}>
+                                    <h2 style={{color:"gray"}}>Second conjoint</h2>
+                                </Row>
+                                <Row style={{marginLeft:"30px"}}> 
+                                    <SimpleTable data={this.MakeTablePersons().slice(6,11)}/>
+                                </Row>
+                                <Row style={{paddingTop:"30px"}}>
+                                    <h2 style={{color:"gray"}}>Mariage</h2>
+                                </Row>
+                                <Row style={{marginLeft:"30px"}}> 
+                                    <SimpleTable data={this.MakeTableMariage().slice(0,7)}/>
+                                </Row>
+                                <Row style={{paddingTop:"30px"}}>
+                                    <Col className="offset-sm-5">
+                                        <Button color="info" onClick={(e)=>this.HandleClickValidation(e)}>Valider le mariage</Button>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        </>
+                    }
+                        
+                    </Container>
+                    </>
+                    }
+                    </>
+            }
+
+            
             </>
          );
     }

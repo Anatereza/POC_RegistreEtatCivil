@@ -15,15 +15,35 @@ import { createTrue } from 'typescript';
 const TITLE = 'Côte d’Ivoire - Naissance enregistrée'
 
 class NaissanceValidee extends Component {
-    
-    state = this.props.location.state
+
 
     constructor(props){
         super(props);
-
+        this.state = {
+            ID : this.props.location.state,
+            windowWidth: 0,
+            windowHeight: 0
+        }
    
-     }
+    }
 
+    componentDidMount() {
+        console.log("=== componentDidMount ===");
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+        console.log("--- updateDimensions ---");
+        let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+        this.setState({ windowWidth, windowHeight });
+    }
 
     handleClick(e){
         console.log("=== handleClick ===")
@@ -34,9 +54,8 @@ class NaissanceValidee extends Component {
     }
 
     MakeTableRecap(){
-        console.log(this.state)
         const result = [
-            {name : "Numéro d’identification unique", price : this.state},
+            {name : "Numéro d’identification unique", price : this.state.ID},
           ]
 
         return (result);
@@ -50,13 +69,37 @@ class NaissanceValidee extends Component {
             </Helmet>
             
             <Container className="body-container">
-                <Row style={{paddingTop:"180px"}} />
-                <Row style={{height:"300px"}} className="text-center">
+                {this.state.windowWidth <= 1024 ?
+                    <><Row style={{paddingTop:"50px"}} />
+                    
+                    <Col style={{marginRight:"60px"}}>
+                    <Row className="text-center">
+                        <div className="container-tile-validation">
+                            <img className="img-tile-valider" alt="..." src={imageValider}/>
+                            <div>
+                                {this.state.windowWidth <= 1024 ?  <><div style={{height:"30px"}}></div><h3 style={{color:"gray"}}>Naissance saisie</h3></> : <h1 style={{color:"gray"}}>Naissance saisie</h1> }
+                                <SimpleTable bold={true} data={this.MakeTableRecap().slice(0,1)}/>
+                                <div style={{paddingTop:"30px"}}>Cette naissance va maintenant être soumise à validation au service des états civils.</div>
+                            </div >
+                        </div>
+                        <Row style={{paddingTop:"30px"}}>
+                                <Col className="offset-md-13">
+                                    <Button onClick={(e)=>{this.handleClick(e)}} className="btn-round btn ml-8 btn-info" color="info">
+                                        Terminer
+                                    </Button>
+                                </Col>
+                        </Row>
+                        </Row>
+                    </Col>
+                </>
+                :
+                    <><Row style={{paddingTop:"180px"}} />
+                    <Row style={{height:"300px"}} className="text-center">
                     <Col className="col-sm-12 col-md-12 offset-md-2">
                         <div className="container-tile-validation">
                             <img className="img-tile-valider" alt="..." src={imageValider}/>
                             <div>
-                                <h1 style={{color:"gray"}}>Naissance saisie</h1>
+                                {this.state.windowWidth <= 1200 ?  <><div style={{height:"30px"}}></div><h3 style={{color:"gray"}}>Naissance saisie</h3></> : <h1 style={{color:"gray"}}>Naissance saisie</h1> }
                                 <SimpleTable bold={true} data={this.MakeTableRecap().slice(0,1)}/>
                                 <div style={{paddingTop:"30px"}}>Cette naissance va maintenant être soumise à validation au service des états civils.</div>
                             </div >
@@ -70,7 +113,10 @@ class NaissanceValidee extends Component {
                                 </Col>
                         </Row>
                     </Col>
-                </Row>
+                </Row></>    
+                }
+                
+                
             </Container>             
             
             

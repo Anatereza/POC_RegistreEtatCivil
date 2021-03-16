@@ -42,7 +42,9 @@ class HomepageCitoyen extends Component {
         infosCitoyen : [],
         personnePDF: [],
         hash: '',
-        ready : false
+        ready : false,
+        windowWidth: 0,
+        windowHeight: 0
     }    
     
     constructor(props) {
@@ -53,17 +55,29 @@ class HomepageCitoyen extends Component {
             const login = this.props.location.state;
             localStorage.setItem('LoginLocal', login);
         }
+        this.updateDimensions = this.updateDimensions.bind(this);
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
         
 
+    }
 
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+        console.log("=== updateDimensions ===");
+        let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+        // let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+        // this.setState({ windowWidth, windowHeight }, function() {console.log(windowWidth)});
+        this.setState((prevState) => ({...prevState,["windowWidth"] :windowWidth}));   
     }
 
     // Back 
     getPerson(e){ 
         return getPerson(e);
     }
-
-    // Back
 
     // Back
     getInfosCitoyen = async () => {
@@ -129,8 +143,8 @@ class HomepageCitoyen extends Component {
     componentDidMount = async () => {
 
         const _login = localStorage.getItem('LoginLocal');
-        console.log("login did mount")
-        console.log(_login)
+        // console.log("login did mount")
+        // console.log(_login)
         this.setState({ login: _login});
         
         // FOR REFRESHING PAGE ONLY ONCE -
@@ -198,43 +212,110 @@ class HomepageCitoyen extends Component {
                 </Container>
             );
         }        
-
         return (
             <Container className="body-container">
+                
+            
+                    {this.state.windowWidth <= 1200 ?
+                        <Row style={{paddingTop:"30px"}}>
+                            <div style={{margin:"10px"}} className="flex-container-spread-center width-70pc">
+                                <img className="mg-10" style={{width:"40px"}} alt="..." src={logoHomeCitoyen}/>
+                                <h4 className="align-left" style={{color:"gray"}}>MES INFORMATIONS PERSONNELLES</h4>
+                            </div>
+                        </Row>
+                    : 
+                        <Row style={{paddingTop:"100px"}}>
+                            <div className="flex-container-left-center">
+                                <img style={{width:"80px"}} alt="..." src={logoHomeCitoyen}/>
+                                <h1 className="ml-4" style={{color:"gray"}}>MES INFORMATIONS PERSONNELLES</h1>
+                            </div>
+                        </Row>
+                    } 
+                
+
+                {this.state.windowWidth <= 1200 &&
+                    <Row style={{display:"flex"}, {flexDirection:"column"}, {justifyContent:"center"}}>
+                        <div className="flex-container-col-left" id="buttons" style={{height:"30px"}}>   
+                                    {ready && (
+                                        <PDFDownloadLink document={ActeDeNaissance(this.state.personnePDF)} fileName="ActeDeNaissance.pdf" className="btn-download-file">
+                                            {
+                                                ({ blob, url, loading, error }) => (loading ? 'Loading Générer mon acte de naissance...' :
+                                                    <Button type="button" className="btn-round ml-1 btn-download-file" color="info" style={{fontWeight:"bold", textTransform: 'none'}}
+                                                        onClick={() => (this.setState({ ready: false }))}>
+                                                        <i class="fa fa-download mr-1"></i>
+                                                        Télécharger mon acte de naissance
+                                                    </Button>
+                                                )
+                                            }
+                                        </PDFDownloadLink>
+                                    )}
+                                    {!ready && (
+                                        <Button type="button" className="btn-round ml-1 btn-download-file" color="info" 
+                                            style={{fontWeight:"bold", textTransform: 'none'}}
+                                            onClick={() => this.toggle()}>
+                                            <i class="fa fa-download mr-1"></i>    
+                                            Générer mon acte de naissance
+                                        </Button>
+                                    )}                                                                         
+
+                            <Button type="button" className="btn-round ml-1 btn-download-file" color="info" style={{fontWeight:"bold", textTransform: 'none'}}>
+                                <i class="fa fa-download mr-1"></i>Générer mon acte de mariage
+                            </Button>
+                        </div>
+                    </Row>
+                }
 
                 <Row style={{paddingTop:"100px"}}>
-                    <div className="flex-container-left-center">
-                        <img style={{width:"80px"}} alt="..." src={logoHomeCitoyen}/>
-                        <h1 className="ml-4" style={{color:"gray"}}>MES INFORMATIONS PERSONNELLES</h1>
-                    </div>
-                </Row>
+                    {this.state.windowWidth <= 1200 ?
+                        <Col style={{paddingLeft: "60px"}, {textAlign:"center"}} >
+                            <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
+                            <Row style={{paddingTop:"50px"}} className="text-left">
+                                <Col className="col-sm-4">
+                                    <h4>Mon code QR</h4>
+                                </Col>
+                                <Col className="col-6">
+                                    <img alt="..." src={GenerateQRCode(this.state.hash)}/>
+                                </Col>
+                            </Row>
+                            <Row style={{paddingTop:"20px"}} className="text-left">
+                                <Col className="col-sm-4">
+                                    <h4>Ma clé de sécurité</h4>
+                                </Col>
+                                <Col className="col-sm-3">
+                                    <div style={{wordWrap:"break-word"}}>{this.state.hash}</div>
+                                </Col>
+                            </Row>
+                        </Col>
+                    :
+                        <Col style={{paddingLeft: "60px"}, {textAlign:"center"}} md={{size: 9}}>
+                            <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
+                            <Row style={{paddingTop:"50px"}} className="text-left">
+                                <Col className="col-sm-4">
+                                    <h4>Mon code QR</h4>
+                                </Col>
+                                <Col className="col-6">
+                                    <img alt="..." src={GenerateQRCode(this.state.hash)}/>
+                                </Col>
+                            </Row>
+                            <Row style={{paddingTop:"20px"}} className="text-left">
+                                <Col className="col-sm-4">
+                                    <h4>Ma clé de sécurité</h4>
+                                </Col>
+                                <Col className="col-sm-3">
+                                    <div style={{wordWrap:"break-word"}}>{this.state.hash}</div>
+                                </Col>
+                            </Row>
+                        </Col>
+                    }
 
-                <Row style={{paddingTop:"100px"}}>
-                    <Col style={{paddingLeft: "60px"}, {textAlign:"center"}} md={{ size: 9, offset: 0 }}>
-                        <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
-                        <Row style={{paddingTop:"50px"}} className="text-left">
-                            <Col className="col-sm-4">
-                                <h4>Mon code QR</h4>
-                            </Col>
-                            <Col className="col-6">
-                                <img alt="..." src={GenerateQRCode(this.state.hash)}/>
-                            </Col>
-                        </Row>
-                        <Row style={{paddingTop:"20px"}} className="text-left">
-                            <Col className="col-sm-4">
-                                <h4>Ma clé de sécurité</h4>
-                            </Col>
-                            <Col className="col-sm-3">
-                                <div style={{wordWrap:"break-word"}}>{this.state.hash}</div>
-                            </Col>
-                        </Row>
-                        
-                    </Col>
-                    <Col>
+
+                    
+                    {/* AFFICHAGE DU BANDEAU DE GAUCHE EN AFFICHAGE DESKTOP */}
+                    {this.state.windowWidth > 1200 &&
+                        <Col>
                         <Row style={{display:"flex"}, {flexDirection:"column"}, {justifyContent:"center"}}>
                             <h2 className="ct-orange" style={{textAlign:"left"}}>GENERER MES DOCUMENTS</h2>
                             <div style={{marginTop: "30px"}, {marginBottom: "30px"}} id="buttons">
-                                        
                                         {ready && (
                                             <PDFDownloadLink document={ActeDeNaissance(this.state.personnePDF)} fileName="ActeDeNaissance.pdf" className="btn-download-file">
                                                 {
@@ -248,8 +329,6 @@ class HomepageCitoyen extends Component {
                                                 }
                                             </PDFDownloadLink>
                                         )}
-
-                                        
                                         {!ready && (
                                             <Button type="button" className="btn-round ml-1 btn-download-file" color="info" 
                                                 style={{fontWeight:"bold", textTransform: 'none'}}
@@ -258,7 +337,6 @@ class HomepageCitoyen extends Component {
                                                 Générer mon acte de naissance
                                             </Button>
                                         )}                                                                         
-
                                 <Button type="button" className="btn-round ml-1 btn-download-file" color="info" style={{fontWeight:"bold", textTransform: 'none'}}>
                                     <i class="fa fa-download mr-1"></i>Générer mon acte de mariage
                                 </Button>
@@ -287,56 +365,12 @@ class HomepageCitoyen extends Component {
                             <h6 className="ct-jaune bold ligne-menu-titre" style={{paddingTop:"30px"}}>Famille</h6>
                             <div className="ligne-menu ct-jaune">Déclarer un décès</div>
                             <div className="ligne-menu ct-jaune">Faire une demande de divorce</div>
-                            {/* <Accordion style={{width:"100px"}} expanded>
-                                <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                                >
-                                    <h6 className="ct-bleu bold">Etats Civils</h6>
-                                </AccordionSummary>
-                                <AccordionDetails style={{display:"flex"}, {direction:"row"}}>
-                                    <div className="ligne-menu">Changement d'état civil</div>
-                                    <div className="ligne-menu">Livret de famille</div>
-                                    <div className="ligne-menu">Actes d’états civils</div>
-                                </AccordionDetails>
-                            </Accordion>
-                            <Accordion style={{width:"100%"}}>
-                                <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                                >
-                                    <h6 className="ct-rouge bold ">Elections</h6>
-                                </AccordionSummary>
-                                <AccordionDetails >   
-                                    <div style={{width:"100%"}}>test</div>
-                                    <div style={{width:"100%"}}>test</div>
-                                </AccordionDetails>
-                            </Accordion>
-                            <Accordion style={{width:"100%"}}>
-                                <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel3a-content"
-                                id="panel3a-header"
-                                >
-                                    <h6 className="ct-vert bold ">Papiers</h6>
-                                </AccordionSummary>
-                            </Accordion>
-                            <Accordion style={{width:"100%"}}>
-                                <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel3a-content"
-                                id="panel3a-header"
-                                >
-                                    <h6 className="ct-jaune bold ">Famille</h6>
-                                </AccordionSummary>
-                            </Accordion> */}
                         </Row>
                     </Col>
+                    }
                 </Row>
             </Container>
-          );
+        );
     }
 }
  

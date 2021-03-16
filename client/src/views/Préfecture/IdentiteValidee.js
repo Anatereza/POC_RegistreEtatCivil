@@ -18,15 +18,30 @@ const TITLE = 'Côte d’Ivoire - Identité validée'
 
 class IdentiteValidee extends Component {
     
-    state = this.props.location.state
+    state = {
+        ID:this.props.location.state,
+        windowWidth: 0,
+        windowHeight: 0
+    }
 
     constructor(props){
         super(props);
 
-   
-     }
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+        console.log("--- updateDimensions ---");
+        let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
 
-
+        this.setState({ windowWidth, windowHeight });
+    }
     handleClick(e){
         console.log("=== handleClick ===")
         console.log("Redirection homepage hopital")
@@ -38,7 +53,7 @@ class IdentiteValidee extends Component {
     MakeTableRecap(){
         console.log(this.state)
         const result = [
-            {name : "Numéro d’identification unique", price : this.state},
+            {name : "Numéro d’identification unique", price : this.state.ID},
           ]
 
         return (result);
@@ -50,38 +65,35 @@ class IdentiteValidee extends Component {
             <Helmet>
             <title>{ TITLE }</title>
             </Helmet>
-            
-            {/* <Container>
-            <Row style={{paddingTop:"100px"}}>
-                <div className="flex-container-left-center">
-                    <img style={{width:"80px"}} alt="..." src={imageValider}/>
-                    <h1 className="ml-4" style={{color:"gray"}}>Naissance validée</h1>
-                </div>
-            </Row>
-            <div style={{height:"80px"}}></div>
-                <Col className="text-left col-sm-12 col-md-6 offset-md-3">
-                    <Row style={{paddingTop:"30px"}}>
-                       <h2 style={{color:"gray"}}>Nouvelle identité verifiée</h2>
-                    </Row>
-                    <Row style={{marginLeft:"30px"}}> 
-                       <SimpleTable data={this.MakeTableRecap().slice(0,1)}/>
-                    </Row>                  
-                    <Form>
-                        <Row style={{paddingTop:"30px"}} >
-                            <Col className="offset-sm-8">
+          
+        <Container className="body-container">
+                {this.state.windowWidth <= 1024 ?
+                <>
+                    <Row style={{paddingTop:"50px"}} />
+                    <Col style={{marginRight:"60px"}}>
+                    <Row className="text-center">
+                        <div className="container-tile-validation">
+                            <img className="img-tile-valider" alt="..." src={imageValider}/>
+                            <div>
+                                {this.state.windowWidth <= 1024 ?  <><div style={{height:"30px"}}></div><h3 style={{color:"gray"}}>Naissance saisie</h3></> : <h1 style={{color:"gray"}}>Naissance saisie</h1> }
+                                <SimpleTable bold={true} data={this.MakeTableRecap().slice(0,1)}/>
+                                <div style={{paddingTop:"30px"}}>Cette naissance va maintenant être soumise à validation au service des états civils.</div>
+                            </div >
+                        </div>
+                        <Row style={{paddingTop:"30px"}}>
+                            <Col className="offset-md-12">
                                 <Button onClick={(e)=>{this.handleClick(e)}} className="btn-round btn ml-8 btn-info" color="info">
                                     Terminer
                                 </Button>
                             </Col>
                         </Row>
-                    </Form>
-                </Col>            
-
-        </Container>   */}  
-        <Container className="body-container">
-                <Row style={{paddingTop:"180px"}} />
-                <Row className="text-center">
+                        </Row>    
+                    </Col></>
+                :
+                <>
+                    <Row style={{paddingTop:"180px"}} />
                     <Col className="col-sm-12 col-md-12 offset-md-2">
+                    <Row className="text-center">
                         <div className="container-tile-validation">
                             <img className="img-tile-valider" alt="..." src={imageValider}/>
                             <div>
@@ -96,8 +108,12 @@ class IdentiteValidee extends Component {
                                 </Button>
                             </Col>
                         </Row>
-                    </Col>
-                </Row>
+                        </Row>    
+                    </Col>  </>
+                }
+                
+                    
+                
             </Container>            
             
             

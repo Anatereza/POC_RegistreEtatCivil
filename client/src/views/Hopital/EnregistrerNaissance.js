@@ -28,6 +28,7 @@ import {
   import TextField from "@material-ui/core/TextField";
   import _isEmpty from "lodash/isEmpty";
   import SimpleTable from 'components/SimpleTable';
+import { ThreeSixty } from '@material-ui/icons';
 
 const TITLE = 'Côte d’Ivoire - Enregistrer une naissance'
 
@@ -38,7 +39,7 @@ function timeout(delay) {
 class EnregistrerNaissance extends Component {
     constructor(props){
         super(props);
-
+        console.log("ENREGISTRER NAISSANCE");
         const fieldsValues = new Map();
         fieldsValues.set("Sexe","Feminin")
         fieldsValues.set("Nom de famille","")
@@ -75,22 +76,44 @@ class EnregistrerNaissance extends Component {
             fieldsValues: fieldsValues,
             formIsOK: true,
             id: "0x",
-            name: ""
+            name: "",
+            windowWidth: 0,
+            windowHeight: 0
         }
 
         if (localStorage.getItem('wkfStateLocal') < 1) {
             localStorage.setItem('wkfStateLocal',1)
             console.log("Initialiser wkfStateLocal si undefined")
-        }        
-     }
+        }
+        this.updateDimensions = this.updateDimensions.bind(this);   
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);  
+    }
 
-     handleCloseErrorSnackBar(event, reason){
+    componentDidMount() {
+        console.log("=== componentDidMount ===");
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+        console.log("--- updateDimensions ---");
+        let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+        this.setState({ windowWidth, windowHeight });
+    }
+
+    handleCloseErrorSnackBar(event, reason){
         if (reason === 'clickaway') {
         return;
         }
-    this.setState({snackBarErrorOpen:false})
- }
-
+        this.setState({snackBarErrorOpen:false})
+    }
 
     handleChange(field, e){         
         let fieldsValues = this.state.fieldsValues
@@ -424,10 +447,23 @@ class EnregistrerNaissance extends Component {
                        
             <Container>
                 <Row style={{paddingTop:"100px"}}>
-                    <div className="flex-container-left-center">
-                        <img style={{width:"80px"}} alt="..." src={imageAjouter}/>
-                        <h1 className="ml-4" style={{color:"gray"}}>Enregistrer une naissance</h1>
-                    </div>
+                    
+                        {this.state.windowWidth <= 1200 ?
+                            <>
+                            <div className="flex-container-spread-center">
+                            <img style={{width:"40px"}} alt="..." src={imageAjouter}/>
+                            <h4 style={{color:"gray"}}>Enregistrer une naissance</h4>
+                            </div>
+                            </>
+                        : 
+                            <>
+                            <div className="flex-container-left-center">
+                                <img style={{width:"80px"}} alt="..." src={imageAjouter}/>
+                                <h1 className="ml-4" style={{color:"gray"}}>Enregistrer une naissance</h1>
+                            </div>
+                            </>
+                        }
+
                 </Row>
                 <div style={{height:"80px"}}></div>
                 <Col className="text-left col-sm-12 col-md-6 offset-md-3">

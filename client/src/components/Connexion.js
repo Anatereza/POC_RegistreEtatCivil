@@ -56,7 +56,7 @@ class Connexion extends Component {
                                 <Input onChange={(e) => this.updateLogin(e)} placeholder="Identifiant" type="text" className="form-control element-form-connexion "></Input>
                                 <div className="element-form-connexion">
                                     <Input onChange={(e) => this.updatePwd(e)} placeholder="Mot de passe" type="password" className="form-control"></Input>
-                                    {this.props.status==='KO' && <div style={{color: "#f5593d"}} >Combinaison identifiant / mot de passe incorrecte.</div>}
+                                    {this.props.status==='KO' && <div className="error-message-form" >Combinaison identifiant / mot de passe incorrecte.</div>}
                                 </div>
                                 <Row className="flex-container-right-center">
                                     {this.state.loading && <CircularProgress />}

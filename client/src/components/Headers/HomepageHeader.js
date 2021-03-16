@@ -9,11 +9,29 @@ class HomepageHeader extends Component {
         URLCible:""
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        
-        
+        this.state = {
+          windowWidth: 0,
+          windowHeight: 0
+        };
+        this.updateDimensions = this.updateDimensions.bind(this);
+      }
 
+    componentDidMount() {
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+    }
+    
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+    
+    updateDimensions() {
+        let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+
+        this.setState({ windowWidth, windowHeight });
     }
 
     HandleClick(){
@@ -62,20 +80,22 @@ class HomepageHeader extends Component {
             <div className="page-header">
                 <Container>
                     <div className="container-logo-header">
-                        <div className="element-logo-header">
-                        <img className="img-header" alt="..." src={logoCoteIvoire} onClick={() => this.HandleClick()} />
-                        </div>
+                        
+                            <img className=" element-logo-header img-header" alt="..." src={logoCoteIvoire} onClick={() => this.HandleClick()} />
+                        
                         <div className="element-logo-header"> 
                                 <div style={{fontWeight:"bold"}, {color:"#fbc658"}}>WWW.GOUV.CI/ETATSCIVILS <br/></div>
                                 <div style={{color:"#66615b"}}>LE PORTAIL DES ACTES D’ÉTATS CIVILS <br/></div>
                                 <div style={{color:"#66615b"}}>DE LA CÔTE D’IVOIRE <br/></div>
                         </div>
-                        <div className="element-logo-header"> 
-                            <span >
-                                <img style={{width:"50px"}} alt="..." src={logoQuestion} />
-                                <div>Une question ?</div>
-                            </span>
-                        </div>
+                        {this.state.windowWidth > 1200 &&
+                            <div className="element-logo-header"> 
+                                <span >
+                                    <img style={{width:"50px"}} alt="..." src={logoQuestion} />
+                                    <div>Une question ?</div>
+                                </span>
+                            </div>
+                        }
                     </div>
                     
                 </Container>
