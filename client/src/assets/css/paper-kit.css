@@ -7733,7 +7733,7 @@ License - nucleoapp.com/license/
 }
 
 /*AFFICHAGE TELEPHONE*/
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
 	.presentation-page .presentation-title {
 		font-size: 7em;
 	}
@@ -7754,15 +7754,6 @@ License - nucleoapp.com/license/
 
 	.body-container {
 		min-height: calc(812px - 100px);
-	}
-
-	.container-tile-validation {
-		display: flex;
-		direction: row;
-		justify-content: space-around;
-		align-items: center;
-		text-align: left;
-		flex-wrap: wrap;
 	}
 
 	.section-how-to-mobile {
@@ -7968,6 +7959,7 @@ License - nucleoapp.com/license/
 		flex-direction: row;
 		justify-content: start;
 		align-items: center;
+		min-height: 160px;
 		/* height: 180px; */
 		/* width: 600px; */
 		border: solid;
@@ -9037,7 +9029,7 @@ td.rdtYear:hover {
 }
 
 /*AFFICHAGE DESKTOP*/
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
 	.body-container {
 		min-height: calc(100vh - 150px - 160px);
 	}
@@ -9046,16 +9038,6 @@ td.rdtYear:hover {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-	}
-
-	.container-tile-validation {
-		display: flex;
-		direction: row;
-		justify-content: space-around;
-		align-items: center;
-		width: 65%;
-		text-align: left;
-		flex-wrap: wrap;
 	}
 
 	.flex-container-col-center {
@@ -9546,6 +9528,26 @@ Label {
 
 .mg-10 {
 	margin: 10px;
+}
+
+.flex-container-end-center{
+	display:flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.container-tile-validation {
+	display: flex;
+	direction: row;
+	justify-content: space-around;
+	align-items: center;
+	text-align: left;
+	flex-wrap: wrap;
+	width:100%;
+}
+
+.width-inherit{
+	width: inherit;
 }
 
 /*# sourceMappingURL=paper-kit.css.map */

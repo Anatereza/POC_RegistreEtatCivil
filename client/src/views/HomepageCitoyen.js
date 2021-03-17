@@ -48,7 +48,6 @@ class HomepageCitoyen extends Component {
     }    
     
     constructor(props) {
-        console.log("=== Homepage Citoyen ===")
         super(props)
 
         if(!window.location.hash){
@@ -67,7 +66,6 @@ class HomepageCitoyen extends Component {
     }
     
     updateDimensions() {
-        console.log("=== updateDimensions ===");
         let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
         // let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
         // this.setState({ windowWidth, windowHeight }, function() {console.log(windowWidth)});
@@ -143,8 +141,6 @@ class HomepageCitoyen extends Component {
     componentDidMount = async () => {
 
         const _login = localStorage.getItem('LoginLocal');
-        // console.log("login did mount")
-        // console.log(_login)
         this.setState({ login: _login});
         
         // FOR REFRESHING PAGE ONLY ONCE -
@@ -267,7 +263,7 @@ class HomepageCitoyen extends Component {
 
                 <Row style={{paddingTop:"100px"}}>
                     {this.state.windowWidth <= 1200 ?
-                        <Col style={{paddingLeft: "60px"}, {textAlign:"center"}} >
+                        <Col className="mg-10" style={{paddingLeft: "60px"}, {textAlign:"center"}} >
                             <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
                             <Row style={{paddingTop:"50px"}} className="text-left">
                                 <Col className="col-sm-4">
@@ -287,7 +283,7 @@ class HomepageCitoyen extends Component {
                             </Row>
                         </Col>
                     :
-                        <Col style={{paddingLeft: "60px"}, {textAlign:"center"}} md={{size: 9}}>
+                        <Col className="mg-10" style={{paddingLeft: "60px"}, {textAlign:"center"}} md={{size: 9}}>
                             <InfoPersonne data={this.getPerson(this.state.infosCitoyen)}></InfoPersonne>
                             <Row style={{paddingTop:"50px"}} className="text-left">
                                 <Col className="col-sm-4">
@@ -302,7 +298,7 @@ class HomepageCitoyen extends Component {
                                     <h4>Ma clé de sécurité</h4>
                                 </Col>
                                 <Col className="col-sm-3">
-                                    <div style={{wordWrap:"break-word"}}>{this.state.hash}</div>
+                                    <div>{this.state.hash}</div>
                                 </Col>
                             </Row>
                         </Col>

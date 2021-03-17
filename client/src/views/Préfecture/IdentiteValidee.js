@@ -66,8 +66,28 @@ class IdentiteValidee extends Component {
             <title>{ TITLE }</title>
             </Helmet>
           
-        <Container className="body-container">
-                {this.state.windowWidth <= 1024 ?
+            <Container className="body-container">
+                <Row style={{paddingTop:"50px"}}/>
+                <Col className="col-sm-14 col-md-10 " >
+                    {/* <Row className="text-center"> */}
+                        <Row>
+                        <div className="container-tile-validation">
+                            <img className="img-tile-valider mg-10" alt="..." src={imageValider}/>
+                            <div>
+                                {this.state.windowWidth <= 1024 ?  <><div style={{height:"30px"}}></div><h3 style={{color:"gray"}}>Identité validée</h3></> : <h1 style={{color:"gray"}}>Identité validée</h1> }
+                                <SimpleTable bold={true} data={this.MakeTableRecap().slice(0,1)}/>
+                                <div style={{paddingTop:"30px"}}>Ce citoyen peut désormais accéder à son espace personnel grâce au numéro unique.</div>
+                            </div >
+                        </div>
+                        </Row>
+                        <Row className="flex-container-end-center" style={{paddingTop:"30px"}}>
+                                <Button onClick={(e)=>{this.handleClick(e)}} className="btn-round btn ml-8 btn-info" color="info">
+                                    Terminer
+                                </Button>
+                        </Row>
+                    {/* </Row> */}
+                </Col>
+                {/* {this.state.windowWidth <= 1024 ?
                 <>
                     <Row style={{paddingTop:"50px"}} />
                     <Col style={{marginRight:"60px"}}>
@@ -110,7 +130,7 @@ class IdentiteValidee extends Component {
                         </Row>
                         </Row>    
                     </Col>  </>
-                }
+                } */}
                 
                     
                 

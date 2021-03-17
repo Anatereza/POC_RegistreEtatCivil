@@ -69,9 +69,30 @@ class NaissanceValidee extends Component {
             </Helmet>
             
             <Container className="body-container">
-                {this.state.windowWidth <= 1024 ?
-                    <><Row style={{paddingTop:"50px"}} />
-                    
+                <Row style={{paddingTop:"50px"}}/>
+                <Col className="col-sm-14 col-md-10 " >
+                    {/* <Row className="text-center"> */}
+                        <Row>
+                        <div className="container-tile-validation">
+                            <img className="img-tile-valider mg-10" alt="..." src={imageValider}/>
+                            <div>
+                                {this.state.windowWidth <= 1024 ?  <><div style={{height:"30px"}}></div><h3 style={{color:"gray"}}>Naissance saisie</h3></> : <h1 style={{color:"gray"}}>Naissance saisie</h1> }
+                                <SimpleTable bold={true} data={this.MakeTableRecap().slice(0,1)}/>
+                                <div style={{paddingTop:"30px"}}>Cette naissance va maintenant être soumise à validation au service des états civils.</div>
+                            </div >
+                        </div>
+                        </Row>
+                        <Row className="flex-container-end-center" style={{paddingTop:"30px"}}>
+                                <Button onClick={(e)=>{this.handleClick(e)}} className="btn-round btn ml-8 btn-info" color="info">
+                                    Terminer
+                                </Button>
+                        </Row>
+                    {/* </Row> */}
+                </Col>
+                
+                {/* {this.state.windowWidth <= 1024 ?
+                    <>
+                    <Row style={{paddingTop:"50px"}} />
                     <Col style={{marginRight:"60px"}}>
                     <Row className="text-center">
                         <div className="container-tile-validation">
@@ -114,7 +135,7 @@ class NaissanceValidee extends Component {
                         </Row>
                     </Col>
                 </Row></>    
-                }
+                } */}
                 
                 
             </Container>             

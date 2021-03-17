@@ -100,12 +100,12 @@ class DeclarerMariage extends Component {
         this.HandleClick = this.HandleClick.bind(this);
         this.HandleClickSuivant = this.HandleClickSuivant.bind(this);
         this.HandleSubmitMariage = this.HandleSubmitMariage.bind(this);
+        this.setState = this.setState.bind(this);
+        this.updateDimensions = this.updateDimensions.bind(this);
 
         if (localStorage.getItem('wkfStateLocal') < 1) {
             localStorage.setItem('wkfStateLocal',1)
         }
-
-
 
         if(this.props.location.state){
             switch (this.props.location.state.source){
@@ -128,7 +128,7 @@ class DeclarerMariage extends Component {
                 default:
             }
         }
-        this.updateDimensions();
+        // this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions);
     }
     
@@ -137,10 +137,11 @@ class DeclarerMariage extends Component {
     }
     
     updateDimensions() {
+        console.log("=== updateDimensions ===");
         let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
-
-        this.setState({ windowWidth, windowHeight });
+        this.setState({windowWidth:windowWidth})
+        //this.setState((prevState) => ({...prevState,["windowWidth"] :windowWidth}, function() {console.log("State mis à jour");}));
+        this.forceUpdate()
     }
 
     //Gestionnaire des changement de champs du formulaire pour les informations complémentaires sur le mariage
@@ -370,7 +371,7 @@ class DeclarerMariage extends Component {
                         filteredList.push(element)
                     }
                 }
-                const defTableHeight = 56+52+10+i*52;
+                const defTableHeight = 56+52+10+i*52+10;
                 console.log(defTableHeight)            
                 this.setState({tableHeight : defTableHeight, filteredList:filteredList})
                 this.forceUpdate()
@@ -502,15 +503,15 @@ class DeclarerMariage extends Component {
           );
           console.error(error);
         }
+        this.updateDimensions();
     };
     // Back       
     
     render() {     
         return (
             <>
-            
             {/* MOBILE */}
-            {this.state.windowHeight < 1024 &&
+            {this.state.windowWidth < 1024 &&
             <>
                 {this.state.loading ? 
                     <Container className="body-container">
@@ -683,21 +684,21 @@ class DeclarerMariage extends Component {
                                 </Snackbar>
                         }      
                         <Row >
-                            <Col className="offset-sm-2">
+                            <Col className="offset-sm-2  mg-10">
                                 <Row style={{paddingTop:"30px"}}>
-                                    <h2 style={{color:"gray"}}>Premier conjoint</h2>
+                                    <h4 style={{color:"gray"}}>Premier conjoint</h4>
                                 </Row>
                                 <Row style={{marginLeft:"30px"}}> 
                                     <SimpleTable data={this.MakeTablePersons().slice(0,6)}/>
                                 </Row>
                                 <Row style={{paddingTop:"30px"}}>
-                                    <h2 style={{color:"gray"}}>Second conjoint</h2>
+                                    <h4 style={{color:"gray"}}>Second conjoint</h4>
                                 </Row>
                                 <Row style={{marginLeft:"30px"}}> 
                                     <SimpleTable data={this.MakeTablePersons().slice(6,11)}/>
                                 </Row>
                                 <Row style={{paddingTop:"30px"}}>
-                                    <h2 style={{color:"gray"}}>Mariage</h2>
+                                    <h4 style={{color:"gray"}}>Mariage</h4>
                                 </Row>
                                 <Row style={{marginLeft:"30px"}}> 
                                     <SimpleTable data={this.MakeTableMariage().slice(0,7)}/>
@@ -719,7 +720,7 @@ class DeclarerMariage extends Component {
             }
 
             {/* DESKTOP */}
-            {this.state.windowHeight >= 1024 && <>
+            {this.state.windowWidth >= 1024 && <>
                 {this.state.loading ? 
                     <Container className="body-container">
                         <Helmet>
@@ -924,21 +925,21 @@ class DeclarerMariage extends Component {
                             </div>
                         }
                         {localStorage.getItem('wkfStateLocal')>=4 &&
-                        <>
-                        {localStorage.getItem('wkfStateLocal')==4 &&
-                        <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
-                                <MuiAlert elevation={6} variant="filled" severity="success">
-                                    Données complémentaires validées.
-                                </MuiAlert>
-                        </Snackbar>
-                        }
-                        {localStorage.getItem('wkfStateLocal')==5 &&
+                            <>
+                            {localStorage.getItem('wkfStateLocal')==4 &&
                                 <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
-                                    <MuiAlert elevation={6} variant="filled" severity="success">
-                                        Mariage validé. Redirection.
-                                    </MuiAlert>
+                                        <MuiAlert elevation={6} variant="filled" severity="success">
+                                            Données complémentaires validées.
+                                        </MuiAlert>
                                 </Snackbar>
-                        }      
+                            }
+                            {localStorage.getItem('wkfStateLocal')==5 &&
+                                    <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
+                                        <MuiAlert elevation={6} variant="filled" severity="success">
+                                            Mariage validé. Redirection.
+                                        </MuiAlert>
+                                    </Snackbar>
+                            }      
                         <Row >
                             <Col className="offset-sm-2">
                                 <Row style={{paddingTop:"30px"}}>

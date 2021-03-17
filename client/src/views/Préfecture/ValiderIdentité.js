@@ -45,7 +45,9 @@ class ValiderIdentité extends Component {
     
     constructor(props){
       super(props);
-      this.updateDimensions();
+      this.updateDimensions = this.updateDimensions.bind(this);
+      this.setState = this.setState.bind(this)
+      
       window.addEventListener("resize", this.updateDimensions);
       console.log(this.state.windowWidth);
     }
@@ -150,7 +152,7 @@ class ValiderIdentité extends Component {
           console.error(error);
           
         }
-        
+        this.updateDimensions();
     };
     // Back    
 

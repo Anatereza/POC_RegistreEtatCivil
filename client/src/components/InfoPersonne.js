@@ -14,7 +14,6 @@ class InfoPersonne extends Component {
     }
     
     componentDidMount() {
-        console.log("=== componentDidMount ===");
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions);
     }
@@ -26,8 +25,9 @@ class InfoPersonne extends Component {
     updateDimensions() {
         console.log("--- updateDimensions ---");
         let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-        let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
-        this.setState({ windowWidth, windowHeight });
+        
+        this.setState({windowWidth:windowWidth});
+        console.log(this.state.windowWidth);
     }
 
     render() { 

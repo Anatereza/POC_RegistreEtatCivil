@@ -450,10 +450,10 @@ class EnregistrerNaissance extends Component {
                     
                         {this.state.windowWidth <= 1200 ?
                             <>
-                            <div className="flex-container-spread-center">
-                            <img style={{width:"40px"}} alt="..." src={imageAjouter}/>
-                            <h4 style={{color:"gray"}}>Enregistrer une naissance</h4>
-                            </div>
+                            <Col className="flex-container-spread-center">
+                                <img style={{width:"40px"}} alt="..." src={imageAjouter}/>
+                                <h4 style={{color:"gray"}}>Enregistrer une naissance</h4>
+                            </Col>
                             </>
                         : 
                             <>

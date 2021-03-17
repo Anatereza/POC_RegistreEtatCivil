@@ -57,7 +57,6 @@ class HomepagePublique extends Component {
         let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
 
         this.setState({ windowWidth, windowHeight });
-        console.log(this.state);
     }
 
     HandleClick(param){

@@ -41,8 +41,8 @@ class VueVérificationIdentité extends Component {
         let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
         let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
 
-        // this.setState({ windowWidth, windowHeight });
-        this.setState((prevState) => ({...prevState,["windowWidth"] :windowWidth}));
+        this.setState({ windowWidth, windowHeight });
+        //this.setState((prevState) => ({...prevState,["windowWidth"] :windowWidth}));
     }
 
     HandleClickNvlleRecherche(){
