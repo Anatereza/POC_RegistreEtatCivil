@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import countryColors from "variables"
+import countryLayout from "variables"
 import { Link, useHistory } from "react-router-dom";
 import Actualités from "components/Actualités"
 import CarouselComponent from "components/Carroussels/CarouselComponent"
@@ -172,6 +174,7 @@ class HomepagePublique extends Component {
             <>
             {/*<HomepageHeader/>*/}
             <Container className="body-container"> 
+            
                 <div style={{height:"60px"}}/>
                 <Row>
                     <Col  md={{ size: 7, offset: 0 }}>

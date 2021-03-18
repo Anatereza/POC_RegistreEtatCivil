@@ -441,16 +441,13 @@ class EnregistrerNaissance extends Component {
         let file; 
         return ( 
             <>
-            <Helmet>
-            <title>{ TITLE }</title>
-            </Helmet>
                        
             <Container>
                 <Row style={{paddingTop:"100px"}}>
                     
                         {this.state.windowWidth <= 1200 ?
                             <>
-                            <Col className="flex-container-spread-center">
+                            <Col style={{maxWidth:"520px"}} className="flex-container-spread-center">
                                 <img style={{width:"40px"}} alt="..." src={imageAjouter}/>
                                 <h4 style={{color:"gray"}}>Enregistrer une naissance</h4>
                             </Col>

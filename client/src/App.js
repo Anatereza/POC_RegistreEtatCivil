@@ -24,8 +24,29 @@ import HomepageHeader from 'components/Headers/HomepageHeader'
 import NaissanceValidee from "views/Hopital/NaissanceValidee";
 import IdentiteValidee from "views/Préfecture/IdentiteValidee";
 import PortailAdministration from "views/PortailAdministration";
+import {countryLayout} from "variables"
+
+function getFaviconEl() {
+  return document.getElementById("favicon");
+}
+
+function defineFavIcon(){
+  switch (countryLayout){
+    case "CI": 
+      return "%PUBLIC_URL%/Flag_of_Cote_d'Ivoire.ico?v=2"
+    break;
+    case "GB": 
+    return "%PUBLIC_URL%/Flag_of_Gabon.ico?v=2"
+  break;
+    default:
+  }
+}
+
 
 function App() {
+  const favicon = getFaviconEl(); // Accessing favicon element
+  favicon.href = defineFavIcon();
+ 
   return (
     <Router>
       <div className="App">
@@ -67,12 +88,12 @@ function App() {
   );
 }
 
-const Home = () => {
-  return (
-    <div>
-      <h1>Home page</h1>
-    </div>
-  );
-};
+// const Home = () => {
+//   return (
+//     <div>
+//       <h1>Home page</h1>
+//     </div>
+//   );
+// };
 
 export default App;

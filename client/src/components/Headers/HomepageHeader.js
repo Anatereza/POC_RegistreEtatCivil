@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Container } from "reactstrap";
 import "assets/css/paper-kit.css"
 import logoCoteIvoire from 'assets/img/logo_cote_ivoire.png'
+import logoGabon from 'assets/img/logo_gabon.png'
 import logoQuestion from 'assets/img/question.png'
+import {countryLayout} from "variables"
+import {countryColors} from "variables"
 
 class HomepageHeader extends Component {
     state = {
@@ -13,9 +16,11 @@ class HomepageHeader extends Component {
         super(props);
         this.state = {
           windowWidth: 0,
-          windowHeight: 0
+          windowHeight: 0,
+          countryLayout:countryLayout,
         };
         this.updateDimensions = this.updateDimensions.bind(this);
+        console.log(countryColors);
       }
 
     componentDidMount() {
@@ -81,13 +86,30 @@ class HomepageHeader extends Component {
                 <Container>
                     <div className="container-logo-header">
                         
+                            
+                            {this.state.countryLayout === "CI"  && 
+                            <>
                             <img className=" element-logo-header img-header" alt="..." src={logoCoteIvoire} onClick={() => this.HandleClick()} />
-                        
-                        <div className="element-logo-header"> 
-                                <div style={{fontWeight:"bold"}, {color:"#fbc658"}}>WWW.GOUV.CI/ETATSCIVILS <br/></div>
+                            <div className="element-logo-header">
+                                <div style={{fontWeight:"bold"},  {color: countryColors}}>WWW.GOUV.CI/ETATSCIVILS <br/></div>
                                 <div style={{color:"#66615b"}}>LE PORTAIL DES ACTES D’ÉTATS CIVILS <br/></div>
                                 <div style={{color:"#66615b"}}>DE LA CÔTE D’IVOIRE <br/></div>
-                        </div>
+                            </div>
+                            </>
+                            }
+                            {this.state.countryLayout === "GB"  && 
+                            <>
+                            <img className="element-logo-header img-header" alt="..." src={logoGabon} onClick={() => this.HandleClick()} />
+                            <div className="element-logo-header">
+                                <div style={{fontWeight:"bold"}, {color: countryColors}}>WWW.GOUV.GA/ETATSCIVILS <br/></div>
+                                <div style={{color:"#66615b"}}>LE PORTAIL DES ACTES D’ÉTATS CIVILS <br/></div>
+                                <div style={{color:"#66615b"}}>DE LA REPUBLIQUE GABONAISE  <br/></div>
+                            </div>
+                            </>
+                            }
+                          
+                        
+
                         {this.state.windowWidth > 1200 &&
                             <div className="element-logo-header"> 
                                 <span >

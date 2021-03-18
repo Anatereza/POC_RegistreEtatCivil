@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-
+import {countryColors} from "variables"
 class TextesRef extends Component {
     state = {  }
     render() { 
         return (
             <div className="liste-actus">
                 <div className="element-actu">
-                    <h2 className="bold" style={{color:"#FBC658"}}>TEXTES DE REFERENCE</h2>
+                    <h2 className="bold" style={{color:countryColors}}>TEXTES DE REFERENCE</h2>
                 </div>
                     
                     <a className="lien-hypertexte ligne-menu" href="#" style={{textAlign:"left"}}>Code des relations entre le public et l'administration : articles R113-5 à R113-9 </a>

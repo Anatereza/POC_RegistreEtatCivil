@@ -18,6 +18,7 @@
 */
 /*eslint-disable*/
 import React from "react";
+import logoBearingPoint from 'assets/img/bearingpoint.png'
 
 // reactstrap components
 import { Row, Container } from "reactstrap";
@@ -27,14 +28,12 @@ function DemoFooter() {
     <footer className=" footer-nav-perso">
       <Container>
         <Row className="container-footer">
-          <div>FAQ</div>                
-          <div>BearingPoint 2021</div> 
+          <div>FAQ</div> 
+          <div>2021</div>
+          <img style={{height:"15px"}} alt="..." src={logoBearingPoint}/> 
         </Row>
       </Container>
     </footer>
-
-    
-
 
   );
 }

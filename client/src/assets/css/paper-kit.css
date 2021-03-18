@@ -9161,8 +9161,8 @@ td.rdtYear:hover {
 	}
 
 	.element-logo-header:nth-child(1) {
-		height: 160px;
-		width: 200px;
+		height: 120px;
+		width: 160px;
 	}
 
 	.element-logo-header:nth-child(2) {
@@ -9474,6 +9474,10 @@ Label {
 	border-radius: 10px;
 }
 
+.img-header {
+	width: 100px;
+}
+
 .img-header:hover {
 	cursor: pointer;
 }
@@ -9530,8 +9534,8 @@ Label {
 	margin: 10px;
 }
 
-.flex-container-end-center{
-	display:flex;
+.flex-container-end-center {
+	display: flex;
 	justify-content: flex-end;
 	align-items: center;
 }
@@ -9543,11 +9547,15 @@ Label {
 	align-items: center;
 	text-align: left;
 	flex-wrap: wrap;
-	width:100%;
+	width: 100%;
 }
 
-.width-inherit{
+.width-inherit {
 	width: inherit;
+}
+
+.max-width-520 {
+	max-width: 520px;
 }
 
 /*# sourceMappingURL=paper-kit.css.map */

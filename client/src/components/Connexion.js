@@ -8,6 +8,7 @@ import {
     FormGroup,
     Row,
 } from 'reactstrap';
+import {countryColors} from "variables"
 
 
 class Connexion extends Component {
@@ -48,7 +49,7 @@ class Connexion extends Component {
             <>
             <div className="container-block-connexion">
                 <div className="element-block-connexion">
-                    <h2 className="bold" style={{color:"#FBC658"}}>SE CONNECTER</h2>
+                    <h2 className="bold" style={{color:countryColors}}>SE CONNECTER</h2>
                 </div>
                 <div className="element-block-connexion">
                         <Form onSubmit={(e) => this.HandleSubmit(e)}>
