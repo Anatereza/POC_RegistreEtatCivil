@@ -30,13 +30,14 @@ function getFaviconEl() {
   return document.getElementById("favicon");
 }
 
+
 function defineFavIcon(){
   switch (countryLayout){
     case "CI": 
-      return "%PUBLIC_URL%/Flag_of_Cote_d'Ivoire.ico?v=2"
+      return "Flag_of_Cote_d'Ivoire.ico?v=2"
     break;
     case "GB": 
-    return "%PUBLIC_URL%/Flag_of_Gabon.ico?v=2"
+    return "Flag_of_Gabon.ico?v=2"
   break;
     default:
   }
