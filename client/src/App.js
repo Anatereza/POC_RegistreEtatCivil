@@ -62,7 +62,7 @@ function App() {
       </Switch>
         <Switch>
         
-          <Route path="/" exact component={PageAdmin} />
+          <Route path="/" exact component={HomepagePublique} />
           <Route path="/hopital" component={Hopital} />
           <Route path="/mairie" component={Mairie} />
           <Route path="/prefecture" component={Prefecture} />
