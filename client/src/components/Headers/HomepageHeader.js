@@ -20,7 +20,6 @@ class HomepageHeader extends Component {
           countryLayout:countryLayout,
         };
         this.updateDimensions = this.updateDimensions.bind(this);
-        console.log(countryColors);
       }
 
     componentDidMount() {

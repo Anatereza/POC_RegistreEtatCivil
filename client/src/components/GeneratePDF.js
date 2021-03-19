@@ -1,6 +1,7 @@
 import React from 'react';
 import { Page, Text, View, Document, Font, Image } from '@react-pdf/renderer';
 import GenerateQRCode from "components/GenerateQRCode"
+import {countryLayout} from "variables"
 
 // Create styles
 /*const styles = StyleSheet.create({
@@ -41,8 +42,18 @@ const ActeDeNaissance = param => (
         alignContent: 'center'
         }}>
         <View style={{margin: 10, padding: 10, flexGrow: 1, alignContent: 'center', alignItems: 'center'}}>
+            {countryLayout==="CI" && 
+            <>
             <Image style={{width:100}} src="/Côte_d'Ivoire_Logo.jpg" />
             <Text style={{fontWeight: 800, fontSize: 15}}>REPUBLIQUE DE COTE D'IVOIRE</Text>
+            </>
+            }
+            {countryLayout==="GB" && 
+            <>
+            <Image style={{width:100}} src="/Gabon_Logo.jpg" />
+            <Text style={{fontWeight: 800, fontSize: 15}}>REPUBLIQUE GABONAISE</Text>
+            </>
+            }
         </View>
 
         <View style={{margin: 5, padding: 5, flexGrow: 1, alignContent: 'center', alignItems: 'center'}}>

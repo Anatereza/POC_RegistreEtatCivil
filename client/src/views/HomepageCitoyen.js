@@ -4,6 +4,7 @@ import ActeDeNaissance from "components/GeneratePDF"
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import logoHomeCitoyen from 'assets/img/icon_homepage_citizen.jpg'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {countryColors} from "variables"
 
 import {
     Button,
@@ -55,10 +56,8 @@ class HomepageCitoyen extends Component {
             localStorage.setItem('LoginLocal', login);
         }
         this.updateDimensions = this.updateDimensions.bind(this);
-        this.updateDimensions();
-        window.addEventListener("resize", this.updateDimensions);
         
-
+        
     }
 
     componentWillUnmount() {
@@ -66,10 +65,10 @@ class HomepageCitoyen extends Component {
     }
     
     updateDimensions() {
+        console.log("updateDimensions");
         let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-        // let windowHeight = typeof window !== "undefined" ? window.innerHeight : 0;
-        // this.setState({ windowWidth, windowHeight }, function() {console.log(windowWidth)});
-        this.setState((prevState) => ({...prevState,["windowWidth"] :windowWidth}));   
+        this.setState((prevState) => ({...prevState,["windowWidth"] :windowWidth}));
+        console.log(this.state.windowWidth); 
     }
 
     // Back 
@@ -180,6 +179,9 @@ class HomepageCitoyen extends Component {
           );
           console.error(error);
         }
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
+        
     };
     // Back
 
@@ -310,7 +312,7 @@ class HomepageCitoyen extends Component {
                     {this.state.windowWidth > 1200 &&
                         <Col>
                         <Row style={{display:"flex"}, {flexDirection:"column"}, {justifyContent:"center"}}>
-                            <h2 className="ct-orange" style={{textAlign:"left"}}>GENERER MES DOCUMENTS</h2>
+                            <h2 className="text-left" style={{color:countryColors}}>GENERER MES DOCUMENTS</h2>
                             <div style={{marginTop: "30px"}, {marginBottom: "30px"}} id="buttons">
                                         {ready && (
                                             <PDFDownloadLink document={ActeDeNaissance(this.state.personnePDF)} fileName="ActeDeNaissance.pdf" className="btn-download-file">
@@ -344,7 +346,7 @@ class HomepageCitoyen extends Component {
                             </div>
                         </Row>
                         <Row style={{paddingTop:"30px"}, {display:"flex"}, {flexDirection:"column"}, {alignItems:"flex-start"}}>
-                            <h2 className="ct-orange" style={{textAlign:"left"}}>MES DEMARCHES</h2>
+                            <h2 className="text-left" style={{color:countryColors}}>MES DEMARCHES</h2>
                             <h6 className="ct-bleu bold ligne-menu-titre" style={{paddingTop:"30px"}}>Etats Civils</h6>
                             <div className="ct-bleu ligne-menu">Changement d'état civil</div>
                             <div className="ct-bleu ligne-menu">Livret de famille</div>

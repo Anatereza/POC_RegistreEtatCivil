@@ -105,6 +105,7 @@ class DeclarerMariage extends Component {
 
         if (localStorage.getItem('wkfStateLocal') < 1) {
             localStorage.setItem('wkfStateLocal',1)
+            console.log("wkf : 1");
         }
 
         if(this.props.location.state){
@@ -123,6 +124,7 @@ class DeclarerMariage extends Component {
                 case "conjointOK" :            
                     if (props.history.action==="PUSH") {
                         localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1/2).toString())
+                        console.log("wkf + 1/2");
                     }
                 break;
                 default:
@@ -139,9 +141,7 @@ class DeclarerMariage extends Component {
     updateDimensions() {
         console.log("=== updateDimensions ===");
         let windowWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-        this.setState({windowWidth:windowWidth})
-        //this.setState((prevState) => ({...prevState,["windowWidth"] :windowWidth}, function() {console.log("State mis à jour");}));
-        this.forceUpdate()
+        this.setState({windowWidth:windowWidth}, function(){console.log(this.state.windowWidth);})       
     }
 
     //Gestionnaire des changement de champs du formulaire pour les informations complémentaires sur le mariage
@@ -239,6 +239,7 @@ class DeclarerMariage extends Component {
         //Réinitialisation du compteur workflow
         if (formIsValid){
             localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
+            console.log("wkf : 3");
             this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
         }
     }
@@ -252,6 +253,7 @@ class DeclarerMariage extends Component {
         this.setState({snackBarSuccessOpen: true})
 
         localStorage.setItem('wkfStateLocal', 5)
+        console.log("wkf : 5");
         this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
         this.handleClickValiderMariage(); // Après : Reset compteur wkf & Retour page d'accueil
         
@@ -513,7 +515,7 @@ class DeclarerMariage extends Component {
             {/* MOBILE */}
             {this.state.windowWidth < 1024 &&
             <>
-                {this.state.loading ? 
+                {this.state.loading ?
                     <Container className="body-container">
                         <Helmet>
                             <title>{ TITLE }</title>
