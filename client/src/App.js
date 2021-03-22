@@ -35,10 +35,13 @@ function defineFavIcon(){
   switch (countryLayout){
     case "CI": 
       return "Flag_of_Cote_d'Ivoire.ico?v=2"
-    break;
+    
     case "GB": 
     return "Flag_of_Gabon.ico?v=2"
-  break;
+    
+    case "CA": 
+    return "Flag_of_Cameroun.ico?v=2"
+    
     default:
   }
 }

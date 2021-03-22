@@ -54,6 +54,12 @@ const ActeDeNaissance = param => (
             <Text style={{fontWeight: 800, fontSize: 15}}>REPUBLIQUE GABONAISE</Text>
             </>
             }
+            {countryLayout==="CA" && 
+            <>
+            <Image style={{width:100}} src="/Cameroun_Logo.jpg" />
+            <Text style={{fontWeight: 800, fontSize: 15}}>REPUBLIQUE DU CAMEROUN</Text>
+            </>
+            }
         </View>
 
         <View style={{margin: 5, padding: 5, flexGrow: 1, alignContent: 'center', alignItems: 'center'}}>

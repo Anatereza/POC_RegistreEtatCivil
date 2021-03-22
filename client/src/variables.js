@@ -3,7 +3,7 @@
 export const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 // A modifier après chaque lancement de ganache
-export const mnemonicPhrase = "other popular artwork light valve robust remind strike basket garment goddess eager"; // 12 word mnemonic
+export const mnemonicPhrase = "prefer olive seek rifle blue pudding ill sure hair sniff weapon glove"; // 12 word mnemonic
 
 
 export const networkUrl = "http://localhost:8545"
@@ -14,9 +14,29 @@ export const provider = new HDWalletProvider({
     providerOrUrl: networkUrl
 });
 
-// CI : COte d'ivoire
-// GB : Gabon
-export const countryLayout = "GB";
+/** countryLayout permet de paramétrer le vernis pays
+Cette variable doit être impérativement renseignée
+Pour ajouter un pays, il faut modifier :
+- HomepageHeader.js
+  - Logo
+  - Texte du header
+- GeneratePDF.js
+  - Logo
+  - Nom du pays
+- variables.js
+  - ajouter un case au switch et indiquer une couleur primaire
+- App.js
+  - ajouter le favicon
+
+Sera également modifié (sans action nécessaire) :
+- Les couleurs des titres de section dans HomepagePublique (via les composants qui la composent)
+- Les couleurs des titres de section dans HomepageCitoyen (directement dans cette classe)
+
+CI : Côte d'ivoire
+GB : Gabon
+CA : Cameroun A IMPLEMENTER
+ */
+export const countryLayout = "CA";
 
 let countryColor1
 
@@ -26,6 +46,9 @@ switch (countryLayout){
   break;
   case "GB":
     countryColor1 = "#FCD20E"
+  break;
+  case "CA":
+    countryColor1 = "#FCD116"
   break;
   default:
 }

@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { Container } from "reactstrap";
 import "assets/css/paper-kit.css"
+
+//logos
 import logoCoteIvoire from 'assets/img/logo_cote_ivoire.png'
 import logoGabon from 'assets/img/logo_gabon.png'
+import logoCameroun from 'assets/img/logo_cameroun.png'
 import logoQuestion from 'assets/img/question.png'
+
+//Layout
 import {countryLayout} from "variables"
 import {countryColors} from "variables"
 
@@ -85,24 +90,37 @@ class HomepageHeader extends Component {
                 <Container>
                     <div className="container-logo-header">
                         
-                            
+                            {/* COTE D'IVOIRE */}
                             {this.state.countryLayout === "CI"  && 
                             <>
                             <img className=" element-logo-header img-header" alt="..." src={logoCoteIvoire} onClick={() => this.HandleClick()} />
                             <div className="element-logo-header">
-                                <div style={{fontWeight:"bold"},  {color: countryColors}}>WWW.GOUV.CI/ETATSCIVILS <br/></div>
+                                <div className="text-bold" style={{color: countryColors}}>WWW.GOUV.CI/ETATSCIVILS <br/></div>
                                 <div style={{color:"#66615b"}}>LE PORTAIL DES ACTES D’ÉTATS CIVILS <br/></div>
                                 <div style={{color:"#66615b"}}>DE LA CÔTE D’IVOIRE <br/></div>
                             </div>
                             </>
                             }
+
+                            {/* GABON */}
                             {this.state.countryLayout === "GB"  && 
                             <>
                             <img className="element-logo-header img-header" alt="..." src={logoGabon} onClick={() => this.HandleClick()} />
                             <div className="element-logo-header">
-                                <div style={{fontWeight:"bold"}, {color: countryColors}}>WWW.GOUV.GA/ETATSCIVILS <br/></div>
+                                <div className="text-bold" style={{color: countryColors}}>WWW.SGG.GOUV.GA/ETATSCIVILS <br/></div>
                                 <div style={{color:"#66615b"}}>LE PORTAIL DES ACTES D’ÉTATS CIVILS <br/></div>
                                 <div style={{color:"#66615b"}}>DE LA REPUBLIQUE GABONAISE  <br/></div>
+                            </div>
+                            </>
+                            }
+                            {/* CAMEROUN */}
+                            {this.state.countryLayout === "CA"  && 
+                            <>
+                            <img className="element-logo-header img-header" alt="..." src={logoCameroun} onClick={() => this.HandleClick()} />
+                            <div className="element-logo-header">
+                                <div className="text-bold" style={{color: countryColors}}>WWW.SPM.GOV.CM/ETATSCIVILS <br/></div>
+                                <div style={{color:"#66615b"}}>LE PORTAIL DES ACTES D’ÉTATS CIVILS <br/></div>
+                                <div style={{color:"#66615b"}}>DE LA REPUBLIQUE DU CAMEROUN  <br/></div>
                             </div>
                             </>
                             }

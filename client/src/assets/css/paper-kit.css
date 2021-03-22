@@ -9161,16 +9161,17 @@ td.rdtYear:hover {
 	}
 
 	.element-logo-header:nth-child(1) {
+		width: auto;
 		height: 120px;
-		width: 140px;
 	}
 
 	.element-logo-header:nth-child(2) {
-		height: 160px;
+		/* height: 160px; */
 		width: 500px;
 		text-align: left;
 		align-items: center;
-		padding-top: 30px;
+		/* padding-top: 30px; */
+		margin-left: 30px;
 	}
 
 	.element-logo-header:nth-child(3) {
@@ -9561,4 +9562,9 @@ Label {
 .text-left {
 	text-align: left;
 }
+
+.text-bold {
+	font-weight: bold;
+}
+
 /*# sourceMappingURL=paper-kit.css.map */
