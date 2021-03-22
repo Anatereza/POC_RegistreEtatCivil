@@ -123,8 +123,8 @@ class DeclarerMariage extends Component {
                 break;
                 case "conjointOK" :            
                     if (props.history.action==="PUSH") {
-                        localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1/2).toString())
-                        console.log("wkf + 1/2");
+                        localStorage.setItem('wkfStateLocal', (parseInt(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
+                        console.log("wkf + 1");
                     }
                 break;
                 default:
@@ -238,14 +238,14 @@ class DeclarerMariage extends Component {
         this.setState({fieldsStates:fieldsStates}, function(){console.log(this.state.fieldsStates)});
         //Réinitialisation du compteur workflow
         if (formIsValid){
-            localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
+            localStorage.setItem('wkfStateLocal', (parseInt(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
             console.log("wkf : 3");
             this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
         }
     }
 
     HandleClickSuivant(){
-        localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
+        localStorage.setItem('wkfStateLocal', (parseInt(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
         this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
     }
 
@@ -287,7 +287,6 @@ class DeclarerMariage extends Component {
         }
 
 
-        // eslint-disable-next-line no-useless-computed-key
         this.setState((prevState) => ({...prevState,["personne"] :personne}));
         
         if (localStorage.getItem('wkfStateLocal')==='1'){
@@ -400,9 +399,7 @@ class DeclarerMariage extends Component {
         const nom2 = localStorage.getItem('nom2');
         const prenom1 = localStorage.getItem('prenom1');
         const prenom2 = localStorage.getItem('prenom2');        
-        // eslint-disable-next-line no-useless-concat
         const etatCivilConjoint2 = "MARIE LE " + dateMariage + " " + "A" + " " + prenom1 + " " + nom1;
-        // eslint-disable-next-line no-useless-concat
         const etatCivilConjoint1 = "MARIE LE " + dateMariage + " " + "A" + " " + prenom2 + " " + nom2;
  
         try {  
@@ -512,9 +509,9 @@ class DeclarerMariage extends Component {
     };
     // Back       
     
-    render() { 
+    render() {     
         console.log("render");
-        console.log(localStorage.getItem('wkfStateLocal'));    
+        console.log(localStorage.getItem('wkfStateLocal'))
         return (
             <>
             {/* MOBILE */}
@@ -549,13 +546,13 @@ class DeclarerMariage extends Component {
                         <div style={{height:"80px"}}></div>
                         <Row>
                             <Col className="">
-                                {localStorage.getItem('wkfStateLocal') === 1 && 
+                                {localStorage.getItem('wkfStateLocal') == 1 && 
                                     <div className="progress-active">1/4 - Premier conjoint</div>}
-                                {localStorage.getItem('wkfStateLocal') === 2 && 
+                                {localStorage.getItem('wkfStateLocal') == 2 && 
                                     <div className="progress-active">2/4 - Second conjoint</div>} 
-                                {localStorage.getItem('wkfStateLocal') === 3 && 
+                                {localStorage.getItem('wkfStateLocal') == 3 && 
                                     <div className="progress-active">3/4 - Mariage</div>}
-                                {localStorage.getItem('wkfStateLocal') === 4 && 
+                                {localStorage.getItem('wkfStateLocal') == 4 && 
                                     <div className="progress-active">4/4 - Validation</div>}
                             </Col>
                         </Row>
@@ -567,7 +564,7 @@ class DeclarerMariage extends Component {
                             style={{backgroundColor: "6bd098"}}
                         />
                         <br/>
-                        {localStorage.getItem('wkfStateLocal') === 1 && 
+                        {localStorage.getItem('wkfStateLocal')==1 && 
                             <div>
                                 {this.state.loading ? <CircularProgress></CircularProgress> :
                                 <div style={{width:"70%"}}>
@@ -590,7 +587,7 @@ class DeclarerMariage extends Component {
                                 </div> 
                             </div>
                         }
-                        {localStorage.getItem('wkfStateLocal') === 2 && 
+                        {localStorage.getItem('wkfStateLocal')==2 && 
                         <div style={{ height: this.state.tableHeight, width: '100%' }}>
                             <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
                                     <MuiAlert elevation={6} variant="filled" severity="success">
@@ -615,7 +612,7 @@ class DeclarerMariage extends Component {
                             }
                         </div>}
                         
-                        {localStorage.getItem('wkfStateLocal') === 3 &&
+                        {localStorage.getItem('wkfStateLocal')==3 &&
                             <div>
                                 <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
                                     <MuiAlert elevation={6} variant="filled" severity="success">
@@ -676,14 +673,14 @@ class DeclarerMariage extends Component {
                         }
                         {localStorage.getItem('wkfStateLocal')>=4 &&
                         <>
-                        {localStorage.getItem('wkfStateLocal') ===4 &&
+                        {localStorage.getItem('wkfStateLocal')==4 &&
                         <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
                                 <MuiAlert elevation={6} variant="filled" severity="success">
                                     Données complémentaires validées.
                                 </MuiAlert>
                         </Snackbar>
                         }
-                        {localStorage.getItem('wkfStateLocal') ===5 &&
+                        {localStorage.getItem('wkfStateLocal')==5 &&
                                 <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
                                     <MuiAlert elevation={6} variant="filled" severity="success">
                                         Mariage validé. Redirection.
@@ -794,7 +791,7 @@ class DeclarerMariage extends Component {
                             style={{backgroundColor: "6bd098"}}
                         />
                         <br/>
-                        {localStorage.getItem('wkfStateLocal')===1 && 
+                        {localStorage.getItem('wkfStateLocal')==1 && 
                             <div>
                                 {this.state.loading ? <CircularProgress></CircularProgress> :
                                 <div style={{width:"70%"}}>
@@ -817,7 +814,7 @@ class DeclarerMariage extends Component {
                                 </div> 
                             </div>
                         }
-                        {localStorage.getItem('wkfStateLocal')===2 && 
+                        {localStorage.getItem('wkfStateLocal')==2 && 
                         <div style={{ height: this.state.tableHeight, width: '100%' }}>
                             <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
                                     <MuiAlert elevation={6} variant="filled" severity="success">
@@ -842,7 +839,7 @@ class DeclarerMariage extends Component {
                             }
                         </div>}
                         
-                        {localStorage.getItem('wkfStateLocal')===3 &&
+                        {localStorage.getItem('wkfStateLocal')==3 &&
                             <div>
                                 <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
                                     <MuiAlert elevation={6} variant="filled" severity="success">
@@ -933,14 +930,14 @@ class DeclarerMariage extends Component {
                         }
                         {localStorage.getItem('wkfStateLocal')>=4 &&
                             <>
-                            {localStorage.getItem('wkfStateLocal')===4 &&
+                            {localStorage.getItem('wkfStateLocal')==4 &&
                                 <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
                                         <MuiAlert elevation={6} variant="filled" severity="success">
                                             Données complémentaires validées.
                                         </MuiAlert>
                                 </Snackbar>
                             }
-                            {localStorage.getItem('wkfStateLocal')===5 &&
+                            {localStorage.getItem('wkfStateLocal')==5 &&
                                     <Snackbar open={this.state.snackBarSuccessOpen} autoHideDuration={3000} onClose={this.handleCloseSuccessSnackBar}>
                                         <MuiAlert elevation={6} variant="filled" severity="success">
                                             Mariage validé. Redirection.
@@ -990,4 +987,3 @@ class DeclarerMariage extends Component {
 }
  
 export default DeclarerMariage;
-
