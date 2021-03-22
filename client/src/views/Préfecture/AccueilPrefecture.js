@@ -9,7 +9,7 @@ import {
     Col,
   } from "reactstrap";
 
-const TITLE = 'Côte d’Ivoire - Accueil Préfecture'
+const TITLE = 'Accueil Préfecture'
 
 class AccueilPrefecture extends Component {
     state = {  }

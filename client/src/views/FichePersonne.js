@@ -21,7 +21,7 @@ import { triggerBase64Download } from 'react-base64-downloader';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
-const TITLE = 'Côte d’Ivoire - Fiche personne'
+const TITLE = 'Fiche personne'
 
 class FichePersonne extends Component {
     

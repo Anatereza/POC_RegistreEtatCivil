@@ -30,7 +30,7 @@ import {
   import SimpleTable from 'components/SimpleTable';
 import { ThreeSixty } from '@material-ui/icons';
 
-const TITLE = 'Côte d’Ivoire - Enregistrer une naissance'
+const TITLE = 'Enregistrer une naissance'
 
 function timeout(delay) {
     return new Promise( res => setTimeout(res, delay) );
