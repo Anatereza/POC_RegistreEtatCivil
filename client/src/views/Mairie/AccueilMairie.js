@@ -17,7 +17,7 @@ import {
   } from "reactstrap";
 
 
-  const TITLE = 'Côte d’Ivoire - Accueil Mairie'
+  const TITLE = 'Accueil Mairie'
 
 class AccueilMairie extends Component {
 

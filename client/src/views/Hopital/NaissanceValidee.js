@@ -12,7 +12,7 @@ import {
   } from "reactstrap";
 import { createTrue } from 'typescript';
 
-const TITLE = 'Côte d’Ivoire - Naissance enregistrée'
+const TITLE = 'Naissance enregistrée'
 
 class NaissanceValidee extends Component {
 

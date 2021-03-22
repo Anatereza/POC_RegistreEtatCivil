@@ -30,7 +30,7 @@ async function timeout(delay) {
     return new Promise( res => setTimeout(res, delay) );
     
 }
-const TITLE = 'Côte d’Ivoire - Déclarer un mariage'
+const TITLE = 'Déclarer un mariage'
 
 const columns = [
     { field: 'ID', headerName: <div style={{fontWeight:"bold"}}>N° d’identification unique</div>, width: 240 },

@@ -14,7 +14,7 @@ import {
     Label,
   } from "reactstrap";
 
-const TITLE = 'Côte d’Ivoire - Identité validée'
+const TITLE = 'Identité validée'
 
 class IdentiteValidee extends Component {
     
