@@ -86,15 +86,8 @@ class EnregistrerNaissance extends Component {
             console.log("Initialiser wkfStateLocal si undefined")
         }
         this.updateDimensions = this.updateDimensions.bind(this);   
-        this.updateDimensions();
-        window.addEventListener("resize", this.updateDimensions);  
     }
 
-    componentDidMount() {
-        console.log("=== componentDidMount ===");
-        this.updateDimensions();
-        window.addEventListener("resize", this.updateDimensions);
-    }
     
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateDimensions);
@@ -426,6 +419,8 @@ class EnregistrerNaissance extends Component {
                 pathname:'hopital-naissance'
             })
         }
+        this.updateDimensions();
+        window.addEventListener("resize", this.updateDimensions);
     };
     // Back
 
@@ -441,7 +436,6 @@ class EnregistrerNaissance extends Component {
         let file; 
         return ( 
             <>
-                       
             <Container>
                 <Row style={{paddingTop:"100px"}}>
                     

@@ -35,13 +35,12 @@ class PortailAdministration extends Component {
         console.log(param)
         switch (param[0]){
             case 'membreHopital' :
-                console.log("case membre 1 (hopital)");
                 this.props.history.push({
                     pathname:'home-hopital'
                 }) 
               
             break;
-            case 'membrePrefecture' :
+            case 'officierEtatCivil' :
                 this.props.history.push({
                     pathname:'home-prefecture'
                 }) 
