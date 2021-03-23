@@ -11,9 +11,7 @@ import "./assets/css/paper-kit.css";
 import "./assets/demo/demo.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById("root")
 );
 

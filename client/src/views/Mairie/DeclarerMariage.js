@@ -123,8 +123,8 @@ class DeclarerMariage extends Component {
                 break;
                 case "conjointOK" :            
                     if (props.history.action==="PUSH") {
-                        localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1/2).toString())
-                        console.log("wkf + 1/2");
+                        localStorage.setItem('wkfStateLocal', (parseInt(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
+                        console.log("wkf + 1");
                     }
                 break;
                 default:
@@ -238,14 +238,14 @@ class DeclarerMariage extends Component {
         this.setState({fieldsStates:fieldsStates}, function(){console.log(this.state.fieldsStates)});
         //Réinitialisation du compteur workflow
         if (formIsValid){
-            localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
+            localStorage.setItem('wkfStateLocal', (parseInt(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
             console.log("wkf : 3");
             this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
         }
     }
 
     HandleClickSuivant(){
-        localStorage.setItem('wkfStateLocal', (parseFloat(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
+        localStorage.setItem('wkfStateLocal', (parseInt(localStorage.getItem('wkfStateLocal'), 10)+1).toString())
         this.setState({wkfState:parseInt(localStorage.getItem('wkfStateLocal'),10)})
     }
 
@@ -510,6 +510,8 @@ class DeclarerMariage extends Component {
     // Back       
     
     render() {     
+        console.log("render");
+        console.log(localStorage.getItem('wkfStateLocal'))
         return (
             <>
             {/* MOBILE */}
@@ -985,4 +987,3 @@ class DeclarerMariage extends Component {
 }
  
 export default DeclarerMariage;
-
