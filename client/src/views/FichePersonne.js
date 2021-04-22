@@ -33,10 +33,7 @@ class FichePersonne extends Component {
 	this.getInfosCitoyens = this.getInfosCitoyen.bind(this);
 	this.setState = this.setState.bind(this);
         if(!window.location.hash){
-            const ID = this.props.location.state.ID;
-	    console.log("je suis la");
-            console.log(ID);
-	    console.log(this.props.location.state);
+        const ID = this.props.location.state.ID;
 	    localStorage.setItem('IDLocal', ID);
             const _ID = localStorage.getItem('IDLocal');
             const URL = this.props.location.state.URL;

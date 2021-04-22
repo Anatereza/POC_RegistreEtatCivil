@@ -27,7 +27,16 @@ const columns = [
 
   
 class ValiderIdentité extends Component {
-    state = {
+    
+    constructor(props){
+      super(props);
+      this.updateDimensions = this.updateDimensions.bind(this);
+      this.setState = this.setState.bind(this);
+      this.handleClick = this.handleClick.bind(this);
+
+      window.addEventListener("resize", this.updateDimensions);
+
+      this.state = {
         nom:"",
         prenom:"",
         sexe:"",
@@ -41,16 +50,10 @@ class ValiderIdentité extends Component {
         loading:true,
         windowWidth: 0,
         windowHeight: 0
-      }
-    
-    constructor(props){
-      super(props);
-      this.updateDimensions = this.updateDimensions.bind(this);
-      this.setState = this.setState.bind(this);
-      this.handleClick = this.handleClick.bind(this);
+      }      
 
-      window.addEventListener("resize", this.updateDimensions);
       console.log(this.state.windowWidth);
+
     }
 
     componentWillUnmount() {
@@ -69,7 +72,10 @@ class ValiderIdentité extends Component {
       this.props.history.push({
           pathname:'fiche-personne',
           state: {
-            ID : this.state.ID, 
+            // setState dans "handleClick" ne fonctionne pas sur la machine BE
+            // solution --> utiliser directement "ID"
+            //ID : this.state.ID,
+            ID : ID,  
             URL : this.state.URL,
           }
       });
