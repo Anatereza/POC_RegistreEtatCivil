@@ -28,10 +28,16 @@ class FichePersonne extends Component {
     constructor(props) {
         console.log("=== FichePersonne ===")
         super(props)
-        
+        this.updateDimensions = this.updateDimensions.bind(this);
+	this.getPerson = this.getPerson.bind(this);
+	this.getInfosCitoyens = this.getInfosCitoyen.bind(this);
+	this.setState = this.setState.bind(this);
         if(!window.location.hash){
             const ID = this.props.location.state.ID;
-            localStorage.setItem('IDLocal', ID);
+	    console.log("je suis la");
+            console.log(ID);
+	    console.log(this.props.location.state);
+	    localStorage.setItem('IDLocal', ID);
             const _ID = localStorage.getItem('IDLocal');
             const URL = this.props.location.state.URL;
             localStorage.setItem('URLLocal', URL);

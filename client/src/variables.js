@@ -5,7 +5,7 @@ export const HDWalletProvider = require("@truffle/hdwallet-provider");
 // A modifier après chaque lancement de ganache
 export const mnemonicPhrase = "annual anxiety detail slide dry spawn drink weather mammal blouse club away"; // 12 word mnemonic
 
-export const adresseIP = "localhost";
+export const adresseIP = "52.47.98.192";
 
 export const networkUrl = "http://" + adresseIP + ":8545";
 
