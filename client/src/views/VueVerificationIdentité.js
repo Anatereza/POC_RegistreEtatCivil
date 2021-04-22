@@ -15,16 +15,20 @@ import {
   } from "reactstrap";
 
 class VueVérificationIdentité extends Component {
-    state = {
-        paramHash : this.props.history.location.search.slice(1,this.props.history.location.search.length),
-        windowWidth: 0,
-        windowHeight: 0,
-    }
 
     constructor(props) {
         super(props)
         this.HandleClickNvlleRecherche = this.HandleClickNvlleRecherche.bind(this)
+        this.updateDimensions = this.updateDimensions.bind(this);
+        this.setState = this.setState.bind(this);
+
+        this.state = {
+            paramHash : this.props.history.location.search.slice(1,this.props.history.location.search.length),
+            windowWidth: 0,
+            windowHeight: 0,
+        }
     }
+  
 
     componentDidMount() {
         console.log("=== componentDidMount ===");
