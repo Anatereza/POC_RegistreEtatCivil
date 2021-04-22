@@ -22,36 +22,47 @@ async function timeout(delay) {
 }
 
 class ComponentVérificationID extends Component {
-    state = {
-        hashSent: false,
-        hashIsOk: false,
-        stateComponent: "init", 
-        /**
-         * hashSent | hashIsOk | stateComponent
-         *  false   |   false  | "init"
-         *  false   |   true   | ----
-         *  true    |   false  | "HaskKO"
-         *  true    |   true   | "HashOK"
-         */
-        fieldValue:this.props.defaultHash, //Valeur tapée dans le champs input, mise à jour on change
-        sentHash:"", //Valeur envoyée dans au back (hash complet), mise à jour on submit
-        userData : "", //Données utilisateur retournées. TODO : format à définir
-        CivilStateInstance: undefined,
-        account: null,
-        web3: null,
-        login: '',
-        infosCitoyen: [],
-        hashFieldHasChanged:false,
-        loading:false,
-        snackBarErrorOpen:false,
-        snackBarSuccessOpen:false,
-      }
 
     constructor(props) {
         super(props)
         
         this.updateState = this.updateState.bind(this);
         this.setState = this.setState.bind(this);
+        this.handleCloseErrorSnackBar = this.handleCloseErrorSnackBar.bind(this);
+        this.handleCloseSuccessSnackBar = this.handleCloseSuccessSnackBar.bind(this);
+        this.checkHash = this.checkHash.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.defineInputValue = this.defineInputValue.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        // verifyHash
+        this.verifyHash = this.verifyHash.bind(this);
+
+
+        this.state = {
+            hashSent: false,
+            hashIsOk: false,
+            stateComponent: "init", 
+            /**
+             * hashSent | hashIsOk | stateComponent
+             *  false   |   false  | "init"
+             *  false   |   true   | ----
+             *  true    |   false  | "HaskKO"
+             *  true    |   true   | "HashOK"
+             */
+            fieldValue:this.props.defaultHash, //Valeur tapée dans le champs input, mise à jour on change
+            sentHash:"", //Valeur envoyée dans au back (hash complet), mise à jour on submit
+            userData : "", //Données utilisateur retournées. TODO : format à définir
+            CivilStateInstance: undefined,
+            account: null,
+            web3: null,
+            login: '',
+            infosCitoyen: [],
+            hashFieldHasChanged:false,
+            loading:false,
+            snackBarErrorOpen:false,
+            snackBarSuccessOpen:false,
+          }
     }
 
     handleCloseErrorSnackBar(event, reason){

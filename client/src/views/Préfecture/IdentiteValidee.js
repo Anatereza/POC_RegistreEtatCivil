@@ -18,17 +18,23 @@ const TITLE = 'Identité validée'
 
 class IdentiteValidee extends Component {
     
-    state = {
+    /*state = {
         ID:this.props.location.state,
         windowWidth: 0,
         windowHeight: 0
-    }
+    }*/
 
     constructor(props){
         super(props);
 
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions);
+        
+        this.state = {
+            ID:this.props.location.state,
+            windowWidth: 0,
+            windowHeight: 0
+        }
     }
     
     componentWillUnmount() {

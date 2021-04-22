@@ -5,14 +5,16 @@ import Row from 'reactstrap/lib/Row';
 import { ThemeProvider } from 'react-bootstrap';
 
 class PortailAdministration extends Component {
-    state = {
+    /*state = {
         windowWidth:0,
-      }
+      }*/
     constructor(props){
         super(props)
         this.HandleConnexion = this.HandleConnexion.bind(this)
         this.updateDimensions = this.updateDimensions.bind(this)
-
+        this.state = {
+            windowWidth:0,
+          }
     }
 
     componentDidMount() {

@@ -29,9 +29,10 @@ class FichePersonne extends Component {
         console.log("=== FichePersonne ===")
         super(props)
         this.updateDimensions = this.updateDimensions.bind(this);
-	this.getPerson = this.getPerson.bind(this);
-	this.getInfosCitoyens = this.getInfosCitoyen.bind(this);
-	this.setState = this.setState.bind(this);
+        this.getPerson = this.getPerson.bind(this);
+        this.getInfosCitoyens = this.getInfosCitoyen.bind(this);
+        this.setState = this.setState.bind(this);
+        
         if(!window.location.hash){
         const ID = this.props.location.state.ID;
 	    localStorage.setItem('IDLocal', ID);

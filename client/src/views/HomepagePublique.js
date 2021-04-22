@@ -23,7 +23,7 @@ import { provider } from "../variables";
 
 
 class HomepagePublique extends Component {
-    state = {
+    /*state = {
         isTileState: true,
         isConnexionState: false,
         redirect:false,
@@ -36,13 +36,28 @@ class HomepagePublique extends Component {
         authentificationState:"init",
         windowWidth: 0,
         windowHeight: 0,
-    }
+    }*/
 
     constructor(props) {
         super(props)
         this.HandleClick = this.HandleClick.bind(this);
         this.setState = this.setState.bind(this)
         this.updateDimensions = this.updateDimensions.bind(this);
+        
+        this.state = {
+            isTileState: true,
+            isConnexionState: false,
+            redirect:false,
+            login: '',
+            pwd: '',
+            auth: '',
+            CivilStateInstance: undefined,
+            account: null,
+            web3: null,
+            authentificationState:"init",
+            windowWidth: 0,
+            windowHeight: 0,
+        }
     }
 
     componentDidMount() {

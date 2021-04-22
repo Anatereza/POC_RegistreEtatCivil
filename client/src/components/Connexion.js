@@ -12,16 +12,23 @@ import {countryColors} from "variables"
 
 
 class Connexion extends Component {
-    state = {
+    /*state = {
         login: "",
         pwd: "",
         authentificationState:"init",
         loading: false,
-    };
+    };*/
 
     constructor(props) {
         console.log("=== Constructeur connexion ===")
         super(props)
+
+        this.state = {
+            login: "",
+            pwd: "",
+            authentificationState:"init",
+            loading: false,
+        };
     }
 
     HandleSubmit(e){

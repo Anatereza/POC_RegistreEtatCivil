@@ -8,10 +8,22 @@ import {
 
 
 class InfoPersonne extends Component {
-    state = {
+    
+    constructor(props) {
+        super(props)
+        this.updateDimensions = this.updateDimensions.bind(this);
+        this.setState = this.setState.bind(this);
+
+        this.state = {
+            windowWidth: 0,
+            windowHeight: 0
+        }
+    }
+    
+    /*state = {
         windowWidth: 0,
         windowHeight: 0
-    }
+    }*/
     
     componentDidMount() {
         this.updateDimensions();
