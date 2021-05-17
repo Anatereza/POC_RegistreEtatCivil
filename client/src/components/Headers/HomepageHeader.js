@@ -6,6 +6,7 @@ import "assets/css/paper-kit.css"
 import logoCoteIvoire from 'assets/img/logo_cote_ivoire.png'
 import logoGabon from 'assets/img/logo_gabon.png'
 import logoCameroun from 'assets/img/logo_cameroun.png'
+import logoMadagascar from 'assets/img/logo_madagascar.png'
 import logoQuestion from 'assets/img/question.png'
 
 //Layout
@@ -113,6 +114,19 @@ class HomepageHeader extends Component {
                             </div>
                             </>
                             }
+
+                            {/* MADAGASCAR */}
+                            {this.state.countryLayout === "MG"  && 
+                            <>
+                            <img className="element-logo-header img-header" alt="..." src={logoMadagascar} onClick={() => this.HandleClick()} />
+                            <div className="element-logo-header">
+                                <div className="text-bold" style={{color: countryColors}}>WWW.GOUV.MG/ETATSCIVILS <br/></div>
+                                <div style={{color:"#66615b"}}>LE PORTAIL DES ACTES D’ÉTATS CIVILS <br/></div>
+                                <div style={{color:"#66615b"}}>DE LA REPUBLIQUE DE MADAGASCAR <br/></div>
+                            </div>
+                            </>
+                            }
+
                             {/* CAMEROUN */}
                             {this.state.countryLayout === "CA"  && 
                             <>

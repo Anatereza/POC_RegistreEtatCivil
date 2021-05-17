@@ -41,6 +41,9 @@ function defineFavIcon(){
     
     case "CA": 
     return "Flag_of_Cameroun.ico?v=2"
+
+    case "MG": 
+    return "Flag_of_Madagascar.ico?v=2"
     
     default:
   }

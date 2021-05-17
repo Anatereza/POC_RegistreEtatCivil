@@ -5,7 +5,9 @@ export const HDWalletProvider = require("@truffle/hdwallet-provider");
 // A modifier après chaque lancement de ganache
 export const mnemonicPhrase = "annual anxiety detail slide dry spawn drink weather mammal blouse club away"; // 12 word mnemonic
 
-export const adresseIP = "52.47.98.192";
+// En local : localhost
+//export const adresseIP = "52.47.98.192";
+export const adresseIP = "localhost";
 
 export const networkUrl = "http://" + adresseIP + ":8545";
 
@@ -37,8 +39,9 @@ Sera également modifié (sans action nécessaire) :
 CI : Côte d'ivoire
 GB : Gabon
 CA : Cameroun A IMPLEMENTER
+MG : Madagascar
  */
-export const countryLayout = "CA";
+export const countryLayout = "MG";
 
 let countryColor1
 
@@ -51,6 +54,9 @@ switch (countryLayout){
   break;
   case "CA":
     countryColor1 = "#FCD116"
+  break;
+  case "MG":
+    countryColor1 = "#005421"
   break;
   default:
 }

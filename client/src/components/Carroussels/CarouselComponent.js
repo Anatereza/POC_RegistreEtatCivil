@@ -20,6 +20,7 @@ import React from "react";
 import imageCarroussel1 from 'assets/img/carroussel1.png'
 import imageCarroussel2 from 'assets/img/carroussel2.png'
 import imageCarroussel3 from 'assets/img/carroussel3.png'
+import imageCarrousseMada from 'assets/img/carrousselMada.png'
 // reactstrap components
 import {
   Card,
@@ -29,9 +30,88 @@ import {
   CarouselCaption,
 } from "reactstrap";
 
-// core components
+//Layout
+import {countryLayout} from "variables"
 
-const items = [
+// core components
+var items;
+
+if (countryLayout === 'MG') {
+  items = [
+    {
+      src: imageCarrousseMada,
+      altText: "Somewhere",
+      // caption: 
+      // // <div style={{textAlign:"left"}}>
+      // //   <h1>Tous vos actes d’état civil en un même endroit</h1> 
+      // //   <h5>
+      // //     <ul>
+      // //       <li>Actes de naissance</li>
+      // //       <li>Actes de mariage</li>
+      // //       <li>Actes de décès</li>
+      // //     </ul>
+      // //   </h5>
+      // //   </div>,
+    },
+    {
+      src: imageCarroussel2,
+      altText: "Somewhere else",
+      // caption: 
+      // /* <div style={{textAlign:"left"}}>
+      // <h1>Vos actes numériques certifiés sans attendre</h1> 
+      // <h5>Les actes sont générés instantanément. Les données qui y figurent sont certifiées.</h5>
+      // </div> */,
+    },
+    {
+      src: imageCarroussel3,
+      altText: "Here it is",
+      // caption: 
+      // {/* <div style={{textAlign:"left"}}>
+      //   <h1>Vérification des identités sûre et rapide</h1> 
+      //   <h5>Pour vérifier l’authenticité d’un acte, demandez le numéro à son porteur. Vous pourrez obtenir une garantie en un clic.</h5>
+      // </div> */},
+    },
+  ];
+} else {
+  items = [
+    {
+      src: imageCarroussel1,
+      altText: "Somewhere",
+      // caption: 
+      // // <div style={{textAlign:"left"}}>
+      // //   <h1>Tous vos actes d’état civil en un même endroit</h1> 
+      // //   <h5>
+      // //     <ul>
+      // //       <li>Actes de naissance</li>
+      // //       <li>Actes de mariage</li>
+      // //       <li>Actes de décès</li>
+      // //     </ul>
+      // //   </h5>
+      // //   </div>,
+    },
+    {
+      src: imageCarroussel2,
+      altText: "Somewhere else",
+      // caption: 
+      // /* <div style={{textAlign:"left"}}>
+      // <h1>Vos actes numériques certifiés sans attendre</h1> 
+      // <h5>Les actes sont générés instantanément. Les données qui y figurent sont certifiées.</h5>
+      // </div> */,
+    },
+    {
+      src: imageCarroussel3,
+      altText: "Here it is",
+      // caption: 
+      // {/* <div style={{textAlign:"left"}}>
+      //   <h1>Vérification des identités sûre et rapide</h1> 
+      //   <h5>Pour vérifier l’authenticité d’un acte, demandez le numéro à son porteur. Vous pourrez obtenir une garantie en un clic.</h5>
+      // </div> */},
+    },
+  ];
+ 
+}
+
+const items_draft = [
   {
     src: imageCarroussel1,
     altText: "Somewhere",
